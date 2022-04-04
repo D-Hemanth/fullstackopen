@@ -7,28 +7,30 @@ const Button = (props) => {
   )
 }
 
+// Refratored each line in statistics into a new react component StatisticLine outside the main App component
+const StatisticLine = (props) => {
+  return (
+    <div>{props.text} {props.value} {props.value2}</div>
+  )
+}
+
 // Refratored the statistics into a new react component outside the main App component
 const Statistics = ({ good, neutral, bad }) => {
   if ((good | neutral | bad) > 0) {
     return (
       // put all elements inside react fragments <>, </> so that JSX has link to atleast one parent element
       <>
-        <h1>statistics</h1>
-        <div>good {good}</div>
-        <div>neutral {neutral}</div>
-        <div>bad {bad}</div>
-        <div>all {good + neutral + bad}</div>
-        <div>average {(good - bad) / (good + neutral + bad)}</div>
-        <div>positive {(good / (good + neutral + bad)) * 100} %</div>
+        <StatisticLine text='good' value={good} />
+        <StatisticLine text='neutral' value={neutral} />
+        <StatisticLine text='bad' value={bad} />
+        <StatisticLine text='all' value={good + neutral + bad} />
+        <StatisticLine text='average' value={(good - bad) / (good + neutral + bad)} />
+        <StatisticLine text='positive' value={(good / (good + neutral + bad)) * 100} value2={'%'} />
       </>
     )
   }
   return (
-    <>
-      <h1>statistics</h1>
-      <h3>No feedback given</h3>
-    </>
-    
+    <h3>No feedback given</h3> 
   )
 }
 
@@ -50,6 +52,7 @@ const App = () => {
       <Button onClick={upGoodByOne} text='good' />
       <Button onClick={upNeutralByOne} text='neutral' />
       <Button onClick={upBadByOne} text='bad' />
+      <h1>statistics</h1>
       <>{Statistics({ good, neutral, bad })}</>
     </div>
   )
