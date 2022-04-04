@@ -9,17 +9,26 @@ const Button = (props) => {
 
 // Refratored the statistics into a new react component outside the main App component
 const Statistics = ({ good, neutral, bad }) => {
+  if ((good | neutral | bad) > 0) {
+    return (
+      // put all elements inside react fragments <>, </> so that JSX has link to atleast one parent element
+      <>
+        <h1>statistics</h1>
+        <div>good {good}</div>
+        <div>neutral {neutral}</div>
+        <div>bad {bad}</div>
+        <div>all {good + neutral + bad}</div>
+        <div>average {(good - bad) / (good + neutral + bad)}</div>
+        <div>positive {(good / (good + neutral + bad)) * 100} %</div>
+      </>
+    )
+  }
   return (
-    // put all elements inside react fragments <>, </> so that JSX has link to atleast one parent element
     <>
       <h1>statistics</h1>
-      <div>good {good}</div>
-      <div>neutral {neutral}</div>
-      <div>bad {bad}</div>
-      <div>all {good + neutral + bad}</div>
-      <div>average {(good - bad) / (good + neutral + bad)}</div>
-      <div>positive {(good / (good + neutral + bad)) * 100} %</div>
+      <h3>No feedback given</h3>
     </>
+    
   )
 }
 
