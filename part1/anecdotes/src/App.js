@@ -1,10 +1,12 @@
 import { useState } from 'react'
 
-const Button = (props) => {
-  return(
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+
+const Anecdote = ({ text, votesCount}) =>{
+  return (
     <>
-      <p>{props.value}</p>
-      <button onClick={props.handleClick}>{props.text}</button>
+      <p>{text}</p>
+      <p>has {votesCount} votes</p>
     </>
   )
 }
@@ -21,15 +23,27 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  //  create a zero-filled array of a desired length and make it using usestate so that it is not local soped within the handleVoteClicks function
+  const [allVotes, setAllVotes] = useState(Array(7).fill(0))
+  console.log(allVotes)
 
-  const setToValue = ({ anecdotes }) => {
-    const randomindex = Math.floor(Math.random() * anecdotes.length)
-    setSelected(randomindex)
+  const handleAnecdoteClick = () => {
+    const randomarrayindex = Math.floor(Math.random() * anecdotes.length)
+    setSelected(randomarrayindex)
+  }
+
+  const handleVoteClick = () => {
+    //  correct way of updating state stored in complex data structures like objects and arrays is to make a copy of the state
+    const newAllVotes = [...allVotes]
+    newAllVotes[selected] += 1
+    setAllVotes(newAllVotes)
   }
 
   return (
     <div>
-      <Button handleClick={() => setToValue({anecdotes})} value={anecdotes[selected]} text='next anecdote' />
+      <Anecdote text={anecdotes[selected]} votesCount={allVotes[selected]} />
+      <Button onClick={handleVoteClick} text='vote' />
+      <Button onClick={handleAnecdoteClick} text='next anecdote' />
     </div>
   )
 }
