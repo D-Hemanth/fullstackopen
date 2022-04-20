@@ -1,12 +1,42 @@
 import { useState } from 'react'
 
-const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+const Header = () => <h1>Anecdote of the day</h1>
 
 const Anecdote = ({ text, votesCount}) =>{
   return (
     <>
-      <p>{text}</p>
-      <p>has {votesCount} votes</p>
+      <div>{text}</div>
+      <div>has {votesCount} votes</div>
+    </>
+  )
+}
+
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+
+const MostVotes = ({ mostVotes, anecdotes }) => {
+  // Find the max no. of votes in the array mostVotes
+  const maxVotes = Math.max(...mostVotes)
+  // Find the index of the maxVotes of  maxVotes so that we can use it to display the anecdote
+  const maxVoteIndex = mostVotes.indexOf(maxVotes)
+  // console.log(mostVotes)
+  // console.log(maxVotes)
+  // console.log(maxVoteIndex)
+  // console.log(anecdotes[maxVoteIndex])
+
+  if (maxVotes === 0) {
+    return (
+      <>
+        <h1>Anecdote with most votes</h1>
+        <div>No votes yet</div>
+      </>
+    )
+  }
+  
+  return (
+    <>
+      <h1>Anecdote with most votes</h1>
+      <div>{anecdotes[maxVoteIndex]}</div>
+      <div>has {maxVotes} votes</div>
     </>
   )
 }
@@ -25,7 +55,7 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   //  create a zero-filled array of a desired length and make it using usestate so that it is not local soped within the handleVoteClicks function
   const [allVotes, setAllVotes] = useState(Array(7).fill(0))
-  console.log(allVotes)
+  // console.log(allVotes)
 
   const handleAnecdoteClick = () => {
     const randomarrayindex = Math.floor(Math.random() * anecdotes.length)
@@ -41,9 +71,11 @@ const App = () => {
 
   return (
     <div>
+      <Header />
       <Anecdote text={anecdotes[selected]} votesCount={allVotes[selected]} />
       <Button onClick={handleVoteClick} text='vote' />
       <Button onClick={handleAnecdoteClick} text='next anecdote' />
+      <MostVotes mostVotes={allVotes} anecdotes={anecdotes} />
     </div>
   )
 }
