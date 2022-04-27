@@ -11,17 +11,17 @@ const Course = ({ course }) => {
         return (
         // wrap the JSX expression in a fragment <> </> so that it has one parent element to the div 'root'
         <div>
-            <Part part={courseParts[0]['name']} exercises={courseParts[0]['exercises']} />
-            <Part part={courseParts[1]['name']} exercises={courseParts[1]['exercises']} />
-            <Part part={courseParts[2]['name']} exercises={courseParts[2]['exercises']} />
+            <Part partName={courseParts[0]['name']} exercises={courseParts[0]['exercises']} />
+            <Part partName={courseParts[1]['name']} exercises={courseParts[1]['exercises']} />
+            <Part partName={courseParts[2]['name']} exercises={courseParts[2]['exercises']} />
         </div>
         )
     }
       
-    const Part = (props) => {
+    const Part = ({ partName, exercises }) => {
       return (
           <p>
-          {props.part} {props.exercises}
+          {partName} {exercises}
           </p>
       )
     }
