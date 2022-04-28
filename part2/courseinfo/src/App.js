@@ -25,11 +25,23 @@ const Part = ({ partName, exercises }) => {
   )
 }
 
+const Total = ({ courseParts }) => {
+  // reduce() method returns a single value: the function's accumulated result.
+  let total = courseParts.reduce(function(sum, part){
+    return sum + part.exercises
+  }, 0)
+  // console.log(total);   
+  return (
+    <h4>Total of {total} exercises</h4>
+  )
+}
+
 const Course = ({ course }) => {
     return (
       <div>
         <Header courseName={course.name} />
         <Content courseParts={course.parts} />
+        <Total courseParts={course.parts} />
       </div>
     )
 }
