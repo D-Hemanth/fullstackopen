@@ -1,8 +1,5 @@
 import Courses from "./components/Courses"
-
-const Title = ({ title }) => {
-  return(<h1>{title}</h1>)
-}
+import Title from "./components/Title"
 
 const App = () => {
   const courses = [
