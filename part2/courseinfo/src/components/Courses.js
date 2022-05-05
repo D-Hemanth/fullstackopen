@@ -3,7 +3,6 @@ import Content from "./Content"
 import Total from "./Total"
 
 const Courses = ({ courses }) => {
-
   // console.log(courses);
   // use map array method to iterate over the courses list, so we can call Header,Content,Total for each course element of courses list
   return(
