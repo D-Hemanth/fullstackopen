@@ -1,8 +1,4 @@
-const Header = ({ courseName }) => {
-  return (
-  <h2>{courseName}</h2>
-  )
-}
+import Header from "./Header"
 
 const Content = ({ courseParts }) => {
   // console.log({ courseParts})
