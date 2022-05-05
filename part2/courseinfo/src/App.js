@@ -1,3 +1,7 @@
+const Title = ({ title }) => {
+  return(<h1>{title}</h1>)
+}
+
 const Header = ({ courseName }) => {
   return (
     <h1>{courseName}</h1>
