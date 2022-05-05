@@ -41,13 +41,19 @@ const Total = ({ courseParts }) => {
   )
 }
 
-const Course = ({ course }) => {
-    return (
-      <div>
+const Course = ({ courses }) => {
+  // console.log(courses);
+  // use map array method to iterate over the courses list, so we can call Header,Content,Total for each course element of courses list
+  return(
+  <>
+  {courses.map(course => (
+      <div key={course.id}>
         <Header courseName={course.name} />
         <Content courseParts={course.parts} />
         <Total courseParts={course.parts} />
       </div>
+    ))}
+  </>
     )
 }
 
