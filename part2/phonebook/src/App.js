@@ -26,9 +26,10 @@ const App = (props) => {
       alert(`${newName} is already added to phonebook`);
     }
     else {
-    setPersons(persons.concat(phonebookObject));
-    // console.log('phonebook names list', persons)
-    setNewName('')
+      setPersons(persons.concat(phonebookObject));
+      // console.log('phonebook names list', persons)
+      setNewName('')
+    }
   }
 
   // Handle addition of input element to react state
