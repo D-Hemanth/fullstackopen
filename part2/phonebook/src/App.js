@@ -32,7 +32,7 @@ const App = (props) => {
       <form onSubmit={addName}>
         <div>
           name: <input onChange={handleNameChange} value={newName} />
-    </div>
+        </div>
         <div>
           <button type="submit">add</button>
         </div>
