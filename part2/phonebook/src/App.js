@@ -22,6 +22,10 @@ const App = (props) => {
     // console.log(phonebookObject.name)
     // use array method includes to check if the array has an name element which we are trying to add to phonebook
     if(result.includes(phonebookObject.name))
+    {
+      alert(`${newName} is already added to phonebook`);
+    }
+    else {
     setPersons(persons.concat(phonebookObject));
     // console.log('phonebook names list', persons)
     setNewName('')
