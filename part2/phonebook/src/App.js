@@ -15,6 +15,11 @@ const App = (props) => {
       name: newName
     }
 
+    // prevent user from adding duplicate names to phonebook
+    // Map the values of name in the persons object to an array i.e. results array & flatten it by one pair of brackets
+    const result = persons.map(Object.values).flat(1)
+    // console.log(result)
+    // console.log(phonebookObject.name)
     setPersons(persons.concat(phonebookObject));
     // console.log('phonebook names list', persons)
     setNewName('')
