@@ -7,6 +7,12 @@ const App = (props) => {
   const [newName, setNewName] = useState('')
 
 
+  // Handle addition of input element to react state
+  const handleNameChange = (event) => {
+    // console.log(event.target.value)
+    setNewName(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
