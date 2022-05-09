@@ -46,8 +46,18 @@ const App = (props) => {
 
   // Handle addition of number input element to react state as a controlled element
   const handleNumberChange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewNumber(event.target.value)
+  }
+
+  const handleFilterChange = (event) => {
+    setAllPersons(persons)
+    // console.log(event.target.value)
+    setNewFilter(event.target.value)
+    // Perform case-insensitive matching of text contained in newFilter state & person.name element
+    const regex = new RegExp(newFilter, 'i');
+    const filteredPersons = () => allPersons.filter(person => person.name.match(regex))
+    setPersons(filteredPersons)
   }
 
   return (
