@@ -51,6 +51,10 @@ const App = (props) => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <form>
+        <div>filter shown with <input onChange={handleFilterChange} value={newFilter} /></div>
+      </form>
+      <h2>add a new</h2>
       <form onSubmit={addName}>
         <div>name: <input onChange={handleNameChange} value={newName} /></div>
         <div>number: <input onChange={handleNumberChange} value={newNumber} /></div>
