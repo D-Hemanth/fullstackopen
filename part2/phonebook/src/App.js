@@ -7,6 +7,8 @@ const App = (props) => {
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [allPersons, setAllPersons] = useState([])
+  const [newFilter, setNewFilter] = useState('')
 
 
   // Add a new name to phonebook & prevent default action after form submission
