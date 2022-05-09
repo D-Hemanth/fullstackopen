@@ -10,7 +10,6 @@ const App = () => {
   const [allPersons, setAllPersons] = useState([])
   const [newFilter, setNewFilter] = useState('')
 
-
   // Add a new name to phonebook & prevent default action after form submission
   const addName = (event) => {
     event.preventDefault()
@@ -65,8 +64,8 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter value={newFilter} onChange={handleFilterChange} />
       <h3>Add a new</h3>
-      <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange}   />
-      <h2>Numbers</h2>
+      <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
+      <h3>Numbers</h3>
       <Persons persons={persons} />
     </div>
   )
