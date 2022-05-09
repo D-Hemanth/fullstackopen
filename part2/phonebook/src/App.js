@@ -2,9 +2,11 @@ import { useState } from 'react'
 
 const App = (props) => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas',
+  number: '040-1234567' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
 
   // Add a new name to phonebook & prevent default action after form submission
@@ -12,7 +14,8 @@ const App = (props) => {
     event.preventDefault()
     // console.log('submit button clicked', event.target)
     const phonebookObject = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
 
     // prevent user from adding duplicate names to phonebook
@@ -29,6 +32,7 @@ const App = (props) => {
       setPersons(persons.concat(phonebookObject));
       // console.log('phonebook names list', persons)
       setNewName('')
+      setNewNumber('')
     }
   }
 
