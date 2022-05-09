@@ -38,6 +38,12 @@ const App = (props) => {
     setNewName(event.target.value)
   }
 
+  // Handle addition of number input element to react state as a controlled element
+  const handleNumberChange = (event) => {
+    console.log(event.target.value)
+    setNewNumber(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
