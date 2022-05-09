@@ -1,10 +1,7 @@
 import { useState } from 'react'
 
-const App = (props) => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas',
-  number: '040-1234567' }
-  ]) 
+const App = () => {
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [allPersons, setAllPersons] = useState([])
