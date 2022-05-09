@@ -36,7 +36,7 @@ const App = (props) => {
     }
   }
 
-  // Handle addition of input element to react state
+  // Handle addition of name input element to react state as a controlled element
   const handleNameChange = (event) => {
     // console.log(event.target.value)
     setNewName(event.target.value)
