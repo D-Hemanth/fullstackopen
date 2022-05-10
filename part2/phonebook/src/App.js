@@ -11,6 +11,17 @@ const App = () => {
   const [allPersons, setAllPersons] = useState([])
   const [newFilter, setNewFilter] = useState('')
 
+  // use effect hooks to perform side effects on the function components like data fetching,setting up subscription & manually changing the DOM in react components
+  // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fullfilled')
+        setPersons(response.data)
+      })
+  }, [])
+
   // Add a new name to phonebook & prevent default action after form submission
   const addName = (event) => {
     event.preventDefault()
