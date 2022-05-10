@@ -14,6 +14,7 @@ const App = () => {
   // use effect hooks to perform side effects on the function components like data fetching,setting up subscription & manually changing the DOM in react components
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
   useEffect(() => {
+    console.log('effect')
     axios
       .get('http://localhost:3001/persons')
       .then(response => {
