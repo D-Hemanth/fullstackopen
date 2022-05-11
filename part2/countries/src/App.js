@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
+const Content = ({ countries, setCountries }) => {
+  if(countries.length > 10) {
+    return(
+      <p>Too many matches, specify another filter</p>
+    )
+  }
 const App = () => {
   const [countries, setCountries] = useState([])
   const [allCountries, setAllCountries] = useState([])
@@ -50,8 +56,9 @@ const App = () => {
       <form>
         <div>find countries <input value={newFilter} onChange={handleFilterChange} /></div>
       </form>
+      <Content countries={countries} setCountries={setCountries} />
     </div>
-  );
+  )
 }
 
 export default App;
