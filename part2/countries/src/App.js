@@ -7,6 +7,15 @@ const Content = ({ countries, setCountries }) => {
       <p>Too many matches, specify another filter</p>
     )
   }
+  else if((countries.length > 1) && (countries.length < 10)) {
+    return (
+      <ul style={{listStyle: 'none',padding: '0',margin: 0.5 +'em'}}>
+        {countries.map((country, i) => 
+        <li key={i}>{country.name}</li>
+        )}
+      </ul>
+    )
+  }
 const App = () => {
   const [countries, setCountries] = useState([])
   const [allCountries, setAllCountries] = useState([])
