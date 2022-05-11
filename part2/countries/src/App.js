@@ -7,6 +7,8 @@ const Content = ({ countries, setCountries }) => {
       <p>Too many matches, specify another filter</p>
     )
   }
+  // List out the countries partially matching the search based on user input
+  // use button provided next to countries list to directly jump to the content of that country
   else if((countries.length > 1) && (countries.length < 10)) {
     return (
       <ul style={{listStyle: 'none',padding: '0',margin: 0.5 +'em'}}>
