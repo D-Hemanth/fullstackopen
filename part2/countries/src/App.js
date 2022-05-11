@@ -16,6 +16,20 @@ const Content = ({ countries, setCountries }) => {
       </ul>
     )
   }
+  else if(countries.length === 1) {
+    // {console.log(countries)} 
+      return (
+        <>
+          <h1>{countries[0].name}</h1>
+          <div>Capital {countries[0].capital}</div>
+          <div>Area {countries[0].area}</div>
+          <div><h3>Languages: </h3>{Object.values(countries[0].languages).map((language, i) => <li key={i}>{language}</li>)}</div><br></br>
+          <img src={countries[0].flags.png} alt={countries[0].name}></img>
+        </>
+      )
+  } 
+}
+
 const App = () => {
   const [countries, setCountries] = useState([])
   const [allCountries, setAllCountries] = useState([])
