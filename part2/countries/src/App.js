@@ -36,6 +36,15 @@ const App = () => {
     // const countriesName = newCountriesArray[0].map(country => country.name).flat(1)
     // console.log(countriesName)
 
+    // Perform case-insensitive matching of text contained in filter state & country.name element
+    if(newFilter) {
+      const regex = new RegExp( newFilter, 'i' );
+      const filteredCountries = () => newCountriesArray.filter(country => country.name.match(regex))
+      setCountries(filteredCountries)
+      console.log(filteredCountries)
+    }
+  }
+
   return (
     <div>
       <form>
