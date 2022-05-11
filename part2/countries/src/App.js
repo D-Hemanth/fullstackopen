@@ -20,6 +20,22 @@ const App = () => {
   const handleFilterChange = (event) => {
     console.log(event.target.value)
     setNewFilter(event.target.value)
+
+    const newCountriesArray = 
+      allCountries.map(function(country) {
+        return {
+          name: country.name.common,
+          capital: country.capital,
+          area: country.area,
+          languages: country.languages,
+          flags: country.flags
+        };
+      })
+    // console.log(newCountriesArray)
+
+    // const countriesName = newCountriesArray[0].map(country => country.name).flat(1)
+    // console.log(countriesName)
+
   return (
     <div>
       <form>
