@@ -9,7 +9,7 @@ const Country = ({ country }) => {
         console.log('country for weather',country)
         const weatherLocation = country.capital[0];   
         const apiKey = process.env.REACT_APP_API_KEY;
-        console.log(apiKey)      
+        // console.log(apiKey)      
         const params = {
             q: weatherLocation, 
             appid: apiKey,
@@ -29,7 +29,7 @@ const Country = ({ country }) => {
             .catch((err) =>{
                 console.log(err);
             })
-        },[]);
+        });
 
     // since the api response is set to weather state after rendering the components use conditionals to re-render the page after getting the api response
     const render = () => {

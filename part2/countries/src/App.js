@@ -1,36 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-
-const Content = ({ countries, setCountries }) => {
-  if(countries.length > 10) {
-    return(
-      <p>Too many matches, specify another filter</p>
-    )
-  }
-  // List out the countries partially matching the search based on user input
-  // use button provided next to countries list to directly jump to the content of that country
-  else if((countries.length > 1) && (countries.length < 10)) {
-    return (
-      <ul style={{listStyle: 'none',padding: '0',margin: 0.5 +'em'}}>
-        {countries.map((country, i) => 
-        <li key={i}>{country.name} <button onClick={() => setCountries([country])}>show</button></li>
-        )}
-      </ul>
-    )
-  }
-  else if(countries.length === 1) {
-    // {console.log(countries)} 
-      return (
-        <>
-          <h1>{countries[0].name}</h1>
-          <div>Capital {countries[0].capital}</div>
-          <div>Area {countries[0].area}</div>
-          <div><h3>Languages: </h3>{Object.values(countries[0].languages).map((language, i) => <li key={i}>{language}</li>)}</div><br></br>
-          <img src={countries[0].flags.png} alt={countries[0].name}></img>
-        </>
-      )
-  } 
-}
+import Content from './components/Content'
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -63,9 +33,6 @@ const App = () => {
         };
       })
     // console.log(newCountriesArray)
-
-    // const countriesName = newCountriesArray[0].map(country => country.name).flat(1)
-    // console.log(countriesName)
 
     // Perform case-insensitive matching of text contained in filter state & country.name element
     if(newFilter) {
