@@ -45,3 +45,29 @@ const Country = ({ country }) => {
                 </>
             )    
 
+        if (weather.length > 0) {
+            const currentWeather = weather
+            console.log('current weather for capital',currentWeather)
+            const icon = currentWeather[0].weather[0].icon;
+            return (
+                <>
+                    <h1>{country.name}</h1>
+                    <div>Capital {country.capital}</div>
+                    <div>Area {country.area}</div>
+                    <div><h3>Languages: </h3>{Object.values(country.languages).map((language, i) => <li key={i}>{language}</li>)}</div><br></br>
+                    <img src={country.flags.png} alt={country.name}></img>
+                    <h2>Weather in {country.capital}</h2>
+                    <div>Temperature {currentWeather[0].main.temp} Celcius</div>
+                    <img src={`http://openweathermap.org/img/wn/${icon}@2x.png`} alt={currentWeather[0].weather[0].description} style={{width: 125 +'px'}}></img>
+                    <div>Wind {currentWeather[0].wind.speed} m/s</div>
+                </>
+            )
+        }
+        else {
+                return <p>No data found for Weather</p>
+            }
+    }
+    return render()
+}
+
+export default Country
