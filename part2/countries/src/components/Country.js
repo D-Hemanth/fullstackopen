@@ -30,3 +30,18 @@ const Country = ({ country }) => {
                 console.log(err);
             })
         },[]);
+
+    // since the api response is set to weather state after rendering the components use conditionals to re-render the page after getting the api response
+    const render = () => {
+        if(isLoading) 
+            return (
+                <>
+                    <h1>{country.name}</h1>
+                    <div>Capital {country.capital}</div>
+                    <div>Area {country.area}</div>
+                    <div><h3>Languages: </h3>{Object.values(country.languages).map((language, i) => <li key={i}>{language}</li>)}</div><br></br>
+                    <img src={country.flags.png} alt={country.name}></img>
+                    <h3>Weather is loading...</h3>
+                </>
+            )    
+
