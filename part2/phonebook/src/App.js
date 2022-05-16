@@ -47,9 +47,9 @@ const App = () => {
         .post('http://localhost:3001/persons',phonebookObject)
         .then(response => {
           setPersons(persons.concat(response.data));
-      // console.log('phonebook names list', persons)
-      setNewName('')
-      setNewNumber('')
+          // console.log('phonebook names list', persons)
+          setNewName('')
+          setNewNumber('')
         })
     }
   }
