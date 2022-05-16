@@ -16,11 +16,11 @@ const App = () => {
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
+    phonebookService
+      .getAll()
+      .then(initialContacts => {
         console.log('promise fullfilled')
-        setPersons(response.data)
+        setPersons(initialContacts)
       })
   }, [])
 
@@ -44,10 +44,10 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
     }
     else {
-      axios
-        .post('http://localhost:3001/persons',phonebookObject)
-        .then(response => {
-          setPersons(persons.concat(response.data));
+      phonebookService
+        .create(phonebookObject)
+        .then(returnedContact => {
+          setPersons(persons.concat(returnedContact));
           // console.log('phonebook names list', persons)
           setNewName('')
           setNewNumber('')
