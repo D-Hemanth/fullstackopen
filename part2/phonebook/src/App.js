@@ -10,6 +10,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [allPersons, setAllPersons] = useState([])
   const [newFilter, setNewFilter] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState(null)
 
   // use effect hooks to perform side effects on the function components like data fetching,setting up subscription & manually changing the DOM in react components
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
@@ -106,6 +107,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notificationMessage} />
       <Filter value={newFilter} onChange={handleFilterChange} />
       <h3>Add a new</h3>
       <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
