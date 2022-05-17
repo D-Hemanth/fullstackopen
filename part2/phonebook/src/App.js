@@ -76,6 +76,13 @@ const App = () => {
     setPersons(filteredPersons)
   }
 
+  // Handle deletion of phonebook data from the server
+  const handleDeleteChange = (person, persons) => {
+    window.confirm(`Delete ${person.name}`)
+
+      phonebookService
+      .deleteContact(person.id)
+
   return (
     <div>
       <h2>Phonebook</h2>
