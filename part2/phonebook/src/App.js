@@ -83,7 +83,7 @@ const App = () => {
       <h3>Add a new</h3>
       <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} />
       <h3>Numbers</h3>
-      <Persons persons={persons} />
+      <Persons persons={persons} handleDeleteChange={handleDeleteChange}/>
     </div>
   )
 }
