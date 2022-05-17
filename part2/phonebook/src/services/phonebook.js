@@ -13,5 +13,11 @@ const create = (phonebookObject) => {
     return request.then(response => response.data)
 }
 
+// do a axios delete request to the url to delete phonebook data from the backend server 
+const deleteContact = (id) => {
+    const request = axios.delete(`${baseurl}/${id}`)
+    // return request.then(response => console.log('chosen phonebook data deleted'))
+}
+
 // export the getAll, create  as an object of any name i.e. here in app - phonebookService to use these methods in app
-export default { getAll, create }
+export default { getAll, create, deleteContact }
