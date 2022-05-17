@@ -83,6 +83,13 @@ const App = () => {
       phonebookService
       .deleteContact(person.id)
 
+      // setpersons state to remaining contacts in the persons state
+      // so that it refreshes the page after deleting a phonebook data on the server to show only reaminging contacts in phonebook
+      const id = person.id
+      const remainingContacts = persons.filter(person => person.id !== id)
+      setPersons(remainingContacts)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
