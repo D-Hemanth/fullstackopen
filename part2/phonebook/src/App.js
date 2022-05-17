@@ -3,6 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import phonebookService from './services/phonebook'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -64,6 +65,12 @@ const App = () => {
           // console.log('phonebook names list', persons)
           setNewName('')
           setNewNumber('')
+
+          // Add a improved notification message when you add a new name to phonebook
+          setNotificationMessage(`Added ${phonebookObject.name}`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000);
         })
     }
   }
