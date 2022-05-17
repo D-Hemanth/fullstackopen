@@ -40,7 +40,19 @@ const App = () => {
     // use array method includes to check if the array has an name element which we are trying to add to phonebook
     if(result.includes(phonebookObject.name))
     {
-      alert(`${newName} is already added to phonebook`);
+      const result = persons.filter(person => person.name === phonebookObject.name)
+      console.log(result)
+      window.confirm(`${newName} is already added to phonebook,replace the old number with a new one?`);
+      const id = result[0].id
+      
+      // use phonebookService object to update phone number in phonebook data using put request & setpersons state to returnedcontacts after changing number
+      phonebookService
+        .update(id, phonebookObject)
+        .then(returnedContacts => {
+          setPersons(persons.map(person => person.id !== id ? person : returnedContacts))
+          setNewName('')
+          setNewNumber('')
+        })
     }
     else {
       phonebookService
