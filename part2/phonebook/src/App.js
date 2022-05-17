@@ -37,6 +37,7 @@ const App = () => {
     const result = persons.map(Object.values).flat(1)
     // console.log(result)
     // console.log(phonebookObject.name)
+
     // use array method includes to check if the array has an name element which we are trying to add to phonebook
     if(result.includes(phonebookObject.name))
     {
