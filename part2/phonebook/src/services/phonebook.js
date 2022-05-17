@@ -19,5 +19,12 @@ const deleteContact = (id) => {
     // return request.then(response => console.log('chosen phonebook data deleted'))
 }
 
+// do a axios put request to the url to update or change the phone number of existing name in phonebook
+const update = (id, newNumberObject) => {
+    const request = axios.put(`${baseurl}/${id}`, newNumberObject)
+    return request.then(response => response.data)
+}
+    
+
 // export the getAll, create  as an object of any name i.e. here in app - phonebookService to use these methods in app
-export default { getAll, create, deleteContact }
+export default { getAll, create, deleteContact, update }
