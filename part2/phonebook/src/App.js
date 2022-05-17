@@ -55,6 +55,12 @@ const App = () => {
           setPersons(persons.map(person => person.id !== id ? person : returnedContacts))
           setNewName('')
           setNewNumber('')
+
+          // Add a improved notification message when you add a new contact number to existing phonebook contact
+          setNotificationMessage(`Changed ${phonebookObject.name}'s number to ${phonebookObject.number}`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000);
         })
     }
     else {
