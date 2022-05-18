@@ -63,6 +63,17 @@ const App = () => {
             setNotificationMessage(null)
           }, 5000);
         })
+        .catch(error => {
+          // set message color to red for errors in the phonebook app
+          setMessageColor('red')
+          // Add a improved notification message when you delete a person when the phonebook app is open in two separate tabs
+          setNotificationMessage(`Information of ${phonebookObject.name} has already been removed from server`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000)
+          const name = phonebookObject.name
+          setPersons(persons.filter(n => n.name !== name))
+        })
     }
     else {
       phonebookService
