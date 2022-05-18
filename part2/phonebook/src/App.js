@@ -57,6 +57,8 @@ const App = () => {
           setNewName('')
           setNewNumber('')
 
+          // set message color to green for Notifications in the phonebook app
+          setMessageColor('green')
           // Add a improved notification message when you add a new contact number to existing phonebook contact
           setNotificationMessage(`Changed ${phonebookObject.name}'s number to ${phonebookObject.number}`)
           setTimeout(() => {
@@ -84,6 +86,8 @@ const App = () => {
           setNewName('')
           setNewNumber('')
 
+          // set message color to green for Notifications in the phonebook app
+          setMessageColor('green')
           // Add a improved notification message when you add a new name to phonebook
           setNotificationMessage(`Added ${phonebookObject.name}`)
           setTimeout(() => {
