@@ -40,6 +40,10 @@ app.get('/info', (request, response) => {
         <p>${timestamp}</p>`)
 })
 
+app.get('/api/persons/:id', (request, response) => {
+		const id = Number(request.params.id)
+		const contact = persons.find(person => person.id === id)
+
 // define a port to output the response received from the server 
 const PORT = 3001;
 app.listen(PORT, () => {
