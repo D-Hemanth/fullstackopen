@@ -44,6 +44,18 @@ app.get('/api/persons/:id', (request, response) => {
 		const id = Number(request.params.id)
 		const contact = persons.find(person => person.id === id)
 
+		if(contact) {
+			// if the contact is not empty display it on screen
+			console.log(contact)
+			response.send(contact)
+		}
+		else {
+			// if the contact is empty send bad request status code 400
+			// response.statusMessage = 'Cannot find the webpage'; // see the response in network tab
+			response.status(400).end()
+		}
+})
+
 // define a port to output the response received from the server 
 const PORT = 3001;
 app.listen(PORT, () => {
