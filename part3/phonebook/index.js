@@ -24,3 +24,9 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
+
+// get method to display all contacts in the phonebook
+app.get('/api/persons', (request, response) => {
+    response.json(persons)
+})
+
