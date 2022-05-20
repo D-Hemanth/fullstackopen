@@ -57,6 +57,7 @@ app.get('/api/persons/:id', (request, response) => {
 		}
 })
 
+// test out the delete method using the postman desktop app or REST client vscode extension
 app.delete('/api/persons/:id', (request, response) => {
 		const id = Number(request.params.id)
 		persons = persons.filter(person => person.id !== id)
