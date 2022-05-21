@@ -65,6 +65,13 @@ app.delete('/api/persons/:id', (request, response) => {
 		response.status(204).end()
 })
 
+
+// post method to add a note to notes list
+app.post('/api/persons', (request, response) => {
+	// the body property  of request object contains data sent through post request
+	const body = request.body
+	// console.log(body)
+
 // define a port to output the response received from the server 
 const PORT = 3001;
 app.listen(PORT, () => {
