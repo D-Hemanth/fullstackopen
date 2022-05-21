@@ -47,7 +47,7 @@ app.get('/api/persons/:id', (request, response) => {
 
 		if(contact) {
 			// if the contact is not empty display it on screen
-			console.log(contact)
+			// console.log(contact)
 			response.send(contact)
 		}
 		else {
@@ -57,7 +57,7 @@ app.get('/api/persons/:id', (request, response) => {
 		}
 })
 
-// test out the delete method using the postman desktop app or REST client vscode extension
+// add delete method & test it out using the postman desktop app or REST client vscode extension
 app.delete('/api/persons/:id', (request, response) => {
 		const id = Number(request.params.id)
 		persons = persons.filter(person => person.id !== id)
