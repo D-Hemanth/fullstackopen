@@ -83,6 +83,15 @@ app.post('/api/persons', (request, response) => {
 	const body = request.body
 	// console.log(body)
 
+	const person = {
+			content: body.name,
+			number: body.number,
+			id: getRandomInt(5, 1000000)
+		}
+
+	response.json(person)
+})
+
 // define a port to output the response received from the server 
 const PORT = 3001;
 app.listen(PORT, () => {
