@@ -103,6 +103,7 @@ app.post('/api/persons', (request, response) => {
 			id: getRandomInt(5, 1000000)
 		}
 
+	persons = persons.concat(person)
 	response.json(person)
 })
 
