@@ -65,6 +65,10 @@ app.delete('/api/persons/:id', (request, response) => {
 		response.status(204).end()
 })
 
+// In order to access the data easily, we need the help of the express json-parser
+// Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
+app.use(express.json())
+
 
 // post method to add a note to notes list
 app.post('/api/persons', (request, response) => {
