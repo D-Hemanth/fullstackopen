@@ -24,6 +24,8 @@ morgan.token('postData', (request) => {
 	}
 })
 
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :postData'))
+
 let persons = [
 		{ 
 			"id": 1,
