@@ -76,10 +76,6 @@ app.delete('/api/persons/:id', (request, response) => {
 		response.status(204).end()
 })
 
-// In order to access the data easily, we need the help of the express json-parser
-// Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
-app.use(express.json())
-
 // Returns a random integer between min (inclusive) and max (inclusive) for id number, great explanation in comments of stackoverflow link
 // resource:https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
 function getRandomInt(min, max) {
@@ -109,7 +105,7 @@ app.post('/api/persons', (request, response) => {
 	}
 
 	const person = {
-			content: body.name,
+			name: body.name,
 			number: body.number,
 			id: getRandomInt(5, 1000000)
 		}
