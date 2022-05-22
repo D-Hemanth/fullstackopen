@@ -11,7 +11,18 @@ app.use(express.json())
 
 // Add use method for morgan after you've got the request data use of express.json to log request using tiny configuration to console
 // tiny - :method :url :status :res[content-length] - :response-time ms  
-app.use(morgan('tiny'))
+// app.use(morgan('tiny'))
+
+// Configure morgan so that it also shows the data sent in HTTP POST requests using morgan token
+morgan.token('postData', (request) => {
+	if(request.method === 'POST') 
+	{
+		return JSON.stringify(request.body);
+	}
+	else {
+		return ' ';
+	}
+})
 
 let persons = [
 		{ 
