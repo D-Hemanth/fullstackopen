@@ -2,6 +2,13 @@ const { response } = require('express')
 const express = require('express')
 const app = express()
 
+// Add morgan a HTTP request logger middleware for node.js using tiny configuration
+var morgan = require('morgan')
+
+// In order to access the data easily, we need the help of the express json-parser for the post method to access the request body
+// Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
+app.use(express.json())
+
 let persons = [
 		{ 
 			"id": 1,
