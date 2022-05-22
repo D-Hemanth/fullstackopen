@@ -9,6 +9,10 @@ var morgan = require('morgan')
 // Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
 app.use(express.json())
 
+// Add use method for morgan after you've got the request data use of express.json to log request using tiny configuration to console
+// tiny - :method :url :status :res[content-length] - :response-time ms  
+app.use(morgan('tiny'))
+
 let persons = [
 		{ 
 			"id": 1,
