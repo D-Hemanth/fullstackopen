@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseurl = 'http://localhost:3001/persons'
+const baseurl = 'http://localhost:3001/api/persons'
 
 // do a axios get request to the url to collect phonebook data from the server
 const getAll = () => {
