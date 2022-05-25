@@ -29,3 +29,18 @@ if(process.argv.length < 5) {
             mongoose.connection.close()
         })
 }
+else if(process.argv.length === 5) {
+    // Add a new contact to phonebook using the Person model
+    // For adding names containing whitespace characters, it must be enclosed in quotes
+    const person = new Person({
+        name: process.argv[3],
+        number: process.argv[4],
+    })
+
+    // use save method of Person model to save note to the mongodb 
+    person.save().then(result => {
+        console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
+        mongoose.connection.close()
+    })
+} 
+
