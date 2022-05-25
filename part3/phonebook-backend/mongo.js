@@ -7,3 +7,12 @@ const url = `mongodb+srv://fullstack:${password}@cluster0.z6ybgse.mongodb.net/ph
 
 mongoose.connect(url)
 
+// Add a schema which tells Mongoose how the note objects are to be stored in the database
+const phonebookSchema = new mongoose.Schema({
+    name: String,
+    number: String,
+})
+
+// Create a Person document model from the schema variable
+const Person = mongoose.model('Person', phonebookSchema)
+
