@@ -83,25 +83,24 @@ app.post('/api/persons', (request, response) => {
 	const body = request.body
 	// console.log(body)
 
-	if(!body.name || !body.number) {
-		return response.status(400).json({
-			error: 'name or number is missing'
-		})
-	}
-	else {
-		const existingContactName = persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())
-		if(existingContactName) {
-			return response.status(400).json({
-				error: 'name must be unique'
-			})
-		}
-	}
+	// if(!body.name || !body.number) {
+	// 	return response.status(400).json({
+	// 		error: 'name or number is missing'
+	// 	})
+	// }
+	// else {
+	// 	const existingContactName = persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())
+	// 	if(existingContactName) {
+	// 		return response.status(400).json({
+	// 			error: 'name must be unique'
+	// 		})
+	// 	}
+	// }
 
-	const person = {
+	const person = new Person({
 			name: body.name,
-			number: body.number,
-			id: getRandomInt(5, 1000000)
-		}
+			number: body.number
+		})
 
 	persons = persons.concat(person)
 	response.json(person)
