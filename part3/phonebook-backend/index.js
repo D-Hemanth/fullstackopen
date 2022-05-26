@@ -2,29 +2,9 @@ const { response, json } = require('express')
 const express = require('express')
 const app = express()
 
-let persons = [
-		{ 
-			"id": 1,
-			"name": "Arto Hellas", 
-			"number": "040-123456"
-		},
-		{ 
-			"id": 2,
-			"name": "Ada Lovelace", 
-			"number": "39-44-5323523"
-		},
-		{ 
-			"id": 3,
-			"name": "Dan Abramov", 
-			"number": "12-43-234345"
-		},
-		{ 
-			"id": 4,
-			"name": "Mary Poppendieck", 
-			"number": "39-23-6423122"
-		}
-]
-
+require('dotenv').config()
+// Person variable will be assigned to the same object that the module defines
+const Person = require('./models/phonebook')
 
 // Add morgan a HTTP request logger middleware for node.js using tiny configuration
 var morgan = require('morgan')
@@ -57,14 +37,16 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :p
 const cors = require('cors')
 app.use(cors())
 
-// get method to display all contacts in the phonebook
+// get method to display all contacts in phonebook of mongodb using find method of Person model
 app.get('/api/persons', (request, response) => {
+	Person.find({}).then(persons => {
 		response.json(persons)
+	})	
 })
 
 // get method to display time that the request was received and how many entries are in the phonebook 
 app.get('/info', (request, response) => {
-		const totalContacts = persons.length
+		const totalContacts = Person.length
 		const timestamp = new Date()
 
 		response.send(
@@ -74,19 +56,9 @@ app.get('/info', (request, response) => {
 
 // get method to find a contact in the phonebook by using the route parameter - :id in request
 app.get('/api/persons/:id', (request, response) => {
-		const id = Number(request.params.id)
-		const contact = persons.find(person => person.id === id)
-
-		if(contact) {
-			// if the contact is not empty display it on screen
-			// console.log(contact)
-			response.send(contact)
-		}
-		else {
-			// if the contact is empty send bad request status code 400
-			// response.statusMessage = 'Cannot find the webpage'; // see the response in network tab
-			response.status(400).end()
-		}
+	Person.findById(params.request.id).then(person => {
+		response.json(person)
+	})
 })
 
 // add delete method & test it out using the postman desktop app or REST client vscode extension
@@ -136,7 +108,7 @@ app.post('/api/persons', (request, response) => {
 })
 
 // define a port to output the response received from the server 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
 		console.log(`Server running on port ${PORT}`)
 })
