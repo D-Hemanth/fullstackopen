@@ -69,13 +69,13 @@ app.delete('/api/persons/:id', (request, response) => {
 		response.status(204).end()
 })
 
-// Returns a random integer between min (inclusive) and max (inclusive) for id number, great explanation in comments of stackoverflow link
-// resource:https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
-function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// // Returns a random integer between min (inclusive) and max (inclusive) for id number, great explanation in comments of stackoverflow link
+// // resource:https://stackoverflow.com/questions/1527803/generating-random-whole-numbers-in-javascript-in-a-specific-range
+// function getRandomInt(min, max) {
+//     min = Math.ceil(min);
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
 
 // post method to add a note to notes list
 app.post('/api/persons', (request, response) => {
