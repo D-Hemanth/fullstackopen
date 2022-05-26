@@ -102,8 +102,9 @@ app.post('/api/persons', (request, response) => {
 			number: body.number
 		})
 
-	persons = persons.concat(person)
-	response.json(person)
+	person.save().then(savedContact => {
+		response.json(savedContact)
+	})
 })
 
 // define a port to output the response received from the server 
