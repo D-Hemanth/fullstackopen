@@ -62,11 +62,13 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 // add delete method & test it out using the postman desktop app or REST client vscode extension
+// delete method to remove a note from Phonebook list on mongodb using findByIdAndRemove method of Person model
 app.delete('/api/persons/:id', (request, response) => {
-		const id = Number(request.params.id)
-		persons = persons.filter(person => person.id !== id)
-
+	Person.findByIdAndRemove(request.params.id)
+		.then(result => {
 		response.status(204).end()
+		})
+		.catch(error => next(error))
 })
 
 // // Returns a random integer between min (inclusive) and max (inclusive) for id number, great explanation in comments of stackoverflow link
