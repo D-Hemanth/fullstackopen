@@ -46,8 +46,7 @@ app.get('/api/persons', (request, response) => {
 
 // get method to display time that the request was received and how many entries are in the phonebook 
 app.get('/info', (request, response) => {
-		const totalContacts = Person.length
-		const timestamp = new Date()
+	const timestamp = new Date()
 
 	Person.find({}).then(persons => {
 		// console.log(persons)
