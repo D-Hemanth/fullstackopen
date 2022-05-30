@@ -49,9 +49,13 @@ app.get('/info', (request, response) => {
 		const totalContacts = Person.length
 		const timestamp = new Date()
 
+	Person.find({}).then(persons => {
+		// console.log(persons)
 		response.send(
-				`<p>Phonebook has info for ${totalContacts} people</p></ br>
-				<p>${timestamp}</p>`)
+			`<p>Phonebook has info for ${persons.length} people</p></ br>
+			<p>${timestamp}</p>`
+		)
+	})
 })
 
 // get method to find a contact in the phonebook by using the route parameter - :id in request
