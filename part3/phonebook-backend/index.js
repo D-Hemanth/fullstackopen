@@ -128,6 +128,16 @@ const unknownEndpoint = (request, response) => {
 // handler of requests with unknown endpoint
 app.use(unknownEndpoint)
 
+const errorHandler = (error, request, response, next) => {
+	console.error(error.message)
+
+	if(error.name === 'CastError') {
+		// when dealing with Promises i.e. like findById it's a good idea to print the object that caused the exception to the console in the error handler
+		console.log(error)
+		// error handler response
+		return response.status(400).send({ error: 'malformatted id'})
+	}
+
 // define a port to output the response received from the server 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
