@@ -120,6 +120,24 @@ app.post('/api/persons', (request, response) => {
 	})
 })
 
+// put method to update a contact in phonebook on mongodb
+app.put('/api/persons/:id', (request, response, next) => {
+	const body = request.body
+
+	const person = {
+		name: body.name,
+		number: body.number
+	}
+	console.log(person)
+
+	Person.findByIdAndUpdate(request.params.id, person, { new: true})
+		.then(updatedPerson => {
+			console.log(updatedPerson)
+			response.json(updatedPerson)
+		})
+		.catch(error => next(error))
+})
+
 // add a middleware function that catches requests made to the non-existent routes
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint'})
