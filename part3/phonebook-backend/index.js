@@ -59,14 +59,14 @@ app.get('/api/persons/:id', (request, response, next) => {
 	Person.findById(request.params.id)
 		.then(person => {
 			if(Person) {
-		response.json(person)
+				response.json(person)
 			}
 			else {
 				// no matching object is found in the database, the value of Person will be null then 404 not found
 				response.status(404).end()
 			}
 			
-	})
+		})
 		// Given malformed id like /api/notes/someInvalidId as an argument, the findById method will throw an error causing the returned promise to be rejected
 		// this causes callback function call to catch block 
 		.catch(error => next(error))
