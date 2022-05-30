@@ -55,10 +55,21 @@ app.get('/info', (request, response) => {
 })
 
 // get method to find a contact in the phonebook by using the route parameter - :id in request
-app.get('/api/persons/:id', (request, response) => {
-	Person.findById(params.request.id).then(person => {
+app.get('/api/persons/:id', (request, response, next) => {
+	Person.findById(request.params.id)
+		.then(person => {
+			if(Person) {
 		response.json(person)
+			}
+			else {
+				// no matching object is found in the database, the value of Person will be null then 404 not found
+				response.status(404).end()
+			}
+			
 	})
+		// Given malformed id like /api/notes/someInvalidId as an argument, the findById method will throw an error causing the returned promise to be rejected
+		// this causes callback function call to catch block 
+		.catch(error => next(error))
 })
 
 // add delete method & test it out using the postman desktop app or REST client vscode extension
