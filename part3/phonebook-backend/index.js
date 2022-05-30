@@ -120,6 +120,14 @@ app.post('/api/persons', (request, response) => {
 	})
 })
 
+// add a middleware function that catches requests made to the non-existent routes
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint'})
+}
+
+// handler of requests with unknown endpoint
+app.use(unknownEndpoint)
+
 // define a port to output the response received from the server 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
