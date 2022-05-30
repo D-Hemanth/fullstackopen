@@ -138,6 +138,13 @@ const errorHandler = (error, request, response, next) => {
 		return response.status(400).send({ error: 'malformatted id'})
 	}
 
+	// In all other error situations, the middleware passes the error forward to the default Express error handler
+  	next(error)
+}
+
+// this has to be the last loaded middleware.
+app.use(errorHandler)
+
 // define a port to output the response received from the server 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
