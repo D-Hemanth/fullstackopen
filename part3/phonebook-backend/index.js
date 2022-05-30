@@ -120,7 +120,7 @@ app.post('/api/persons', (request, response) => {
 	})
 })
 
-// put method to update a contact in phonebook on mongodb
+// put method to update a contact in phonebook on mongodb using the findByIdAndUpdate method of Person model
 app.put('/api/persons/:id', (request, response, next) => {
 	const body = request.body
 
