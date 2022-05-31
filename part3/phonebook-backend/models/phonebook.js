@@ -14,9 +14,17 @@ mongoose.connect(url)
     }) 
 
 // Add a schema which tells Mongoose how the note objects are to be stored in the database
+// Also add way for validating the format of the data before it is stored in the database using validation functionality of mongoose i.e. name, number
 const phonebookSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+    name: {
+        type: String,
+        minlength: 3,
+        required: true
+    },
+    number: {
+        type: String,
+        required: true
+    }
 })
 
 // to remove unique id field _id & mongo versioning field __v from the frontend output
