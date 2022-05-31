@@ -97,23 +97,15 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response, next) => {
 	// the body property  of request object contains data sent through post request
 	const body = request.body
-	// console.log(body)
+	console.log(body.name)
 
-	// use the validation functionality available in Mongoose instead of the following
-	// if(!body.name || !body.number) {
-	// 	return response.status(400).json({
-	// 		error: 'name or number is missing'
-	// 	})
-	// }
-	// else {
-	// 	const existingContactName = persons.find(person => person.name.toLowerCase() === body.name.toLowerCase())
-	// 	if(existingContactName) {
-	// 		return response.status(400).json({
-	// 			error: 'name must be unique'
-	// 		})
-	// 	}
-	// }
-
+	// verify if the name is a duplicate or not
+	// https://stackoverflow.com/questions/35833176/node-js-check-if-field-exists-in-mongo-db#:~:text=router.post%20%28%27%2Flogin%27%2C%20function%20%28request%2C%20response%29%20%7B%20User.find%20%28%7B,this%20field%20already%20exists%20in%20my%20mongo%20database.
+	Person.findOne({ name: body.name },function(error, person) {
+		if(person) {
+			return response.status(400).json({error: 'name must be unique'})
+		}
+		else {
 	const person = new Person({
 			name: body.name,
 			number: body.number
