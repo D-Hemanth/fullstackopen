@@ -115,6 +115,8 @@ app.post('/api/persons', (request, response, next) => {
 		response.json(savedContact)
 	})
 	.catch(error => next(error))
+		}
+	})
 })
 
 // put method to update a contact in phonebook on mongodb using the findByIdAndUpdate method of Person model
