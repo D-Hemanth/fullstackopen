@@ -94,6 +94,16 @@ const App = () => {
             setNotificationMessage(null)
           }, 5000);
         })
+        .catch(error => {
+          // this is the way to access the error message from backend validation inside Person schema
+          console.log(error.response.data.error)
+          // set message color to red for error Notifications in the phonebook app
+          setMessageColor('red')
+          // Add a improved notification message when validation error occurs on phonebook backend
+          setNotificationMessage(`${error.response.data.error}`)
+          setTimeout(() => {
+            setNotificationMessage(null)
+          }, 5000);
     }
   }
 
