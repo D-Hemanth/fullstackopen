@@ -161,6 +161,10 @@ const errorHandler = (error, request, response, next) => {
 		// error handler response
 		return response.status(400).send({ error: 'malformatted id'})
 	}
+	// error handler checks if the error is a ValidationError exception from the note schema
+  	else if(error.name === 'ValidationError') {
+		  return response.status(400).json({error:error.message})
+	  }
 
 	// In all other error situations, the middleware passes the error forward to the default Express error handler
   	next(error)
