@@ -127,15 +127,16 @@ app.post('/api/persons', (request, response, next) => {
 
 // put method to update a contact in phonebook on mongodb using the findByIdAndUpdate method of Person model
 app.put('/api/persons/:id', (request, response, next) => {
-	const body = request.body
+	const { name, number } = request.body
 
-	const person = {
-		name: body.name,
-		number: body.number
-	}
-	console.log(person)
+	// // don't use the javascript object note in findbyidandupdate just send the props name, number directly refer syntax documentation
+	// const person = {
+	// 	name: body.name,
+	// 	number: body.number
+	// }
+	// console.log(person)
 
-	Person.findByIdAndUpdate(request.params.id, person, { new: true})
+	Person.findByIdAndUpdate(request.params.id, { name, number }, { new: true, runValidators: true, context: 'query'})
 		.then(updatedPerson => {
 			console.log(updatedPerson)
 			response.json(updatedPerson)
