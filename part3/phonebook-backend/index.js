@@ -94,11 +94,12 @@ app.delete('/api/persons/:id', (request, response) => {
 // }
 
 // post method to add a note to notes list
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
 	// the body property  of request object contains data sent through post request
 	const body = request.body
 	// console.log(body)
 
+	// use the validation functionality available in Mongoose instead of the following
 	// if(!body.name || !body.number) {
 	// 	return response.status(400).json({
 	// 		error: 'name or number is missing'
@@ -121,6 +122,7 @@ app.post('/api/persons', (request, response) => {
 	person.save().then(savedContact => {
 		response.json(savedContact)
 	})
+	.catch(error => next(error))
 })
 
 // put method to update a contact in phonebook on mongodb using the findByIdAndUpdate method of Person model
