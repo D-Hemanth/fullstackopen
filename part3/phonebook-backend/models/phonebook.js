@@ -23,6 +23,14 @@ const phonebookSchema = new mongoose.Schema({
     },
     number: {
         type: String,
+        validate: {
+            validator: function(v) {
+                // [1-9][0-9][0-9] will match double digit number from 100 to 999 & \d+ or \d{1,} matches with atleast 1 or more number
+                return /[1-9][0-9][0-9]-\d{1,}/.test(v);
+            },
+            message: props => `${props.value} is not a valid phone number of format DD-DDDDDD... or DDD-DDDDD,,,`
+        },
+        minlength: 8,
         required: true
     }
 })
