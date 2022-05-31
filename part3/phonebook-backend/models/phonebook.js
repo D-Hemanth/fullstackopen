@@ -15,6 +15,7 @@ mongoose.connect(url)
 
 // Add a schema which tells Mongoose how the note objects are to be stored in the database
 // Also add way for validating the format of the data before it is stored in the database using validation functionality of mongoose i.e. name, number
+// resource: https://regextutorial.org/regex-for-numbers-and-ranges.php#:~:text=To%20match%20a%20two%20digit%20number%20%2F%20d,ranges%20and%20their%20regular%20expressions%20code%20with%20meaning.
 const phonebookSchema = new mongoose.Schema({
     name: {
         type: String,
