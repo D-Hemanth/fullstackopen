@@ -104,6 +104,7 @@ const App = () => {
           setTimeout(() => {
             setNotificationMessage(null)
           }, 5000);
+        })
     }
   }
 
