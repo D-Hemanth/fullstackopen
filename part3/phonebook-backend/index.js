@@ -155,7 +155,7 @@ const errorHandler = (error, request, response, next) => {
     // when dealing with Promises i.e. like findById it's a good idea to print the object that caused the exception to the console in the error handler
     console.log(error)
     // error handler response
-    return response.status(400).send({ error: 'malformatted id' })
+    return response.status(400).send({ error: 'Malformatted id' })
   }
   // error handler checks if the error is a ValidationError exception from the note schema
   else if(error.name === 'ValidationError') {
