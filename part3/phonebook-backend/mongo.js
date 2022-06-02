@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const mongoose = require('mongoose')
 
 // Use process.argv to access the data in command-line parameters
@@ -10,8 +11,8 @@ mongoose.connect(url)
 
 // Add a schema which tells Mongoose how the note objects are to be stored in the database
 const phonebookSchema = new mongoose.Schema({
-    name: String,
-    number: String,
+  name: String,
+  number: String,
 })
 
 // Create a Person document model from the schema variable
@@ -20,28 +21,29 @@ const Person = mongoose.model('Person', phonebookSchema)
 // so we verify that the command line argument contains 3 arguments except node mongo.js i.e. node mongo.js password name number
 // if args < 5 then display all entries in the phonebook
 if(process.argv.length < 5) {
-    Person
-        .find({})
-        .then(persons => {
-            console.log('phonebook:')
-            persons.forEach(person => {
-                console.log(`${person.name} ${person.number}`)
-            })
-            mongoose.connection.close()
-        })
+  Person
+    .find({})
+    .then(persons => {
+      console.log('phonebook:')
+      persons.forEach(person => {
+        console.log(`${person.name} ${person.number}`)
+      })
+      mongoose.connection.close()
+    })
 }
 else if(process.argv.length === 5) {
-    // Add a new contact to phonebook using the Person model
-    // For adding names containing whitespace characters, it must be enclosed in quotes
-    const person = new Person({
-        name: process.argv[3],
-        number: process.argv[4],
-    })
+  // Add a new contact to phonebook using the Person model
+  // For adding names containing whitespace characters, it must be enclosed in quotes
+  const person = new Person({
+    name: process.argv[3],
+    number: process.argv[4],
+  })
 
-    // use save method of Person model to save note to the mongodb 
-    person.save().then(result => {
-        console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
-        mongoose.connection.close()
-    })
-} 
+  // use save method of Person model to save note to the mongodb
+  // eslint-disable-next-line no-unused-vars
+  person.save().then(result => {
+    console.log(`added ${process.argv[3]} number ${process.argv[4]} to phonebook`)
+    mongoose.connection.close()
+  })
+}
 
