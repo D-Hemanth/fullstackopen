@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "My first blog",
+  "author": "Hemanth",
+  "url": "https://hemanth.com",
+  "likes": 15
+}
+
+
+### POST blogs to mongodb request check
+
