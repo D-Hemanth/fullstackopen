@@ -15,3 +15,15 @@ const blogSchema = new mongoose.Schema({
   likes: Number
 }) 
 
+const Blog = mongoose.model('Blog', blogSchema)
+
+const mongoUrl = process.env.MONGODB_URI
+mongoose.connect(mongoUrl)
+
+// Use app.use to load the different middlewares into the express application
+// cors middleware to use and allow for requests from all origins
+app.use(cors())
+// In order to access the data easily, we need the help of the express json-parser
+// Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
+app.use(express.json())
+
