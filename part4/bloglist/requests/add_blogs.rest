@@ -11,3 +11,12 @@ Content-Type: application/json
 
 ### POST blogs to mongodb request check
 
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Second blog",
+  "author": "Hemanth D",
+  "url": "https://hemanthd.com",
+  "likes": 12
+}
