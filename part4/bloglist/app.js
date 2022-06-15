@@ -27,3 +27,21 @@ app.use(cors())
 // Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
 app.use(express.json())
 
+app.get('/api/blogs', (request, response) => {
+  Blog
+    .find({})
+    .then(blogs => {
+      response.json(blogs)
+    })
+})
+
+app.post('/api/blogs', (request, response) => {
+  const blog = new Blog(request.body)
+
+  blog
+    .save()
+    .then(result => {
+      response.status(201).json(result)
+    })
+})
+
