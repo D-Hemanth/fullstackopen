@@ -1,4 +1,3 @@
-const http = require('http')
 const express = require('express')
 const app = express()
 const cors = require('cors')
@@ -20,6 +19,4 @@ app.use(express.json())
 // The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '' & later /api/blogs are added to the request from blogs in controllers 
 app.use('', blogsRouter)
 
-app.listen(config.PORT, () => {
-  console.log(`Server running on port ${config.PORT}`)
-})
+module.exports = app
