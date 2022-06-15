@@ -5,7 +5,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const { response } = require('express')
 require('dotenv').config()
-const Blog = require('./models/blog')
+const blogsRouter = require('./controllers/blogs')
 
 const mongoUrl = process.env.MONGODB_URI
 mongoose.connect(mongoUrl)
@@ -17,23 +17,8 @@ app.use(cors())
 // Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
 app.use(express.json())
 
-app.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
-})
-
-app.post('/api/blogs', (request, response) => {
-  const blog = new Blog(request.body)
-
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
-    })
-})
+// The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '' & later /api/blogs are added to the request from blogs in controllers 
+app.use('', blogsRouter)
 
 const PORT = 3003
 app.listen(PORT, () => {
