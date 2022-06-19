@@ -3,4 +3,9 @@ const dummy = (blogs) => {
     return 1
 }
 
-module.exports = { dummy }
+// totalLikes function that receives a list of blog posts as a parameter. The function returns the total sum of likes in all of the blog posts
+const totalLikes = (blogs) => {
+	if(blogs.length === 0) {
+		// totalLikes of empty list is zero
+		return 0
+	}
