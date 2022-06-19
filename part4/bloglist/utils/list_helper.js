@@ -9,3 +9,8 @@ const totalLikes = (blogs) => {
 		// totalLikes of empty list is zero
 		return 0
 	}
+	else if(blogs.length === 1) {
+		// when list has only one blog, equals the likes of that 
+		// console.log('when list has only one blog totalLikes is ', blogs[0].likes)
+		return blogs[0].likes
+	}
