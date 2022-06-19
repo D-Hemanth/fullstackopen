@@ -14,3 +14,27 @@ const totalLikes = (blogs) => {
 		// console.log('when list has only one blog totalLikes is ', blogs[0].likes)
 		return blogs[0].likes
 	}
+	else {
+		// totalLikes of a bigger list is calculated right
+		// first map the likes from all blogs into separate array
+		const likes = blogs.map(blog => blog.likes)
+		// console.log('array of likes', likes)
+
+		// use the reduce function to calculate the sum of 
+		// const reducer = (sum, likes) => {
+		// 		return sum + likes
+		// }
+
+		// return likes.reduce(reducer, 0)
+
+		// use a forEach method to find the sum of likes array
+		let sum = 0
+
+		likes.forEach(like => {
+				sum += like
+				// console.log(sum)
+			});
+
+		return sum
+	}
+}
