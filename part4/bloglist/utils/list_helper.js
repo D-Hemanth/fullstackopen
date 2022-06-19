@@ -39,4 +39,22 @@ const totalLikes = (blogs) => {
 	}
 }
 
-module.exports = { dummy, totalLikes }
+// favoriteBlog function that receives a list of blogs as a parameter. The function finds out which blog has most likes.
+const favoriteBlog = (blogs) => {
+	// first map the likes from all blogs into separate array
+	const likes = blogs.map(blog => blog.likes)
+	// console.log('array of likes', likes)
+
+	// find the index of the max value in likes array spread so that Math.max finds max out of entire array instead of one value of array
+	const mostLikesIndex = likes.indexOf(Math.max(...likes))
+	// console.log(mostLikesIndex)
+
+	// return the blog with the most likes in following format
+	const blog = {
+		title: blogs[mostLikesIndex].title,
+		author: blogs[mostLikesIndex].author,
+		likes: blogs[mostLikesIndex].likes
+	}
+	
+	return blog
+}
