@@ -20,7 +20,7 @@ const totalLikes = (blogs) => {
 		const likes = blogs.map(blog => blog.likes)
 		// console.log('array of likes', likes)
 
-		// use the reduce function to calculate the sum of 
+		// use the reduce function to calculate the sum of likes
 		// const reducer = (sum, likes) => {
 		// 		return sum + likes
 		// }
@@ -82,3 +82,5 @@ const mostBlogs = (blogs) => {
 			blogs: maxCount
 	}
 }
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
