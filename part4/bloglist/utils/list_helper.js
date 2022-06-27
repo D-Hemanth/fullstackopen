@@ -62,3 +62,23 @@ const favoriteBlog = (blogs) => {
 // require Lodash to solve the following exercises make use of the Lodash library to Iterating arrays, objects, & strings, Manipulating & testing values
 const _ = require('lodash')
 
+// the following solution will work even without the lodash '_' in authorCounts = _(blogs)
+// mostBlogs function that receives a list of blogs as a parameter. The function finds out which author has most blogs.
+const mostBlogs = (blogs) => {
+	// console.log(blogs)
+	// Find duplicate author values in the array object using reduce method
+	let authorCounts = _(blogs).reduce((authorCount, blog) => {
+		// console.log('authorCount',authorCount)
+		// console.log('blog', blog)
+		// console.log('authorCount[blog.author]', authorCount[blog.author])
+		authorCount[blog.author] = (authorCount[blog.author] || 0) + 1
+		return authorCount
+	}, {})
+	console.log('final author counts', authorCounts)
+	let maxCount = Math.max(...Object.values(authorCounts))
+	let mostBlogsAuthor = Object.keys(authorCounts).filter(author => authorCounts[author] === maxCount)
+	return {
+			author: mostBlogsAuthor[0],
+			blogs: maxCount
+	}
+}
