@@ -59,4 +59,6 @@ const favoriteBlog = (blogs) => {
 	return blog
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog }
+// require Lodash to solve the following exercises make use of the Lodash library to Iterating arrays, objects, & strings, Manipulating & testing values
+const _ = require('lodash')
+
