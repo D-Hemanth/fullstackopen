@@ -78,8 +78,8 @@ const mostBlogs = (blogs) => {
 	let maxCount = Math.max(...Object.values(authorCounts))
 	let mostBlogsAuthor = Object.keys(authorCounts).filter(author => authorCounts[author] === maxCount)
 	return {
-			author: mostBlogsAuthor[0],
-			blogs: maxCount
+		author: mostBlogsAuthor[0],
+		blogs: maxCount
 	}
 }
 
