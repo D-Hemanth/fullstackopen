@@ -83,6 +83,8 @@ const mostBlogs = (blogs) => {
 	}
 }
 
+// the following solution will work even without the lodash '_' in authorCounts = _(blogs)
+// mostLikes function that receives a list of blogs as a parameter. The function finds out which author has most likes.
 const mostLikes = (blogs) => {
 	// console.log(blogs)
 	// Find duplicate author values in the array object using reduce method
@@ -94,3 +96,13 @@ const mostLikes = (blogs) => {
 		return likesCount
 	}, {})
 	console.log('final author counts', likesCounts)
+	let maxLikesCount = Math.max(...Object.values(likesCounts))
+	// console.log(maxLikesCount)
+	let mostLikesAuthor = Object.keys(likesCounts).filter(author => likesCounts[author] === maxLikesCount)
+	return {
+		author: mostLikesAuthor[0],
+		likes: maxLikesCount
+	}
+}
+
+module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes }
