@@ -83,4 +83,14 @@ const mostBlogs = (blogs) => {
 	}
 }
 
-module.exports = { dummy, totalLikes, favoriteBlog, mostBlogs }
+const mostLikes = (blogs) => {
+	// console.log(blogs)
+	// Find duplicate author values in the array object using reduce method
+	let likesCounts = _(blogs).reduce((likesCount, blog) => {
+		// console.log('likeCount', likeCount)
+		// console.log('blog', blog)
+		// console.log('likesCount[blog.author]', likesCount[blog.author])
+		likesCount[blog.author] = (likesCount[blog.author] || 0) + blog.likes
+		return likesCount
+	}, {})
+	console.log('final author counts', likesCounts)
