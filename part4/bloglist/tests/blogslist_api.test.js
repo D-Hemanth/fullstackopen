@@ -101,6 +101,12 @@ describe('Deletion of a blogpost', () => {
       .delete(`/api/blogs/${blogToDelete.id}`)
       .expect(204)
 
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+
+    const titles = blogsAtEnd.map(blog => blog.title)
+    expect(titles).not.toContain(blogToDelete.title)
+  })
 afterAll(() => {
   mongoose.connection.close()
 })
