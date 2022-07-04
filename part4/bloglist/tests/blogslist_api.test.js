@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
+const Blog = require('../models/blog')
+const helper = require('../tests/test_helper')
 
 const api = supertest(app)
 
@@ -24,6 +26,7 @@ test('Blogs are returned as json', async () => {
 test('The unique identifier property of the blog posts is named id instead of the default _id', async () => {
   const blogs = await Blog.find({})
   // console.log(blogs[0].id)
+  // Use .toBeDefined to check that a variable is not undefined
   expect(blogs[0].id).toBeDefined()
 })
 
