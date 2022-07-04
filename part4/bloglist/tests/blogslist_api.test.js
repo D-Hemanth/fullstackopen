@@ -122,6 +122,8 @@ test('Updating the likes of a blogpost using a specific id', async () => {
 
   const likes = blogsAtEnd.map(blog => blog.likes)
   expect(likes).not.toBe(blogToUpdate.likes)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
