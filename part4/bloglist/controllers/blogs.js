@@ -2,12 +2,10 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
 // get method to display all blogs in the blogslist of mongodb using find method of Blog model
-blogsRouter.get('/api/blogs', (request, response) => {
-  Blog
-    .find({})
-    .then(blogs => {
-      response.json(blogs)
-    })
+blogsRouter.get('/api/blogs', async (request, response) => {
+  // refactor the tested routes to use async/await
+  const blogs = await Blog.find({})
+  response.json(blogs)
 })
 
 // post method to add a blog to blogslist on mongodb
@@ -22,7 +20,7 @@ blogsRouter.post('/api/blogs', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes
-    })
+  })
   // console.log(blog)
 
   // refactor the tested routes to use async/await
