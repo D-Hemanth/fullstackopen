@@ -117,6 +117,11 @@ test('Updating the likes of a blogpost using a specific id', async () => {
     .put(`/api/blogs/${blogToUpdate.id}`)
     .expect(200)
 
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+
+  const likes = blogsAtEnd.map(blog => blog.likes)
+  expect(likes).not.toBe(blogToUpdate.likes)
 afterAll(() => {
   mongoose.connection.close()
 })
