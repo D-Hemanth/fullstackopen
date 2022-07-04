@@ -84,6 +84,11 @@ test('If the title & url are missing from the request data, respond with status 
     .send(newBlog)
     .expect(400)
   
+  // uses blogsAtEnd function for checking the blogs stored in the database to have same length if title or url are missing
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })

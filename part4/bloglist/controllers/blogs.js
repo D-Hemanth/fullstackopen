@@ -19,6 +19,11 @@ blogsRouter.post('/api/blogs', async (request, response) => {
     body.likes = 0
   }
 
+  // verifies that if the title and url properties are missing from the request data, the backend responds to the request with the status code 400 Bad Request
+  if(!body.title || !body.url) {
+    return response.status(400).json('Bad Request')
+  }
+
   //  blog objects are created with the Blog model constructor function
   const blog = new Blog({
     title: body.title,
