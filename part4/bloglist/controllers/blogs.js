@@ -45,4 +45,16 @@ blogsRouter.delete('/api/blogs/:id', async (request, response) => {
   response.status(204).end()
 })
 
+// update method to update a blog from a blogslist on mongodb using the id parameter
+blogsRouter.put('/api/blogs/:id', async (request, response) => {
+  const body = request.body
+
+  const blog = {
+    likes: body.likes
+  }
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+  response.status(200).json(updatedBlog)
+})
+
 module.exports = blogsRouter
