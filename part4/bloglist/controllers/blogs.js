@@ -14,6 +14,10 @@ blogsRouter.post('/api/blogs', async (request, response) => {
   const body = request.body
   // console.log(body)
 
+  if(!body.likes) {
+    body.likes = 0
+  }
+
   //  blog objects are created with the Blog model constructor function
   const blog = new Blog({
     title: body.title,

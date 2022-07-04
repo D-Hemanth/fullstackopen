@@ -66,6 +66,13 @@ test('If the likes property is missing from the request, then it will default to
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
+  // uses blogsAtEnd function for checking the blogs stored in the database
+  const blogsAtEnd = await helper.blogsInDb()
+  const newAddedBlog = blogsAtEnd.find(blog => blog.title === 'TDD harms architecture')
+  // console.log(newAddedBlog)
+  expect(newAddedBlog.likes).toBe(0)
+})  
+
 afterAll(() => {
   mongoose.connection.close()
 })
