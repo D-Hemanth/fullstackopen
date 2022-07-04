@@ -73,6 +73,17 @@ test('If the likes property is missing from the request, then it will default to
   expect(newAddedBlog.likes).toBe(0)
 })  
 
+test('If the title & url are missing from the request data, respond with status code 400 Bad Request', async () => {
+  const newBlog =   {
+    author: "Robert C. Martin",
+    likes: 10,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(400)
+  
 afterAll(() => {
   mongoose.connection.close()
 })
