@@ -14,6 +14,7 @@ blogsRouter.post('/api/blogs', async (request, response) => {
   const body = request.body
   // console.log(body)
 
+  //  verifies that if the likes property is missing from the request, it will default to the value 0
   if(!body.likes) {
     body.likes = 0
   }
