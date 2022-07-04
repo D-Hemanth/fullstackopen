@@ -89,6 +89,18 @@ test('If the title & url are missing from the request data, respond with status 
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 })
 
+describe('Deletion of a blogpost', () => {
+  // let's write tests for fetching and removing an individual blog
+  test('succeeds with status code 204 if id is valid', async () => {
+    // In the initialization phase they fetch a blogs from the database
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    // the tests call the actual operation being tested which is deletion here
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
 afterAll(() => {
   mongoose.connection.close()
 })
