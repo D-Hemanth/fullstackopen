@@ -109,6 +109,14 @@ describe('Deletion of a blogpost', () => {
   })
 })
 
+test('Updating the likes of a blogpost using a specific id', async () => {
+  const blogsAtStart = await helper.blogsInDb()
+  const blogToUpdate = blogsAtStart[0]
+
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .expect(200)
+
 afterAll(() => {
   mongoose.connection.close()
 })
