@@ -44,6 +44,15 @@ test('Add a new valid blog post', async () => {
     .expect(201)
     .expect('Content-Type', /application\/json/)
 
+  // uses blogsAtEnd function for checking the blogs stored in the database
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  // uses blogsAtEnd function for checking the blogs content stored in the database matches the input contents
+  const contents = blogsAtEnd.map(blog => blog.title)
+  expect(contents).toContain('Type wars')
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
