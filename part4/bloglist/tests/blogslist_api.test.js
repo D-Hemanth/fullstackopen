@@ -30,6 +30,20 @@ test('The unique identifier property of the blog posts is named id instead of th
   expect(blogs[0].id).toBeDefined()
 })
 
+test('Add a new valid blog post', async () => {
+  const newBlog =   {
+    title: "Type wars",
+    author: "Robert C. Martin",
+    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+    likes: 2
+  }
+
+  await api 
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
 afterAll(() => {
   mongoose.connection.close()
 })
