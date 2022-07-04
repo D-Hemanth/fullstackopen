@@ -39,4 +39,10 @@ blogsRouter.post('/api/blogs', async (request, response) => {
   response.status(201).json(savedBlog)
 })
 
+// delete method to remove a blog from a blogslist on mongodb using the id parameter
+blogsRouter.delete('/api/blogs/:id', async (request, response) => {
+  await Blog.findByIdAndRemove(request.params.id)
+  response.status(204).end()
+})
+
 module.exports = blogsRouter
