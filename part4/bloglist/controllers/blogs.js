@@ -11,15 +11,25 @@ blogsRouter.get('/api/blogs', (request, response) => {
 })
 
 // post method to add a blog to blogslist on mongodb
-blogsRouter.post('/api/blogs', (request, response) => {
+blogsRouter.post('/api/blogs', async (request, response) => {
   // the body property  of request object contains data sent through post request
-  const blog = new Blog(request.body)
+  const body = request.body
+  // console.log(body)
 
-  blog
-    .save()
-    .then(result => {
-      response.status(201).json(result)
+  //  blog objects are created with the Blog model constructor function
+  const blog = new Blog({
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
     })
+  // console.log(blog)
+
+  // refactor the tested routes to use async/await
+  // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
+  const savedBlog = await blog.save()
+  response.status(201).json(savedBlog)
+
 })
 
 module.exports = blogsRouter
