@@ -37,7 +37,6 @@ blogsRouter.post('/api/blogs', async (request, response) => {
   // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
   const savedBlog = await blog.save()
   response.status(201).json(savedBlog)
-
 })
 
 module.exports = blogsRouter
