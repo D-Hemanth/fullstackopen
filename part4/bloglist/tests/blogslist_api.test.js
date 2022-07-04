@@ -107,6 +107,8 @@ describe('Deletion of a blogpost', () => {
     const titles = blogsAtEnd.map(blog => blog.title)
     expect(titles).not.toContain(blogToDelete.title)
   })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
