@@ -21,6 +21,12 @@ test('Blogs are returned as json', async () => {
     .expect('Content-Type', /application\/json/)
 }, 100000)
 
+test('The unique identifier property of the blog posts is named id instead of the default _id', async () => {
+  const blogs = await Blog.find({})
+  // console.log(blogs[0].id)
+  expect(blogs[0].id).toBeDefined()
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
