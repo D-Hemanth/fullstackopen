@@ -134,9 +134,13 @@ describe('When there is initially one user in db', () => {
     await User.deleteMany({})
 
     const passwordHash = await bcrypt.hash('sekret', 10)
-    const user = new User({ username: 'root', passwordHash})
+    const user = new User({ username: 'root', passwordHash })
 
     await user.save()
+
+    // Find out which users are there in the database before performing the tests
+    const users = await User.find({})
+    console.log(users)
   })
 
   test('creation succeeds with a fresh username', async () => {
@@ -159,6 +163,48 @@ describe('When there is initially one user in db', () => {
 
     const usernames = usersAtEnd.map(user => user.username)
     expect(usernames).toContain(newUser.username)
+  })
+
+  test('creation of newuser fails with proper statuscode & message if username is already taken', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      username: 'root',
+      name: 'Superuser',
+      password: 'salainen',
+    }
+
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('username must be unique')
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toEqual(usersAtStart)
+  })
+
+  test('creation of newuser fails with proper statuscode & message if password is not 3 character long', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      username: 'Hemanth',
+      name: 'Hemanth D',
+      password: 'sa',
+    }
+
+    const result = await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(400)
+      .expect('Content-Type', /application\/json/)
+
+    expect(result.body.error).toContain('Password validation failed: Password is shorter than the minimum allowed length (3)')
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd).toEqual(usersAtStart)
   })
 })
 
