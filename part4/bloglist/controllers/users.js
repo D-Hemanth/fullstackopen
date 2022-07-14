@@ -4,7 +4,8 @@ const User = require('../models/user')
 
 // display all users in the database using get method of usersRouter
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({})
+  // Mongoose join like in relational database is done with the populate method
+  const users = await User.find({}).populate('blogs', { url: 1, title: 1, author: 1 })
   response.json(users)
 })
 

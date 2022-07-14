@@ -1,10 +1,14 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
+// Add information about the user who created a note is sent in the userId field of the request body
+const User = require('../models/user')
+
 // get method to display all blogs in the blogslist of mongodb using find method of Blog model
-blogsRouter.get('/api/blogs', async (request, response) => {
+blogsRouter.get('/', async (request, response) => {
   // refactor the tested routes to use async/await
-  const blogs = await Blog.find({})
+  // Mongoose join like in relational database is done with the populate method
+  const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs)
 })
 
