@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 
 // define the model for representing a user with username, name, passwordHash
+// define specific validation rules like Type, minLength, unique,etc for each field in the schema 
+// Both username and password must be given. Both username and password must be at least 3 characters long. The username must be unique 
 const userSchema = new mongoose.Schema({
   username: { 
     type: String,
