@@ -24,7 +24,7 @@ loginRouter.post('/', async (request, response) => {
   // a token is created with the method jwt.sign & it contains the username and the user id in a digitally signed form
   // Once the API user, eg. a React app gets a token, the API has a blind trust to the token holder to solve this problem limit the validity period of a token
   // token expires in 60*60 seconds, that is, in one hour
-  const token = jwt.sign(userForToken, process.env.SECRET)
+  const token = jwt.sign(userForToken, process.env.SECRET, { expiresIn: 60*60 })
 
   response
     .status(200)

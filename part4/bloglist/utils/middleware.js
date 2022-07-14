@@ -34,6 +34,10 @@ const errorHandler = (error, _request, response, next) => {
   else if(error.name === 'JsonWebTokenError') {
     return response.status(401).json({ error: 'invalid token' })
   }
+  // error handler checks if the error is a TokenExpiredError exception if the logged user token token has expired
+  else if(error.name === 'TokenExpiredError') {
+    return response.status(401).json({ error: 'token expired' })
+  }
 
   // In all other error situations, the middleware passes the error forward to the default Express error handler
   next(error)
