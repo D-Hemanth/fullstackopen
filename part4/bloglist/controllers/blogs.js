@@ -13,7 +13,7 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 // post method to add a blog to blogslist on mongodb
-blogsRouter.post('/api/blogs', async (request, response) => {
+blogsRouter.post('/', async (request, response) => {
   // the body property  of request object contains data sent through post request
   const body = request.body
   // console.log(body)
@@ -28,11 +28,15 @@ blogsRouter.post('/api/blogs', async (request, response) => {
     return response.status(400).json('Bad Request')
   }
 
+  // info about user who created a note is sent in the userId field of the request body
+  const user = await User.findById(body.userId)
+
   //  blog objects are created with the Blog model constructor function
   const blog = new Blog({
     title: body.title,
     author: body.author,
     url: body.url,
+    user: user._id,
     likes: body.likes
   })
   // console.log(blog)
@@ -40,17 +44,19 @@ blogsRouter.post('/api/blogs', async (request, response) => {
   // refactor the tested routes to use async/await
   // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
   const savedBlog = await blog.save()
-  response.status(201).json(savedBlog)
+  user.blogs = user.blogs.concat(savedBlog._id)
+  await user.save()
+  response.json(savedBlog)
 })
 
 // delete method to remove a blog from a blogslist on mongodb using the id parameter
-blogsRouter.delete('/api/blogs/:id', async (request, response) => {
+blogsRouter.delete('/:id', async (request, response) => {
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
 
 // update method to update a blog from a blogslist on mongodb using the id parameter
-blogsRouter.put('/api/blogs/:id', async (request, response) => {
+blogsRouter.put('/:id', async (request, response) => {
   const body = request.body
 
   const blog = {
