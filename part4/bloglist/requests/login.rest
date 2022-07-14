@@ -1,0 +1,18 @@
+### Checking if login works with correct username & password
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Hemanth",
+  "password": "toughPassword"
+}
+
+
+### Checking if login works with Incorrect username or password
+POST http://localhost:3003/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "Hemanth",
+  "password": "Password"
+}
