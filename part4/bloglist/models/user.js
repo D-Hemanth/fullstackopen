@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  blogs: [
+    {
+      // The ids of the blogs are stored within the user document as an array of Mongo ids
+      //  Mongo does not know ObjectId field that references blogs, this syntax is purely related to and defined by Mongoose.
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Blog'
+    }
+  ],
 })
 
 userSchema.set('toJSON', {

@@ -6,6 +6,11 @@ const blogSchema = new mongoose.Schema({
   title: String,
   author: String,
   url: String,
+  user: {
+    // blog contains references & information about the user who created it
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   likes: Number
 }) 
 
