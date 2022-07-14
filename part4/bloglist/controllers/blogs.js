@@ -1,8 +1,8 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-
 // Add information about the user who created a note is sent in the userId field of the request body
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 // get method to display all blogs in the blogslist of mongodb using find method of Blog model
 blogsRouter.get('/', async (request, response) => {
@@ -11,6 +11,16 @@ blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
   response.json(blogs)
 })
+
+// The helper function getTokenFrom isolates the token from the authorization header, get token for authorization in every request made to the server
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if(authorization && authorization.toLowerCase().startsWith('bearer')) {
+    // Authorization header will have the value: Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW then substring(7) returns only the token
+    return authorization.substring(7)
+  }
+  return null
+}
 
 // post method to add a blog to blogslist on mongodb
 blogsRouter.post('/', async (request, response) => {
@@ -28,8 +38,14 @@ blogsRouter.post('/', async (request, response) => {
     return response.status(400).json('Bad Request')
   }
 
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if(!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid '})
+  }
+
   // info about user who created a note is sent in the userId field of the request body
-  const user = await User.findById(body.userId)
+  const user = await User.findById(decodedToken.id)
 
   //  blog objects are created with the Blog model constructor function
   const blog = new Blog({
