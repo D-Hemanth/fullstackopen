@@ -6,6 +6,8 @@ const blogsRouter = require('./controllers/blogs')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
 const loginRouter = require('./controllers/login')
+const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
 
 // define a separate router for dealing with users 
 const usersRouter = require('./controllers/users')
@@ -20,11 +22,19 @@ app.use(cors())
 // Without the json-parser i.e. json(), the body property  of request object sent through post request would be undefined.
 app.use(express.json())
 
-// The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '' & later /api/blogs are added to the request from blogs in controllers 
-app.use('/api/blogs', blogsRouter)
-app.use('/api/login', loginRouter)
+// Middleware functions are called in the order that they're taken into use with the express server object's use hence the json parser is above this
+app.use(middleware.requestLogger)
 
+// The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '/api/blogs' 
+app.use('/api/blogs', blogsRouter)
+// The loginRouter we defined in ./controller/login is used if the URL of the request starts with '/api/login' 
+app.use('/api/login', loginRouter)
 // The usersRouter we defined in ./controller/users is used if the URL of the request starts with '/api/users'
 app.use('/api/users', usersRouter)
+
+// handler of requests with unknown endpoint
+app.use(middleware.unknownEndpoint)
+// this has to be the last loaded middleware
+app.use(middleware.errorHandler)
 
 module.exports = app
