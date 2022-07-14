@@ -2,9 +2,16 @@ const mongoose = require('mongoose')
 
 // define the model for representing a user with username, name, passwordHash
 const userSchema = new mongoose.Schema({
-  username: String,
+  username: { 
+    type: String,
+    minLength: 3,
+    required: true,
+  },
   name: String,
-  passwordHash: String,
+  passwordHash: {
+    type: String,
+    required: true
+  },
 })
 
 userSchema.set('toJSON', {
