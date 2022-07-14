@@ -5,6 +5,7 @@ const { response } = require('express')
 const blogsRouter = require('./controllers/blogs')
 const config = require('./utils/config')
 const mongoose = require('mongoose')
+const loginRouter = require('./controllers/login')
 
 // define a separate router for dealing with users 
 const usersRouter = require('./controllers/users')
