@@ -20,7 +20,7 @@ app.use(cors())
 app.use(express.json())
 
 // The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '' & later /api/blogs are added to the request from blogs in controllers 
-app.use('', blogsRouter)
+app.use('/api/blogs', blogsRouter)
 
 // The usersRouter we defined in ./controller/users is used if the URL of the request starts with '/api/users'
 app.use('/api/users', usersRouter)
