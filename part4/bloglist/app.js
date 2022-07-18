@@ -25,6 +25,8 @@ app.use(express.json())
 
 // Middleware functions are called in the order that they're taken into use with the express server object's use hence the json parser is above this
 app.use(middleware.requestLogger)
+// middleware should take the token from the Authorization header and place it to the token field of the request object
+app.use(middleware.tokenExtractor)
 
 // The blogsRouter we defined in ./controller/blogs is used if the URL of the request starts with '/api/blogs' 
 app.use('/api/blogs', blogsRouter)
