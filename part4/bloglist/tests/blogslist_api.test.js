@@ -285,6 +285,28 @@ describe('When there is initially one user in db', () => {
   })
 })
 
+// test to ensure adding a blog fails with the proper status code 401 Unauthorized if a token is not provided
+describe('Ensure adding a blog fails', () => {
+  test('when a token is not provided', async () => {
+    // add a new blog to mongodb without passing a token of the user who is creating it
+    const newBlog = {
+      _id: "5a422b891b54a676234d17fa",
+      title: "First class tests",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
+      likes: 10,
+      __v: 0
+    }
+
+    // no set(headers) containing the token for authorization is provided
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(401)
+      .expect('Content-Type', /application\/json/)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
