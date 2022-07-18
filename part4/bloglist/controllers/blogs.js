@@ -3,6 +3,7 @@ const Blog = require('../models/blog')
 // Add information about the user who created a note is sent in the userId field of the request body
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
+const { userExtractor } = require('../utils/middleware')
 
 // get method to display all blogs in the blogslist of mongodb using find method of Blog model
 blogsRouter.get('/', async (request, response) => {
@@ -13,7 +14,9 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 // post method to add a blog to blogslist on mongodb
-blogsRouter.post('/', async (request, response) => {
+// middleware should take the token from the Authorization header and then userExtractor finds out the user and sets it to the user field of the request object
+// and also to use the middleware userExtractor only in /api/blogs routes happens by chaining multiple middlewares as the parameter of function use like below
+blogsRouter.post('/', userExtractor, async (request, response) => {
   // the body property  of request object contains data sent through post request
   const body = request.body
   // console.log(body)
@@ -28,14 +31,9 @@ blogsRouter.post('/', async (request, response) => {
     return response.status(400).json('Bad Request')
   }
 
-  // middleware should take the token from the Authorization header and place it to the token field of the request object
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if(!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid '})
-  }
-
-  // info about user who created a note is sent in the userId field of the request body
-  const user = await User.findById(decodedToken.id)
+  // get user object with username, userid from user field of request object of userExtractor middleware
+  const user = request.user
+  // console.log('user', user)
 
   //  blog objects are created with the Blog model constructor function
   const blog = new Blog({
@@ -56,16 +54,12 @@ blogsRouter.post('/', async (request, response) => {
 })
 
 // delete method to remove a blog from a blogslist on mongodb using the id parameter
-blogsRouter.delete('/:id', async (request, response) => {
-  // middleware should take the token from the Authorization header and place it to the token field of the request object
-  //The object decoded from the token contains the username and id fields
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
-  if(!decodedToken.id) {
-    return response.status(401).json({ error: 'token missing or invalid '})
-  }
-
-  // find the user object with username, userid of the user who sent the delete request from the decodedtoken.id
-  const user = await User.findById(decodedToken.id)
+// middleware should take the token from the Authorization header and then userExtractor finds out the user and sets it to the user field of the request object
+// and also to use the middleware userExtractor only in /api/blogs routes happens by chaining multiple middlewares as the parameter of function use like below
+blogsRouter.delete('/:id', userExtractor, async (request, response) => {
+  // get user object with username, userid from user field of request object of userExtractor middleware
+  const user = request.user
+  
   // blogid of the blogpost which the user has sent in the delete request
   const blogToDelete = await Blog.findById(request.params.id)
 
