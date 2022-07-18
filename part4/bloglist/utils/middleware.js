@@ -43,4 +43,16 @@ const errorHandler = (error, _request, response, next) => {
   next(error)
 }
 
-module.exports = { requestLogger, unknownEndpoint, errorHandler }
+// The helper function getTokenFrom isolates the token from the authorization header, get token for authorization in every request made to the server
+const tokenExtractor = (request, response, next) => {
+  const authorization = request.get('authorization')
+  if(authorization && authorization.toLowerCase().startsWith('bearer')) {
+    // Authorization header will have the value: Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW then substring(7) returns only the token
+    // middleware should take the token from the Authorization header and place it to the token field of the request object
+    request['token'] = authorization.substring(7)
+  }
+
+  next()
+}
+
+module.exports = { requestLogger, unknownEndpoint, errorHandler, tokenExtractor }
