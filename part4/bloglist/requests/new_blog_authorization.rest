@@ -3,7 +3,7 @@
 ### no need to mention the userId of user creating the blog as it determined from authorization & decoding token
 POST http://localhost:3003/api/blogs HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyY2QxODBjZDEzMDlhZmIxOWU3ODIxYiIsImlhdCI6MTY1NzgxMzUzOH0.E60j1fgCwhYTCGPU_4I5HgBlnkYq8362V5xKFv2wX_A
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyY2QxODBjZDEzMDlhZmIxOWU3ODIxYiIsImlhdCI6MTY1ODEyMjk3NiwiZXhwIjoxNjU4MTI2NTc2fQ.uMyA4wSsJ4XpgUw-lPHp0a6DoLtnYb4JCybVMO2_PP8
 
 {
   "title": "Things I Don't know as of 2018",
