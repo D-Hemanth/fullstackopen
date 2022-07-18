@@ -33,6 +33,8 @@ test('The unique identifier property of the blog posts is named id instead of th
   expect(blogs[0].id).toBeDefined()
 })
 
+
+describe('Addition of new blogs', () => {
   // declare headers globally so we can use them to set headers in all tests inside a describe block
   let headers
 
@@ -61,67 +63,67 @@ test('The unique identifier property of the blog posts is named id instead of th
     }
   })
 
-test('Add a new valid blog post', async () => {
-  const newBlog =   {
-    title: "Type wars",
-    author: "Robert C. Martin",
-    url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
-    likes: 2
-  }
+  test('Add a new valid blog post', async () => {
+    const newBlog =   {
+      title: "Type wars",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html",
+      likes: 2
+    }
 
-  await api 
-    .post('/api/blogs')
+    await api 
+      .post('/api/blogs')
       .set(headers)
-    .send(newBlog)
+      .send(newBlog)
       .expect(200)
-    .expect('Content-Type', /application\/json/)
+      .expect('Content-Type', /application\/json/)
 
-  // uses blogsAtEnd function for checking the blogs stored in the database
-  const blogsAtEnd = await helper.blogsInDb()
-  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+    // uses blogsAtEnd function for checking the blogs stored in the database
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
 
-  // uses blogsAtEnd function for checking the blogs content stored in the database matches the input contents
-  const contents = blogsAtEnd.map(blog => blog.title)
-  expect(contents).toContain('Type wars')
-})
+    // uses blogsAtEnd function for checking the blogs content stored in the database matches the input contents
+    const contents = blogsAtEnd.map(blog => blog.title)
+    expect(contents).toContain('Type wars')
+  })
 
-test('If the likes property is missing from the request, then it will default to 0', async () => {
-  const newBlog =   {
-    title: "TDD harms architecture",
-    author: "Robert C. Martin",
-    url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
-  }
+  test('If the likes property is missing from the request, then it will default to 0', async () => {
+    const newBlog =   {
+      title: "TDD harms architecture",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2017/03/03/TDD-Harms-Architecture.html",
+    }
 
-  await api
-    .post('/api/blogs')
+    await api
+      .post('/api/blogs')
       .set(headers)
-    .send(newBlog)
+      .send(newBlog)
       .expect(200)
-    .expect('Content-Type', /application\/json/)
+      .expect('Content-Type', /application\/json/)
 
-  // uses blogsAtEnd function for checking the blogs stored in the database
-  const blogsAtEnd = await helper.blogsInDb()
-  const newAddedBlog = blogsAtEnd.find(blog => blog.title === 'TDD harms architecture')
-  // console.log(newAddedBlog)
-  expect(newAddedBlog.likes).toBe(0)
-})  
+    // uses blogsAtEnd function for checking the blogs stored in the database
+    const blogsAtEnd = await helper.blogsInDb()
+    const newAddedBlog = blogsAtEnd.find(blog => blog.title === 'TDD harms architecture')
+    // console.log(newAddedBlog)
+    expect(newAddedBlog.likes).toBe(0)
+  })  
 
-test('If the title & url are missing from the request data, respond with status code 400 Bad Request', async () => {
-  const newBlog =   {
-    author: "Robert C. Martin",
-    likes: 10,
-  }
+  test('If the title & url are missing from the request data, respond with status code 400 Bad Request', async () => {
+    const newBlog =   {
+      author: "Robert C. Martin",
+      likes: 10,
+    }
 
-  await api
-    .post('/api/blogs')
+    await api
+      .post('/api/blogs')
       .set(headers)
-    .send(newBlog)
-    .expect(400)
-  
-  // uses blogsAtEnd function for checking the blogs stored in the database to have same length if title or url are missing
-  const blogsAtEnd = await helper.blogsInDb()
-  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
-})
+      .send(newBlog)
+      .expect(400)
+    
+    // uses blogsAtEnd function for checking the blogs stored in the database to have same length if title or url are missing
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
+  })
 })
 
 describe('Deletion of a blogpost', () => {
@@ -217,7 +219,7 @@ describe('When there is initially one user in db', () => {
 
     // Find out which users are there in the database before performing the tests
     const users = await User.find({})
-    console.log(users)
+    // console.log(users)
   })
 
   test('creation succeeds with a fresh username', async () => {
