@@ -55,4 +55,20 @@ const tokenExtractor = (request, response, next) => {
   next()
 }
 
-module.exports = { requestLogger, unknownEndpoint, errorHandler, tokenExtractor }
+const userExtractor = async (request, response, next) => {
+  // middleware should take the token from the Authorization header and place it to the token field of the request object
+  // The object decoded from the token contains the username and id fields
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if(!decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid '})
+    }
+
+  // info about user who created a note is sent in the user field of the request body
+  request['user'] = await User.findById(decodedToken.id)
+  // console.log('request', request['user'])
+
+  next()
+}
+
+
+module.exports = { requestLogger, unknownEndpoint, errorHandler, tokenExtractor, userExtractor }
