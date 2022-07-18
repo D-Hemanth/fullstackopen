@@ -1,0 +1,13 @@
+
+### DELETE blogs to mongodb request check
+### deleting a blog is possible only if the token sent with the request is the same as that of the blog's creator
+DELETE http://localhost:3003/api/blogs/62d5058b54532688dbdc001c HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyY2QxODBjZDEzMDlhZmIxOWU3ODIxYiIsImlhdCI6MTY1ODEyNzM5OCwiZXhwIjoxNjU4MTMwOTk4fQ._MnS6i-TxX_ZZZqxV9V1c3sFUCzZrBOGGUAIUJgEO8E
+
+
+### DELETE blogs to mongodb request fails check because of wrong blogid
+### deleting a blog is possible only if the token sent with the request is the same as that of the blog's creator
+DELETE http://localhost:3003/api/blogs/62d5058b54532688dbdc001 HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyY2QxODBjZDEzMDlhZmIxOWU3ODIxYiIsImlhdCI6MTY1ODEyNzM5OCwiZXhwIjoxNjU4MTMwOTk4fQ._MnS6i-TxX_ZZZqxV9V1c3sFUCzZrBOGGUAIUJgEO8E
