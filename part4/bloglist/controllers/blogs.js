@@ -56,6 +56,13 @@ blogsRouter.post('/', async (request, response) => {
 
 // delete method to remove a blog from a blogslist on mongodb using the id parameter
 blogsRouter.delete('/:id', async (request, response) => {
+  // middleware should take the token from the Authorization header and place it to the token field of the request object
+  //The object decoded from the token contains the username and id fields
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  if(!decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid '})
+  }
+
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
 })
