@@ -155,17 +155,34 @@ describe('Deletion of a blogpost', () => {
 
   // let's write tests for fetching and removing an individual blog
   test('succeeds with status code 204 if id is valid', async () => {
+    // add a new blog to mongodb so that the user who added it, here root2 can also delete it
+    const newBlog = {
+      _id: "5a422b891b54a676234d17fa",
+      title: "First class tests",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.htmll",
+      likes: 10,
+      __v: 0
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .set(headers)
+      .expect(200)
+
     // In the initialization phase they fetch a blogs from the database
     const blogsAtStart = await helper.blogsInDb()
-    const blogToDelete = blogsAtStart[0]
+    const blogToDelete = blogsAtStart.find(blog => blog.title === newBlog.title)
 
     // the tests call the actual operation being tested which is deletion here
     await api
       .delete(`/api/blogs/${blogToDelete.id}`)
+      .set(headers)
       .expect(204)
 
     const blogsAtEnd = await helper.blogsInDb()
-    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length - 1)
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 
     const titles = blogsAtEnd.map(blog => blog.title)
     expect(titles).not.toContain(blogToDelete.title)
