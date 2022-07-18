@@ -28,6 +28,7 @@ blogsRouter.post('/', async (request, response) => {
     return response.status(400).json('Bad Request')
   }
 
+  // middleware should take the token from the Authorization header and place it to the token field of the request object
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if(!decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid '})
@@ -69,8 +70,8 @@ blogsRouter.delete('/:id', async (request, response) => {
   const blogToDelete = await Blog.findById(request.params.id)
 
   if(blogToDelete.user._id.toString() === user._id.toString()) {
-  await Blog.findByIdAndRemove(request.params.id)
-  response.status(204).end()
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
   }
   else {
     return response.status(401).json({ error: 'unauthorized to delete the blog as your not the creator of that blog' })
