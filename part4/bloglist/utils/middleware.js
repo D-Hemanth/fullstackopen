@@ -1,4 +1,7 @@
 const logger = require('./logger')
+// to find the user after decoding the token we need the User model
+const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 // a middleware function that prints information about every request that is sent to the server
 // middleware function takes 3 parameters req,res, next - next function yields control to the next middleware
