@@ -33,6 +33,34 @@ test('The unique identifier property of the blog posts is named id instead of th
   expect(blogs[0].id).toBeDefined()
 })
 
+  // declare headers globally so we can use them to set headers in all tests inside a describe block
+  let headers
+
+  // beforeEach set the headers to contain the authorization token needed before performing the tests
+  beforeEach(async () => {
+    const newUser = {
+      username: 'root2',
+      name: 'root2',
+      password: 'password'
+    }
+
+  // Create a new user in the mongodb database
+  await api
+    .post('/api/users')
+    .send(newUser)
+
+  // login as the newly created user to generate a token for the user along with the username, name, etc
+  const result = await api
+    .post('/api/login')
+    .send(newUser)
+
+  // console.log('result', result)
+  
+  headers = { 
+    'Authorization': `bearer ${result.body.token}` 
+    }
+  })
+
 test('Add a new valid blog post', async () => {
   const newBlog =   {
     title: "Type wars",
@@ -43,8 +71,9 @@ test('Add a new valid blog post', async () => {
 
   await api 
     .post('/api/blogs')
+      .set(headers)
     .send(newBlog)
-    .expect(201)
+      .expect(200)
     .expect('Content-Type', /application\/json/)
 
   // uses blogsAtEnd function for checking the blogs stored in the database
@@ -65,8 +94,9 @@ test('If the likes property is missing from the request, then it will default to
 
   await api
     .post('/api/blogs')
+      .set(headers)
     .send(newBlog)
-    .expect(201)
+      .expect(200)
     .expect('Content-Type', /application\/json/)
 
   // uses blogsAtEnd function for checking the blogs stored in the database
@@ -84,6 +114,7 @@ test('If the title & url are missing from the request data, respond with status 
 
   await api
     .post('/api/blogs')
+      .set(headers)
     .send(newBlog)
     .expect(400)
   
@@ -91,8 +122,37 @@ test('If the title & url are missing from the request data, respond with status 
   const blogsAtEnd = await helper.blogsInDb()
   expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length)
 })
+})
 
 describe('Deletion of a blogpost', () => {
+  // declare headers globally so we can use them to set headers in all tests inside a describe block
+  let headers
+
+  // beforeEach set the headers to contain the authorization token needed before performing the tests
+  beforeEach(async () => {
+    const newUser = {
+      username: 'root2',
+      name: 'root2',
+      password: 'password'
+    }
+
+  // Create a new user in the mongodb database
+  await api
+    .post('/api/users')
+    .send(newUser)
+
+  // login as the newly created user to generate a token for the user along with the username, name, etc
+  const result = await api
+    .post('/api/login')
+    .send(newUser)
+
+  // console.log('result', result)
+  
+  headers = { 
+    'Authorization': `bearer ${result.body.token}` 
+    }
+  })
+
   // let's write tests for fetching and removing an individual blog
   test('succeeds with status code 204 if id is valid', async () => {
     // In the initialization phase they fetch a blogs from the database
