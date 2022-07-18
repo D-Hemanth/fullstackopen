@@ -63,8 +63,19 @@ blogsRouter.delete('/:id', async (request, response) => {
     return response.status(401).json({ error: 'token missing or invalid '})
   }
 
+  // find the user object with username, userid of the user who sent the delete request from the decodedtoken.id
+  const user = await User.findById(decodedToken.id)
+  // blogid of the blogpost which the user has sent in the delete request
+  const blogToDelete = await Blog.findById(request.params.id)
+
+  if(blogToDelete.user._id.toString() === user._id.toString()) {
   await Blog.findByIdAndRemove(request.params.id)
   response.status(204).end()
+  }
+  else {
+    return response.status(401).json({ error: 'unauthorized to delete the blog as your not the creator of that blog' })
+  }
+  
 })
 
 // update method to update a blog from a blogslist on mongodb using the id parameter
