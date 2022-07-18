@@ -12,16 +12,6 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-// The helper function getTokenFrom isolates the token from the authorization header, get token for authorization in every request made to the server
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if(authorization && authorization.toLowerCase().startsWith('bearer')) {
-    // Authorization header will have the value: Bearer eyJhbGciOiJIUzI1NiIsInR5c2VybmFtZSI6Im1sdXVra2FpIiwiaW then substring(7) returns only the token
-    return authorization.substring(7)
-  }
-  return null
-}
-
 // post method to add a blog to blogslist on mongodb
 blogsRouter.post('/', async (request, response) => {
   // the body property  of request object contains data sent through post request
