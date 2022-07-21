@@ -15,8 +15,15 @@ const setToken = newToken => {
 
 // refractor http routes to use async/await syntax
 const getAll = async () => {
+  // add config with token of the logged-in user to the Authorization header of the HTTP get request
   const response = await axios.get(baseUrl, config)
   return response.data
 }
 
-export default { getAll, setToken }
+const create = async blogObject => {
+  // add config with token of the logged-in user to the Authorization header of the HTTP post request
+  const response = await axios.post(baseUrl, blogObject, config)
+  return response.data
+}
+
+export default { getAll, create, setToken }
