@@ -82,10 +82,17 @@ const App = () => {
       </div>
   )}
 
+  // Logout & Ensure the browser does not remember the details of the user after logging out
+  const handleLogout = () => {
+    window.localStorage.removeItem('loggedBlogappUser')
+    // window.localStorage.clear()
+    setUser(null)
+  } 
+
   return (
     <div>
       <h2>blogs</h2>
-      <p>{user.name} logged in</p>
+      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
       { blogs.map(blog =>
       <Blog key={blog.id} blog={blog} /> )}
