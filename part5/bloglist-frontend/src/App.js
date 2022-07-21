@@ -16,6 +16,25 @@ const App = () => {
     )  
   }, [])
 
+  const handleLogin = async (event) => {
+    event.preventDefault()
+    // console.log('logging in with', username, password)
+
+    // If the login is successful, the form fields are emptied and the server response 
+    // (including a token and the user details) is saved to the user field of the application's state.
+    try {
+      const user = await loginService.login({ 
+        username, password 
+      })
+      setUser(user)
+      setUsername('')
+      setPassword('')
+    }
+    catch (exception) {
+      console.log('exception', exception)
+    }
+  }
+
   // show the login form only if the user is not logged-in so when user === null
   if(user === null) {
     return (
