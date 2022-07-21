@@ -16,6 +16,37 @@ const App = () => {
     )  
   }, [])
 
+  // show the login form only if the user is not logged-in so when user === null
+  if(user === null) {
+    return (
+      // Add the components for username & password for login
+      // target.value sets the username, password value from the form to application's state variables username, password
+      <div>
+        <h2>Log in to application</h2>
+        <form onSubmit={handleLogin}>
+          <div>
+            username
+            <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+          <div>
+            password
+            <input
+            type="password"
+            value={password}
+            name="Password"
+            onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+          <button type="submit">login</button>
+        </form>
+      </div>
+  )}
+
   return (
     <div>
       <h2>blogs</h2>
