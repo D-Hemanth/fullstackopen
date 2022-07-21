@@ -97,6 +97,32 @@ const App = () => {
     setUser(null)
   } 
 
+  const addBlog = async (event) => {
+    event.preventDefault()
+    // console.log('create new Blog button clicked', event.target);
+
+    // send back the title, author, url as props to createNewBlog callback function to perform axios create
+    const createNewBlogs = {
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    }
+    // console.log('createNewBlogs', createNewBlogs)
+
+    try {
+      // Use blogservice create method to post data to the server
+      const newBlog = await blogService.create(createNewBlogs)
+      setBlogs(blogs.concat(newBlog)) 
+      
+      // set the states of title, author, url to blank after sending their data back to App.js with createNewBlogs
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    }
+    catch (exception) {
+      console.log(exception)
+    }
+  }
 
   const handleTitleChange = (event) => {
     console.log(event.target.value)
