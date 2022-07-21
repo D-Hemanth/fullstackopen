@@ -92,8 +92,28 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h2>Blogs</h2>
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+
+      {/* Allow loggedin users to add new blog to mongodb through input forms & states */}
+      <div>
+        <h2>Create New Blog</h2>
+        <form onSubmit={addBlog}>
+          <div>
+            title:
+            <input id="title" value={newTitle} name="Title" onChange={handleTitleChange} />
+          </div>
+          <div>
+            author:
+            <input id="author" value={newAuthor} name="Author" onChange={handleAuthorChange} />
+          </div>
+          <div>
+            url:
+            <input id="url" value={newUrl} name="Url" onChange={handleUrlChange} />
+          </div>
+          <button type="submit">create</button>
+        </form>
+      </div>
 
       { blogs.map(blog =>
       <Blog key={blog.id} blog={blog} /> )}
