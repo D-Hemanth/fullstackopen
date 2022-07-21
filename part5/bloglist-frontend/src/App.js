@@ -27,6 +27,12 @@ const App = () => {
       const user = await loginService.login({ 
         username, password 
       })
+
+      // save the details of a logged-in user to the local storage of browser with window.localStorage
+      window.localStorage.setItem(
+        'loggedBlogappUser', JSON.stringify(user)
+      )
+
       setUser(user)
       setUsername('')
       setPassword('')
