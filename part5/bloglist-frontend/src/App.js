@@ -58,7 +58,14 @@ const App = () => {
       setPassword('')
     }
     catch (exception) {
-      console.log('exception', exception)
+      // console.log('exception', exception)
+      // set message color to red for errors in the bloglist app
+      setMessageColor('red')
+      // Add a improved notification message when you've typed in a wrong username or password
+      setNotificationMessage('Wrong username or password')
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000);
     }
   }
 
@@ -124,6 +131,11 @@ const App = () => {
       setNewTitle('')
       setNewAuthor('')
       setNewUrl('')
+      setMessageColor('green')
+      setNotificationMessage(`A new blog ${newBlog.title} by ${newBlog.author} added`)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000);
     }
     catch (exception) {
       console.log(exception)
