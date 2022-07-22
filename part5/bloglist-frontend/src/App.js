@@ -50,7 +50,7 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
-
+      
       // call the method noteService.setToken(user.token) with a successful login for setting token for all axios requests
       blogService.setToken(user.token)
       setUser(user)
