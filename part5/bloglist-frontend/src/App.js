@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import Notification from './components/Notification'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
+  const [messageColor, setMessageColor] = useState(null)
 
   // Add states for inputing new blogs by loggedIn users
   const [newTitle, setNewTitle] = useState('')
@@ -66,6 +69,9 @@ const App = () => {
       // target.value sets the username, password value from the form to application's state variables username, password
       <div>
         <h2>Log in to application</h2>
+
+        <Notification notificationMessage={notificationMessage} messageColor={messageColor} />
+
         <form onSubmit={handleLogin}>
           <div>
             username
@@ -142,6 +148,9 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
+
+      <Notification notificationMessage={notificationMessage} messageColor={messageColor} />
+
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
       {/* Allow loggedin users to add new blog to mongodb through input forms & states */}
