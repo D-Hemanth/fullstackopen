@@ -15,11 +15,6 @@ const App = () => {
   const [notificationMessage, setNotificationMessage] = useState(null)
   const [messageColor, setMessageColor] = useState(null)
 
-  // Add states for inputing new blogs by loggedIn users
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
-
   // use Useeffect to add a side effect after rendering the component i.e. here we use it to get data from the server
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
   useEffect(() => {
@@ -125,10 +120,6 @@ const App = () => {
       const newBlog = await blogService.create(newBlogObject)
       setBlogs(blogs.concat(newBlog)) 
       
-      // set the states of title, author, url to blank after sending their data back to App.js with createNewBlogs
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
       setMessageColor('green')
       setNotificationMessage(`A new blog ${newBlog.title} by ${newBlog.author} added`)
       setTimeout(() => {
@@ -139,21 +130,6 @@ const App = () => {
       console.log(exception)
     }
   }
-
-  const handleTitleChange = (event) => {
-    console.log(event.target.value)
-    setNewTitle(event.target.value)
-  } 
-
-  const handleAuthorChange = (event) => {
-    console.log(event.target.value)
-    setNewAuthor(event.target.value)
-  } 
-
-  const handleUrlChange = (event) => {
-    console.log(event.target.value)
-    setNewUrl(event.target.value)
-  } 
 
   return (
     <div>
