@@ -74,15 +74,38 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
 })
 
 // update method to update a blog from a blogslist on mongodb using the id parameter
-blogsRouter.put('/:id', async (request, response) => {
+blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const body = request.body
 
+  // get user object with username, userid from user field of request object of userExtractor middleware
+  const user = request.user
+  // console.log('user', user)
+
+  const blogToUpdate = await Blog.findById(request.params.id)
+
+  if(blogToUpdate.user._id.toString() === user._id.toString()) {
   const blog = {
-    likes: body.likes
+      user: user._id,
+      likes: body.likes,
+      author: body.author,
+      title: body.title,
+      url: body.url
   }
 
+    try {
   const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-  response.status(200).json(updatedBlog)
+      response.status(200).json(updatedBlog.toJSON())
+    }
+    catch (exception) {
+      console.log(exception)
+    }
+  }
+  else {
+      return response.status(401).json({ error: `Unauthorized` })
+    }
+
+
+  
 })
 
 module.exports = blogsRouter
