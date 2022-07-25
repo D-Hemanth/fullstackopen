@@ -1,7 +1,9 @@
 import { useState } from "react"
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, updateBlog }) => {
   const [visible, setVisible] = useState(false)
+  // to store the name of the user after updating the likes
+  const [likesUpdateBlog, setLikesUpdateBlog] = useState(blog)
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -21,14 +23,15 @@ const Blog = ({ blog }) => {
     marginBottom: 5,
   }
 
+
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author}&nbsp; 
-      <button onClick={toggleVisibility} blog={blog}>{buttonLabel}</button>
+      <button onClick={toggleVisibility}>{buttonLabel}</button>
       <div style={showWhenVisible}>
         {blog.url}<br />
-        likes {blog.likes} <button>like</button><br />
-        {blog.user.name}<br />
+        likes {blog.likes} <button onClick={increaseLikes}>like</button><br />
+        {likesUpdateBlog.user.name}<br />
       </div>
     </div>  
   )
