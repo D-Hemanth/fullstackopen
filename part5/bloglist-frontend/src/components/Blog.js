@@ -30,8 +30,8 @@ const Blog = ({ blog }) => {
         likes {blog.likes} <button>like</button><br />
         {blog.user.name}<br />
       </div>
-  </div>  
-)
+    </div>  
+  )
 }
 
 export default Blog
