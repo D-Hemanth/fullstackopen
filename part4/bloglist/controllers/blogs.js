@@ -84,16 +84,16 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const blogToUpdate = await Blog.findById(request.params.id)
 
   if(blogToUpdate.user._id.toString() === user._id.toString()) {
-  const blog = {
+    const blog = {
       user: user._id,
       likes: body.likes,
       author: body.author,
       title: body.title,
       url: body.url
-  }
-
+    }  
+    
     try {
-  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+      const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
       response.status(200).json(updatedBlog.toJSON())
     }
     catch (exception) {
