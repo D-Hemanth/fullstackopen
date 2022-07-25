@@ -23,6 +23,14 @@ const Blog = ({ blog, updateBlog }) => {
     marginBottom: 5,
   }
 
+  const increaseLikes = () => {
+    // Using the spread operator to update blog object's likes value by 1
+    const likesIncreaseBlog = ({...blog, likes: blog.likes + 1})
+    console.log(likesIncreaseBlog)
+    // pass the update blog with new likes value to the update function props from the App file
+    setLikesUpdateBlog(likesIncreaseBlog)
+    updateBlog(likesIncreaseBlog)
+  }
 
   return (
     <div style={blogStyle}>

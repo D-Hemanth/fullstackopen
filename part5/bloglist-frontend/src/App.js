@@ -131,6 +131,17 @@ const App = () => {
     }
   }
 
+  const updateBlog = async (likesBlogObject) => {
+    try {
+      // Use blogservice update method to put data to the server, specifically increase likes by 1 when likes button is clicked
+      const likesIncreaseBlog = await blogService.update(likesBlogObject)
+      setBlogs(blogs.map(blog => blog.id !== likesBlogObject.id ? blog : likesIncreaseBlog))
+    }
+    catch (exception) {
+      console.log(exception)
+    }
+  }
+
   return (
     <div>
       <h2>Blogs</h2>
@@ -144,7 +155,7 @@ const App = () => {
       </Togglable>
 
       { blogs.map(blog =>
-      <Blog key={blog.id} blog={blog} /> )}
+      <Blog key={blog.id} blog={blog} updateBlog={updateBlog} /> )}
     </div>
   )
 }
