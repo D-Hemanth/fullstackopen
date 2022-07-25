@@ -117,21 +117,12 @@ const App = () => {
     setUser(null)
   } 
 
-  const addBlog = async (event) => {
-    event.preventDefault()
-    // console.log('create new Blog button clicked', event.target);
-
-    // send back the title, author, url as props to createNewBlog callback function to perform axios create
-    const createNewBlogs = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl
-    }
-    // console.log('createNewBlogs', createNewBlogs)
-
+  const addBlog = async (newBlogObject) => {
     try {
+      // use the toggleVisibility function referenced from the Toggable component to hide create noteform after creating a note
+      blogFormRef.current.toggleVisibility()
       // Use blogservice create method to post data to the server
-      const newBlog = await blogService.create(createNewBlogs)
+      const newBlog = await blogService.create(newBlogObject)
       setBlogs(blogs.concat(newBlog)) 
       
       // set the states of title, author, url to blank after sending their data back to App.js with createNewBlogs
@@ -172,25 +163,9 @@ const App = () => {
 
       <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
-      {/* Allow loggedin users to add new blog to mongodb through input forms & states */}
-      <div>
-        <h2>Create New Blog</h2>
-        <form onSubmit={addBlog}>
-          <div>
-            title:
-            <input id="title" value={newTitle} name="Title" onChange={handleTitleChange} />
-          </div>
-          <div>
-            author:
-            <input id="author" value={newAuthor} name="Author" onChange={handleAuthorChange} />
-          </div>
-          <div>
-            url:
-            <input id="url" value={newUrl} name="Url" onChange={handleUrlChange} />
-          </div>
-          <button type="submit">create</button>
-        </form>
-      </div>
+      <Togglable buttonLabel='new blog' ref={blogFormRef}>
+        <BlogForm createBlog={addBlog}/>
+      </Togglable>
 
       { blogs.map(blog =>
       <Blog key={blog.id} blog={blog} /> )}
