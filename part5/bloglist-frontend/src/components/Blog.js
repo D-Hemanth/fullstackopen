@@ -24,9 +24,8 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const increaseLikes = () => {
     // Using the spread operator to update blog object's likes value by 1
     const likesIncreaseBlog = ({...blog, likes: blog.likes + 1})
-    console.log(likesIncreaseBlog)
+    // console.log(likesIncreaseBlog)
     // pass the update blog with new likes value to the update function props from the App file
-    setLikesUpdateBlog(likesIncreaseBlog)
     updateBlog(likesIncreaseBlog)
   }
 
@@ -34,6 +33,10 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const handleRemoveBlogChange = () => {
     deleteBlog(blog)
   }
+
+  // the button for deleting a blog post is visible only if the blog post was added by that user
+  const deleteButtonVisibility = { display: user.name === blog.user.name ? '' : 'none' }
+
   return (
     <div style={blogStyle}>
       {blog.title} - {blog.author}&nbsp; 
