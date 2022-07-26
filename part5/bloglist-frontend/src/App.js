@@ -118,6 +118,7 @@ const App = () => {
       blogFormRef.current.toggleVisibility()
       // Use blogservice create method to post data to the server
       const newBlog = await blogService.create(newBlogObject)
+      // console.log(newBlog)
       setBlogs(blogs.concat(newBlog)) 
       
       setMessageColor('green')
