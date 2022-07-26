@@ -5,7 +5,7 @@ import loginService from './services/login'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
-
+import LoginForm from './components/LoginForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -71,40 +71,6 @@ const App = () => {
   // noteFormRef variable acts as a reference to the component
   const blogFormRef = useRef()
 
-  // show the login form only if the user is not logged-in so when user === null
-  if(user === null) {
-    return (
-      // Add the components for username & password for login
-      // target.value sets the username, password value from the form to application's state variables username, password
-      <div>
-        <h2>Log in to application</h2>
-
-        <Notification notificationMessage={notificationMessage} messageColor={messageColor} />
-
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
-      </div>
-  )}
-
   // Logout & Ensure the browser does not remember the details of the user after logging out
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
@@ -118,6 +84,7 @@ const App = () => {
       blogFormRef.current.toggleVisibility()
       // Use blogservice create method to post data to the server
       const newBlog = await blogService.create(newBlogObject)
+      // console.log(newBlog)
       setBlogs(blogs.concat(newBlog)) 
       
       setMessageColor('green')
@@ -155,6 +122,26 @@ const App = () => {
     }
   }
 
+  // show the login form only if the user is not logged-in so when user === null
+  if(user === null) {
+    return (
+      // Add the components for username & password for login
+      // target.value sets the username, password value from the form to application's state variables username, password
+      <div>
+        <h2>Log in to application</h2>
+
+        <Notification notificationMessage={notificationMessage} messageColor={messageColor} />
+
+        <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+        />
+      </div>
+    )
+  }
   return (
     <div>
       <h2>Blogs</h2>
