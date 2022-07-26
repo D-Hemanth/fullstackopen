@@ -81,28 +81,21 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   const user = request.user
   // console.log('user', user)
 
-  const blogToUpdate = await Blog.findById(request.params.id)
-
-  if(blogToUpdate.user._id.toString() === user._id.toString()) {
-    const blog = {
-      user: user._id,
-      likes: body.likes,
-      author: body.author,
-      title: body.title,
-      url: body.url
-    }  
-    
-    try {
-      const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-      response.status(200).json(updatedBlog.toJSON())
-    }
-    catch (exception) {
-      console.log(exception)
-    }
+  const blog = {
+    user: user._id,
+    likes: body.likes,
+    author: body.author,
+    title: body.title,
+    url: body.url
+  }  
+  
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    response.status(200).json(updatedBlog.toJSON())
   }
-  else {
-      return response.status(401).json({ error: `Unauthorized` })
-    }
+  catch (exception) {
+    console.log(exception)
+  }
 
 
   
