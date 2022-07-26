@@ -1,4 +1,5 @@
 import { useState, forwardRef, useImperativeHandle } from "react";
+import PropTypes from 'prop-types'
 
 // React.forwardRef creates a React component that forwards the ref attribute it receives to another component below in the tree
 const Togglable = forwardRef((props, refs) => {
@@ -32,5 +33,10 @@ const Togglable = forwardRef((props, refs) => {
     </div>
   )
 })
+
+// expected and required props of a component can be defined with the prop-types package
+Togglable.propTypes = {
+  buttonLabel: PropTypes.string.isRequired
+}
 
 export default Togglable
