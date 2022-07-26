@@ -1,0 +1,4 @@
+### the directories build and node_modules, file .eslintrc.js will be skipped when linting
+node_modules
+build
+.eslintrc.js
