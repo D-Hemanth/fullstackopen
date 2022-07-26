@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs(blogs)
-    )  
+    )
   }, [])
 
   // application checks if user details of a logged-in user can already be found on the local storage. If they can, the details are saved to the state of the application and to blogService
@@ -37,18 +37,18 @@ const App = () => {
     event.preventDefault()
     // console.log('logging in with', username, password)
 
-    // If the login is successful, the form fields are emptied and the server response 
+    // If the login is successful, the form fields are emptied and the server response
     // (including a token and the user details) is saved to the user field of the application's state.
     try {
-      const user = await loginService.login({ 
-        username, password 
+      const user = await loginService.login({
+        username, password
       })
 
       // save the details of a logged-in user to the local storage of browser with window.localStorage
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
-      
+
       // call the method noteService.setToken(user.token) with a successful login for setting token for all axios requests
       blogService.setToken(user.token)
       setUser(user)
@@ -63,7 +63,7 @@ const App = () => {
       setNotificationMessage('Wrong username or password')
       setTimeout(() => {
         setNotificationMessage(null)
-      }, 5000);
+      }, 5000)
     }
   }
 
@@ -76,7 +76,7 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     // window.localStorage.clear()
     setUser(null)
-  } 
+  }
 
   const addBlog = async (newBlogObject) => {
     try {
@@ -85,13 +85,13 @@ const App = () => {
       // Use blogservice create method to post data to the server
       const newBlog = await blogService.create(newBlogObject)
       // console.log(newBlog)
-      setBlogs(blogs.concat(newBlog)) 
-      
+      setBlogs(blogs.concat(newBlog))
+
       setMessageColor('green')
       setNotificationMessage(`A new blog ${newBlog.title} by ${newBlog.author} added`)
       setTimeout(() => {
         setNotificationMessage(null)
-      }, 5000);
+      }, 5000)
     }
     catch (exception) {
       console.log(exception)
@@ -157,7 +157,7 @@ const App = () => {
 
       {/* sort the list of blog posts by the number of likes using sort method with compare function inside [(a,b) => a.likes - b.likes] */}
       { blogs.sort((a,b) => a.likes - b.likes).map(blog =>
-      <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} /> )}
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} /> )}
     </div>
   )
 }
