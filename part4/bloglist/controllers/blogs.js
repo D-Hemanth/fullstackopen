@@ -46,11 +46,11 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
   // console.log(blog)
 
   try {
-  // refactor the tested routes to use async/await
-  // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
-  const savedBlog = await blog.save()
-  user.blogs = user.blogs.concat(savedBlog._id)
-  await user.save()
+    // refactor the tested routes to use async/await
+    // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
+    const savedBlog = await blog.save()
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
     // Mongoose join like in relational database is done with the populate method for the newly created blog to have user field populated again
     const blogsWithUserObject = await Blog.findById(savedBlog.id).populate('user', { username: 1, name: 1 })
     response.json(blogsWithUserObject)
