@@ -45,12 +45,19 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
   })
   // console.log(blog)
 
+  try {
   // refactor the tested routes to use async/await
   // savedBlog is the newly created blog post. The data sent back in the response is the formatted version created with the toJSON method
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
-  response.json(savedBlog)
+    // Mongoose join like in relational database is done with the populate method for the newly created blog to have user field populated again
+    const blogsWithUserObject = await Blog.findById(savedBlog.id).populate('user', { username: 1, name: 1 })
+    response.json(blogsWithUserObject)
+  }
+  catch (exception) {
+    next(exception)
+  }
 })
 
 // delete method to remove a blog from a blogslist on mongodb using the id parameter
@@ -82,7 +89,6 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   // console.log('user', user)
 
   const blog = {
-    user: user._id,
     likes: body.likes,
     author: body.author,
     title: body.title,
@@ -90,7 +96,8 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
   }  
   
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    // Mongoose join like in relational database is done with the populate method for the updated blog to have user field populated again
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true }).populate('user', { username: 1, name: 1 })
     response.status(200).json(updatedBlog.toJSON())
   }
   catch (exception) {
