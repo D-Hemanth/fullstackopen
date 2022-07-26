@@ -142,6 +142,19 @@ const App = () => {
     }
   }
 
+  const deleteBlog = async (blogToDelete) => {
+    try {
+      if(window.confirm(`Remove blog ${blogToDelete.title} by ${blogToDelete.author}`)) {
+        // Use blogservice remove method to delete data from the server, only if the blog was created by that user
+        blogService.remove(blogToDelete)
+        setBlogs(blogs.filter(blog => blog.id !== blogToDelete.id))
+      }
+    }
+    catch (exception) {
+      console.log(exception)
+    }
+  }
+
   return (
     <div>
       <h2>Blogs</h2>
@@ -156,7 +169,7 @@ const App = () => {
 
       {/* sort the list of blog posts by the number of likes using sort method with compare function inside [(a,b) => a.likes - b.likes] */}
       { blogs.sort((a,b) => a.likes - b.likes).map(blog =>
-      <Blog key={blog.id} blog={blog} updateBlog={updateBlog} /> )}
+      <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} /> )}
     </div>
   )
 }

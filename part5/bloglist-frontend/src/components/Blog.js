@@ -1,9 +1,7 @@
 import { useState } from "react"
 
-const Blog = ({ blog, updateBlog }) => {
+const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const [visible, setVisible] = useState(false)
-  // to store the name of the user after updating the likes
-  const [likesUpdateBlog, setLikesUpdateBlog] = useState(blog)
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -32,14 +30,19 @@ const Blog = ({ blog, updateBlog }) => {
     updateBlog(likesIncreaseBlog)
   }
 
+  // delete blogs from bloglist using deleteBlog function props to send axios delete request 
+  const handleRemoveBlogChange = () => {
+    deleteBlog(blog)
+  }
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author}&nbsp; 
+      {blog.title} - {blog.author}&nbsp; 
       <button onClick={toggleVisibility}>{buttonLabel}</button>
       <div style={showWhenVisible}>
         {blog.url}<br />
         likes {blog.likes} <button onClick={increaseLikes}>like</button><br />
-        {likesUpdateBlog.user.name}<br />
+        {blog.user.name}<br />
+        <button style={deleteButtonVisibility} onClick={handleRemoveBlogChange}>remove</button>
       </div>
     </div>  
   )
