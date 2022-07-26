@@ -142,6 +142,7 @@ const App = () => {
       </div>
     )
   }
+
   return (
     <div>
       <h2>Blogs</h2>
