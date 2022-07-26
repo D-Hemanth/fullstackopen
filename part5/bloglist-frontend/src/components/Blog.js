@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const [visible, setVisible] = useState(false)
@@ -8,7 +8,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   }
 
   // visibility of the component is defined by an inline style rule, when the display property is set to none the component is not displayed
-  const showWhenVisible = {display: visible ? '' : 'none'}
+  const showWhenVisible = { display: visible ? '' : 'none' }
 
   const buttonLabel = visible ? 'hide' : 'view'
 
@@ -23,13 +23,13 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   const increaseLikes = () => {
     // Using the spread operator to update blog object's likes value by 1
-    const likesIncreaseBlog = ({...blog, likes: blog.likes + 1})
+    const likesIncreaseBlog = ({ ...blog, likes: blog.likes + 1 })
     // console.log(likesIncreaseBlog)
     // pass the update blog with new likes value to the update function props from the App file
     updateBlog(likesIncreaseBlog)
   }
 
-  // delete blogs from bloglist using deleteBlog function props to send axios delete request 
+  // delete blogs from bloglist using deleteBlog function props to send axios delete request
   const handleRemoveBlogChange = () => {
     deleteBlog(blog)
   }
@@ -39,7 +39,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} - {blog.author}&nbsp; 
+      {blog.title} - {blog.author}&nbsp;
       <button onClick={toggleVisibility}>{buttonLabel}</button>
       <div style={showWhenVisible}>
         {blog.url}<br />
@@ -47,7 +47,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         {blog.user.name}<br />
         <button style={deleteButtonVisibility} onClick={handleRemoveBlogChange}>remove</button>
       </div>
-    </div>  
+    </div>
   )
 }
 

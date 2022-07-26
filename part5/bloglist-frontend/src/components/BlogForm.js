@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const BlogForm = ({ createBlog }) => {
   // Add states for inputing new blogs by loggedIn users
@@ -9,28 +9,28 @@ const BlogForm = ({ createBlog }) => {
   const handleTitleChange = (event) => {
     console.log(event.target.value)
     setNewTitle(event.target.value)
-  } 
+  }
 
   const handleAuthorChange = (event) => {
     console.log(event.target.value)
     setNewAuthor(event.target.value)
-  } 
+  }
 
   const handleUrlChange = (event) => {
     console.log(event.target.value)
     setNewUrl(event.target.value)
-  } 
+  }
 
   const addBlog = async (event) => {
-  event.preventDefault()
-  // console.log('create new Blog button clicked', event.target);
+    event.preventDefault()
+    // console.log('create new Blog button clicked', event.target);
 
-  // send back the title, author, url as props to createNewBlog callback function to perform axios create
-  createBlog({
-    title: newTitle,
-    author: newAuthor,
-    url: newUrl
-  })
+    // send back the title, author, url as props to createNewBlog callback function to perform axios create
+    createBlog({
+      title: newTitle,
+      author: newAuthor,
+      url: newUrl
+    })
     // set the states of title, author, url to blank after sending their data back to App.js with createNewBlogs
     setNewTitle('')
     setNewAuthor('')

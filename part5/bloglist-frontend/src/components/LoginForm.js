@@ -12,26 +12,26 @@ const LoginForm = ({
     <div>
       {/* Add the components for username & password for login */}
       <form onSubmit={handleSubmit}>
-          <div>
+        <div>
             username
-            <input
+          <input
             type="text"
             value={username}
             name="Username"
             onChange={handleUsernameChange}
-            />
-          </div>
-          <div>
+          />
+        </div>
+        <div>
             password
-            <input
+          <input
             type="password"
             value={password}
             name="Password"
             onChange={handlePasswordChange}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
     </div>
   )
 }
