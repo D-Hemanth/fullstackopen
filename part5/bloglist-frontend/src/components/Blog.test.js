@@ -39,3 +39,5 @@ describe('<Blog/> component tests', () => {
     expect(fullComponentRendered).toHaveStyle('display: none')
   })
 
+  })
+
