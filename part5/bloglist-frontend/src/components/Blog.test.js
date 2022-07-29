@@ -62,5 +62,6 @@ describe('<Blog/> component tests', () => {
     await user.click(likeButton)
 
     expect(mockLikesUpdateHandler.mock.calls).toHaveLength(2)
+  })
 })
 
