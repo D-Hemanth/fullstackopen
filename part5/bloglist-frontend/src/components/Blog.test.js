@@ -37,3 +37,5 @@ describe('<Blog/> component tests', () => {
     // tests whether url & likes are not displayed
     const fullComponentRendered = component.container.querySelector('.showFullBlog')
     expect(fullComponentRendered).toHaveStyle('display: none')
+  })
+
