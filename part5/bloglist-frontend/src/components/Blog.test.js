@@ -39,5 +39,14 @@ describe('<Blog/> component tests', () => {
     expect(fullComponentRendered).toHaveStyle('display: none')
   })
 
+  test('which checks that the blog\'s url and number of likes are shown when the view button is clicked', async () => {
+    const user = userEvent.setup()
+    const viewButton = screen.getByText('view')
+    await user.click(viewButton)
+
+    // tests whether url & likes are displayed
+    const showFullBlogDiv = component.container.querySelector('.showFullBlog')
+    screen.debug(showFullBlogDiv)
+    expect(showFullBlogDiv).not.toHaveStyle('display: none')
   })
 
