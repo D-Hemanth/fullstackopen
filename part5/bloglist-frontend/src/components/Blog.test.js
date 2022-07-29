@@ -26,3 +26,14 @@ describe('<Blog/> component tests', () => {
   beforeEach(() => {
     component = render(<Blog blog={blog} user={user} />)
   })
+
+  test('blog renders the blog\'s title and author, but does not render its url or number of likes by default', () => {
+    const ComponentRendered = component.container.querySelector('.blog')
+    screen.debug(ComponentRendered)
+
+    expect(ComponentRendered).toHaveTextContent('Component testing is done with react-testing-library')
+    expect(ComponentRendered).toHaveTextContent('Hemanth')
+
+    // tests whether url & likes are not displayed
+    const fullComponentRendered = component.container.querySelector('.showFullBlog')
+    expect(fullComponentRendered).toHaveStyle('display: none')
