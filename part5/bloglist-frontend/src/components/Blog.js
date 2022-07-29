@@ -38,10 +38,10 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   const deleteButtonVisibility = { display: user.name === blog.user.name ? '' : 'none' }
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title} - {blog.author}&nbsp;
       <button onClick={toggleVisibility}>{buttonLabel}</button>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className='showFullBlog'>
         {blog.url}<br />
         likes {blog.likes} <button onClick={increaseLikes}>like</button><br />
         {blog.user.name}<br />
