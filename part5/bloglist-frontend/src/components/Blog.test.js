@@ -42,6 +42,7 @@ describe('<Blog/> component tests', () => {
   })
 
   test('which checks that the blog\'s url and number of likes are shown when the view button is clicked', async () => {
+    // setsup a session using setup() to mimic the UI of rendered component in browser to mock user interactions while testing
     const user = userEvent.setup()
     const viewButton = screen.getByText('view')
     await user.click(viewButton)
@@ -53,10 +54,12 @@ describe('<Blog/> component tests', () => {
   })
 
   test('if the like button is clicked twice, the event handler the blog component received as props is called twice', async () => {
+    // setsup a session using setup() to mimic the UI of rendered component in browser to mock user interactions while testing
     const user = userEvent.setup()
     const viewButton = screen.getByText('view')
     await user.click(viewButton)
 
+    // tests when like button is clicked twice mockLikesUpdateHandler is also called twice
     const likeButton = screen.getByText('like')
     await user.click(likeButton)
     await user.click(likeButton)
