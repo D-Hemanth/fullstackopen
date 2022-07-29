@@ -23,8 +23,10 @@ describe('<Blog/> component tests', () => {
     name: 'Hemanth D',
   }
 
+  let mockLikesUpdateHandler = jest.fn()
+
   beforeEach(() => {
-    component = render(<Blog blog={blog} user={user} />)
+    component = render(<Blog blog={blog} user={user} updateBlog={mockLikesUpdateHandler} />)
   })
 
   test('blog renders the blog\'s title and author, but does not render its url or number of likes by default', () => {
