@@ -49,4 +49,5 @@ describe('<Blog/> component tests', () => {
     screen.debug(showFullBlogDiv)
     expect(showFullBlogDiv).not.toHaveStyle('display: none')
   })
+})
 
