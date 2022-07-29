@@ -39,7 +39,7 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     // Allow loggedIn users to add new blog to mongodb through input forms, states, useRef for toggleVisibility, props.children
-    <div>
+    <div className='blogFormDiv'>
       <h2>Create New Blog</h2>
       <form onSubmit={addBlog}>
         <div>
