@@ -1,3 +1,5 @@
+// Mocha recommends that arrow functions are not used, because they might cause some issues in certain situations
+// so don't use function like -- describe('Note app', () => {})
 describe('Blog app', function() {
   // beforeEach block empties the server's database(mongodb) before tests are run
   beforeEach(function() {
