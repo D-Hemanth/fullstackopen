@@ -4,7 +4,7 @@ const Notification = ({ notificationMessage, messageColor }) => {
   }
 
   return (
-    <div className={messageColor}>
+    <div id='notificationMessage' className={messageColor}>
       {notificationMessage}
     </div>
   )
