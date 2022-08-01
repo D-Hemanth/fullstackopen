@@ -20,4 +20,30 @@ describe('Blog app', function() {
     cy.contains('password')
     cy.contains('login')
   })
+
+  describe('Login', function() {
+    it('succeeds with correct credentials', function() {
+      cy.get('#username').type('Hemanth')
+      cy.get('#password').type('toughPassword')
+      cy.get('#login-button').click()
+
+      cy.contains('Hemanth D logged in')
+    })
+
+    it('fails with wrong credentials', function() {
+      cy.get('#username').type('Hemanth')
+      cy.get('#password').type('wrongPassword')
+      cy.get('#login-button').click()
+
+      // Because all tests are for the same component we accessed using cy.get, we can chain them using 'and'
+      // should allows for more diverse tests than contains which works based on text content only
+      cy.get('#notificationMessage')
+        .should('contain', 'Wrong username or password')
+        .and('have.css', 'color', 'rgb(255, 0, 0)')
+        .and('have.css', 'border-style', 'solid')
+
+      // We used cy.get('html') to access the whole visible content of the application
+      cy.get('html').should('not.contain', 'Hemanth D logged in')
+    })
+  })
 })
