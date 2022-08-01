@@ -35,6 +35,12 @@ app.use('/api/login', loginRouter)
 // The usersRouter we defined in ./controller/users is used if the URL of the request starts with '/api/users'
 app.use('/api/users', usersRouter)
 
+// API endpoints to the backend for the testingRouter We can empty the database using these endpoints & to take them into use
+if(process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
+
 // handler of requests with unknown endpoint
 app.use(middleware.unknownEndpoint)
 // this has to be the last loaded middleware
