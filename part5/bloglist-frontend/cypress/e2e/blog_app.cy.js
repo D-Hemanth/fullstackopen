@@ -4,6 +4,7 @@ describe('Blog app', function() {
   // beforeEach block empties the server's database(mongodb) before tests are run
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
+    // Currently it is not possible to add new users through the frontend's UI after resetting it, so we add a new user to the backend from the beforeEach block
     const user = {
       name: 'Hemanth D',
       username: 'Hemanth',
