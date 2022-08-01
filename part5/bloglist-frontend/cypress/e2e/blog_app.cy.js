@@ -4,6 +4,12 @@ describe('Blog app', function() {
   // beforeEach block empties the server's database(mongodb) before tests are run
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
+    const user = {
+      name: 'Hemanth D',
+      username: 'Hemanth',
+      password: 'toughPassword'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users/', user)
     cy.visit('http://localhost:3000')
   })
 
