@@ -156,7 +156,7 @@ const App = () => {
       </Togglable>
 
       {/* sort the list of blog posts by the number of likes using sort method with compare function inside [(a,b) => a.likes - b.likes] */}
-      { blogs.sort((a,b) => a.likes - b.likes).map(blog =>
+      { blogs.sort((a,b) => b.likes - a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} user={user} /> )}
     </div>
   )
