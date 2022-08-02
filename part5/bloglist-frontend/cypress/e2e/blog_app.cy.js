@@ -63,5 +63,18 @@ describe('Blog app', function() {
 
       cy.contains('A blog created by cypress - Hemanth D')
     })
+    it('Check that users can like a blog', function() {
+      cy.contains('new blog').click()
+      cy.get('#title').type('A blog created by cypress')
+      cy.get('#author').type('Hemanth D')
+      cy.get('#url').type('https://github.com/d-hemanth')
+      cy.contains('create').click()
+
+      cy.contains('A blog created by cypress - Hemanth D')
+      cy.contains('view').click()
+      cy.contains(0)
+      cy.get('#likes-button').click()
+      cy.contains(1)
+    })
   })
 })
