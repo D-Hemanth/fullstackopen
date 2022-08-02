@@ -47,4 +47,18 @@ describe('Blog app', function() {
       cy.get('html').should('not.contain', 'Hemanth D logged in')
     })
   })
+    beforeEach(function() {
+      // Using Custom command cy.login for logging In from the backend which is declared in cypress/support/commands.js
+      cy.login({ username: 'Hemanth', password: 'toughPassword' })
+    })
+
+    it('A blog can be created', function() {
+      cy.contains('new blog').click()
+      cy.get('#title').type('A blog created by cypress')
+      cy.get('#author').type('Hemanth D')
+      cy.get('#url').type('https://github.com/d-hemanth')
+      cy.contains('create').click()
+
+      cy.contains('A blog created by cypress - Hemanth D')
+    })
 })
