@@ -63,6 +63,7 @@ describe('Blog app', function() {
 
       cy.contains('A blog created by cypress - Hemanth D')
     })
+
     it('Check that users can like a blog', function() {
       cy.contains('new blog').click()
       cy.get('#title').type('A blog created by cypress')
