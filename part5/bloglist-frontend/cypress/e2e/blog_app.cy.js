@@ -88,6 +88,8 @@ describe('Blog app', function() {
 
     describe('and several blogs exist', function() {
       beforeEach(function() {
+        // Using Custom command cy.login for logging In from the backend which is declared in cypress/support/commands.js
+        cy.login({ username: 'Hemanth', password: 'toughPassword' })
         // Using Custom command cy.createBlog for creating a new blog from the backend which is declared in cypress/support/commands.js
         cy.createBlog({
           title: 'A blog created by cypress',
@@ -103,19 +105,19 @@ describe('Blog app', function() {
       })
 
       it('the user who created a blog can delete it', function() {
-        cy.contains('First class tests').contains('view').click()
+        cy.contains('A blog created by cypress').contains('view').click()
         cy.contains('remove').get('#remove-button').click()
 
         //  use cy.on to invoke a JS Confirm popup, validate the text content, click OK, and validate that the confirm popup has been successfully closed
         cy.on('window:confirm', (str) => {
-          expect(str).to.equal('Remove blog First class tests by Edsger W. Dijkstra')
+          expect(str).to.equal('Remove blog A blog created by cypress by Hemanth D')
         })
         cy.on('window:confirm', () => true)
 
-        cy.get('html').should('not.contain', 'First class tests')
+        cy.get('html').should('not.contain', 'A blog created by cypress')
       })
 
-      it.only('the user who didn\'t create the blog cannot delete it', function() {
+      it('the user who didn\'t create the blog cannot delete it', function() {
         // logout from the user account who created the blogs
         cy.contains('logout').click()
 
