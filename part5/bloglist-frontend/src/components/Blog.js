@@ -43,7 +43,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
       <button onClick={toggleVisibility}>{buttonLabel}</button>
       <div style={showWhenVisible} className='showFullBlog'>
         {blog.url}<br />
-        likes {blog.likes} <button onClick={increaseLikes}>like</button><br />
+        likes {blog.likes} <button id='likes-button' onClick={increaseLikes}>like</button><br />
         {blog.user.name}<br />
         <button style={deleteButtonVisibility} onClick={handleRemoveBlogChange}>remove</button>
       </div>
