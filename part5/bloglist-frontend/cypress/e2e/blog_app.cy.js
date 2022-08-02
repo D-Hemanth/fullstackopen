@@ -47,6 +47,8 @@ describe('Blog app', function() {
       cy.get('html').should('not.contain', 'Hemanth D logged in')
     })
   })
+
+  describe('When logged in', function() {
     beforeEach(function() {
       // Using Custom command cy.login for logging In from the backend which is declared in cypress/support/commands.js
       cy.login({ username: 'Hemanth', password: 'toughPassword' })
@@ -61,4 +63,5 @@ describe('Blog app', function() {
 
       cy.contains('A blog created by cypress - Hemanth D')
     })
+  })
 })
