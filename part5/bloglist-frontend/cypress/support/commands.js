@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+// custom command to login to the app from the backend using POST request to speed up e2e testing in cypress
+Cypress.Commands.add('login', ({ username, password }) => {
+  cy.request('POST', 'http://localhost:3003/api/login', {
+    username, password
+  }).then(response => {
+    // The callback function saves the details of a logged-in user to localStorage, and reloads the page, now there is no difference to a user logging in with the login form
+    localStorage.setItem('loggedBlogappUser', JSON.stringify(response.body))
+    cy.visit('http://localhost:3000')
+  })
+})
