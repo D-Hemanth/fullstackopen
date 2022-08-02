@@ -77,5 +77,35 @@ describe('Blog app', function() {
       cy.get('#likes-button').click()
       cy.contains(1)
     })
+
+    describe('and several blogs exist', function() {
+      beforeEach(function() {
+        // Using Custom command cy.createBlog for creating a new blog from the backend which is declared in cypress/support/commands.js
+        cy.createBlog({
+          title: 'A blog created by cypress',
+          author: 'Hemanth D',
+          url: 'https://github.com/d-hemanth'
+        })
+
+        cy.createBlog({
+          title: 'First class tests',
+          author: 'Edsger W. Dijkstra',
+          url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html'
+        })
+      })
+
+      it('the user who created a blog can delete it', function() {
+        cy.contains('First class tests').contains('view').click()
+        cy.contains('remove').get('#remove-button').click()
+
+        //  use cy.on to invoke a JS Confirm popup, validate the text content, click OK, and validate that the confirm popup has been successfully closed
+        cy.on('window:confirm', (str) => {
+          expect(str).to.equal('Remove blog First class tests by Edsger W. Dijkstra')
+        })
+        cy.on('window:confirm', () => true)
+
+        cy.get('html').should('not.contain', 'First class tests')
+      })
+
   })
 })
