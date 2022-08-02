@@ -5,12 +5,20 @@ describe('Blog app', function() {
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     // Currently it is not possible to add new users through the frontend's UI after resetting it, so we add a new user to the backend from the beforeEach block
-    const user = {
+    const user1 = {
       name: 'Hemanth D',
       username: 'Hemanth',
       password: 'toughPassword'
     }
-    cy.request('POST', 'http://localhost:3003/api/users/', user)
+    cy.request('POST', 'http://localhost:3003/api/users/', user1)
+
+    const user2 = {
+      name: 'Matti Luukkainen',
+      username: 'mluukkai',
+      password: 'salainen'
+    }
+    cy.request('POST', 'http://localhost:3003/api/users/', user2)
+
     cy.visit('http://localhost:3000')
   })
 
@@ -107,5 +115,16 @@ describe('Blog app', function() {
         cy.get('html').should('not.contain', 'First class tests')
       })
 
+      it.only('the user who didn\'t create the blog cannot delete it', function() {
+        // logout from the user account who created the blogs
+        cy.contains('logout').click()
+
+        // login with another user account who didn't create the blog
+        cy.login({ username: 'mluukkai', password: 'salainen' })
+
+        cy.contains('First class tests').contains('view').click()
+        cy.get('#remove-button').should('not.be.visible')
+      })
+    })
   })
 })
