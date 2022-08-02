@@ -34,6 +34,9 @@ Cypress.Commands.add('login', ({ username, password }) => {
     cy.visit('http://localhost:3000')
   })
 })
+
+// custom command to create new blog in the app from the backend using POST request to speed up e2e testing in cypress
+// The command expects the user to be logged in and the user's details to be saved to localStorage
 Cypress.Commands.add('createBlog', ({ title, author, url }) => {
   cy.request({
     url: 'http://localhost:3003/api/blogs',
