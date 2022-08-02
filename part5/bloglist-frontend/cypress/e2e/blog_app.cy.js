@@ -127,6 +127,7 @@ describe('Blog app', function() {
         cy.contains('First class tests').contains('view').click()
         cy.get('#remove-button').should('not.be.visible')
       })
+
       it('check that the blogs are ordered according to likes with blog with the most likes being first', function() {
         // First increase the likes of the two blogs already in db by giving aliases to each blog created so we can use it to refer to their likes count button
         // and add a wait of 0.5 sec otherwise the click is too fast to be recognised as double click & it'll only show one click
@@ -143,6 +144,7 @@ describe('Blog app', function() {
           cy.wrap(blogs[0]).should('contain', 'First class tests')
           cy.wrap(blogs[1]).should('contain', 'A blog created by cypress')
         })
+      })
     })
   })
 })
