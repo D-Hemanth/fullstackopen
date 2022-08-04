@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client'
 import { createStore } from 'redux'
 import reducer from './reducers/counterReducer'
 
+// whole state of the application is stored into one JavaScript-object in the store & it is created using createStore
 const store = createStore(reducer)
 
 const App = () => {
+  // actions dispatched/sent to store using dispatch method
   const good = () => {
     store.dispatch({ type: 'GOOD' })
   }
@@ -40,5 +42,6 @@ const renderApp = () => {
   root.render(<App />)
 }
 
+// function renderApp listens for changes in the store with the store.subscribe method which then renders the whole app
 renderApp()
 store.subscribe(renderApp)
