@@ -19,14 +19,14 @@ const asObject = (anecdote) => {
 
 const initialState = anecdotesAtStart.map(asObject)
 
+// A reducer defined should be such that if there is a change in the state, the old object is not changed, 
+// but it is replaced with a new, changed, object i.e state should not be directly mutated/modified
 const anecdoteReducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
   switch (action.type) {
     case 'NEW_ANECDOTE': 
-      const anecdoteToAdd = asObject(action.data)
-      state = [...state, anecdoteToAdd]
-      return state
+      return [...state, action.data]     // Adding a new note using the JavaScript array spread-syntax
     case 'TOGGLE_VOTE': {
       const id = action.data.id
       // console.log(id)
@@ -39,6 +39,27 @@ const anecdoteReducer = (state = initialState, action) => {
       return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
     }
     default: return state
+  }
+}
+
+// Functions that create actions are called action creators, here createNote is an action creator
+// A module can have only one default export, but multiple "normal" export, use this to export the action creators into App
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    data: {
+      content,
+      id: getId(),
+      votes: 0
+    }
+  }
+}
+
+// Functions that create actions are called action creators, here createNote is an action creator
+export const toggleIncreaseVote = (id) => {
+  return {
+    type: 'TOGGLE_VOTE',
+    data: { id }
   }
 }
 

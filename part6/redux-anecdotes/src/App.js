@@ -13,18 +13,12 @@ const App = () => {
     const content = event.target.anecdote.value
     console.log('content log:', `${ content }`)
     event.target.anecdote.value = ''
-    dispatch({
-      type: 'NEW_ANECDOTE',
-      data: `${ content }`
-    })
+    dispatch(createAnecdote(content))
   }
 
   const vote = (id) => {
     console.log('vote', id)
-    dispatch({
-      type: 'TOGGLE_VOTE',
-      data: { id }
-    })
+    dispatch(toggleIncreaseVote(id))
   }
 
   return (
