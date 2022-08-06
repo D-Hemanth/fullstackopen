@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux'
 
 const App = () => {
+  // any React component can access the anecdotes stored in the store with the useSelector-hook,the function either searches for or selects data from the react-redux store
   const anecdotes = useSelector(state => state)
+  // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
   const dispatch = useDispatch()
 
   const addAnecdote = (event) => {
