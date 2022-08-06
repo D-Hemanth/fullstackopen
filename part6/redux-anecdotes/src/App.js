@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { createAnecdote, toggleIncreaseVote } from './reducers/anecdoteReducer'
+import AnecdoteForm from './components/AnecdoteForm'
+import { toggleIncreaseVote } from './reducers/anecdoteReducer'
 
 const App = () => {
   // any React component can access the anecdotes stored in the store with the useSelector-hook,the function either searches for or selects data from the react-redux store
