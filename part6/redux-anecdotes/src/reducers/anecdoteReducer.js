@@ -23,7 +23,10 @@ const anecdoteReducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
   switch (action.type) {
-    case 'NEW_ANECDOTE': return state.concat(action.data)
+    case 'NEW_ANECDOTE': 
+      const anecdoteToAdd = asObject(action.data)
+      state = [...state, anecdoteToAdd]
+      return state
     case 'TOGGLE_VOTE': {
       const id = action.data.id
       // console.log(id)
