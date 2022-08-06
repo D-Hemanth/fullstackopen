@@ -6,6 +6,10 @@ const App = () => {
 
   const vote = (id) => {
     console.log('vote', id)
+    dispatch({
+      type: 'TOGGLE_VOTE',
+      data: { id }
+    })
   }
 
   return (
