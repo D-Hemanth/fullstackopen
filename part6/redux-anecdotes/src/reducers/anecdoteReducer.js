@@ -1,3 +1,5 @@
+import { createSlice } from "@reduxjs/toolkit"
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -18,18 +20,26 @@ const asObject = (anecdote) => {
 }
 
 const initialState = anecdotesAtStart.map(asObject)
+// console.log('initialState', initialState)
 
-// A reducer defined should be such that if there is a change in the state, the old object is not changed, 
-// but it is replaced with a new, changed, object i.e state should not be directly mutated/modified
-const anecdoteReducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-  switch (action.type) {
-    case 'NEW_ANECDOTE': 
-      return [...state, action.data]     // Adding a new note using the JavaScript array spread-syntax
-    case 'TOGGLE_VOTE': {
-      const id = action.data.id
-      // console.log(id)
+// With Redux Toolkit, we can easily create reducer and related action creators using the createSlice function
+const anecdoteSlice = createSlice({
+  // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/createAnecdotes)
+  name: 'anecdote',
+  initialState,
+  reducers: {
+    createAnecdote(state, action) {
+      const content = action.payload
+      state.push({
+        content,
+        id: getId(),
+        votes: 0
+      })
+    },
+    // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/toggleIncreaseVote)
+    toggleIncreaseVote(state, action) {
+      const id = action.payload
+      // console.log('actoin payload: ', action.payload)
       const anecdoteToChange = state.find(anecdote => anecdote.id === id)
       // console.log(anecdoteToChange)
       const changedAnecdote = {
@@ -38,29 +48,9 @@ const anecdoteReducer = (state = initialState, action) => {
       }
       return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
     }
-    default: return state
-  }
 }
+})
 
-// Functions that create actions are called action creators, here createNote is an action creator
-// A module can have only one default export, but multiple "normal" export, use this to export the action creators into App
-export const createAnecdote = (content) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data: {
-      content,
-      id: getId(),
-      votes: 0
-    }
-  }
-}
-
-// Functions that create actions are called action creators, here createNote is an action creator
-export const toggleIncreaseVote = (id) => {
-  return {
-    type: 'TOGGLE_VOTE',
-    data: { id }
-  }
-}
-
-export default anecdoteReducer
+// The reducer can be accessed by the anecdoteSlice.reducer property, whereas the action creators by the anecdoteSlice.actions
+export const { createAnecdote, toggleIncreaseVote } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
