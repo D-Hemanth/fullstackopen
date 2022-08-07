@@ -48,7 +48,7 @@ const anecdoteSlice = createSlice({
       }
       return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
     }
-}
+  }
 })
 
 // The reducer can be accessed by the anecdoteSlice.reducer property, whereas the action creators by the anecdoteSlice.actions
