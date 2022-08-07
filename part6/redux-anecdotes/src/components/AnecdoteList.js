@@ -3,7 +3,7 @@ import { toggleIncreaseVote } from '../reducers/anecdoteReducer'
 
 const Anecdote = ({anecdote, handleVoteIncrease}) => {
   return (
-    <li>
+    <div>
       <div>
         {anecdote.content}
       </div>
@@ -11,7 +11,7 @@ const Anecdote = ({anecdote, handleVoteIncrease}) => {
         has {anecdote.votes}
         <button onClick={handleVoteIncrease}>vote</button>
       </div>
-    </li>
+    </div>
   )
 }
 
@@ -29,7 +29,7 @@ const AnecdoteList = () => {
   // console.log('sorted anecdotes: ', sortedAnecdotes)
 
   return (
-    <ul>
+    <div>
       {sortedAnecdotes.map(anecdote =>
         <Anecdote 
           key={anecdote.id}
@@ -37,7 +37,7 @@ const AnecdoteList = () => {
           handleVoteIncrease={() => dispatch(toggleIncreaseVote(anecdote.id))}
         />
       )}
-    </ul>
+    </div>
   )
 }
 
