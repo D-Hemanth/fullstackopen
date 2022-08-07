@@ -8,6 +8,13 @@ const Notification = () => {
     padding: 10,
     borderWidth: 1
   }
+
+  // if initially after loading the page there are no notifications to show i.e notification initialstate is null
+  // then don't display the notification display style empty bar at the top
+  if(notification === null) {
+    return null
+  }
+
   return (
     <div style={style}>
       {notification}
