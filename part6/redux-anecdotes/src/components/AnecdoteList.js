@@ -1,7 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleIncreaseVote } from '../reducers/anecdoteReducer'
+import { removeNotification, setNotification } from '../reducers/notificatonReducer'
 
 const Anecdote = ({anecdote, handleVoteIncrease}) => {
+  // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
+  const dispatch = useDispatch()
+
+  const voteIncrease = () => {
+    dispatch(toggleIncreaseVote(anecdote.id))
+    dispatch(setNotification(`You voted for "${anecdote.content}"`))
+    setTimeout(() => {
+      dispatch(removeNotification(null))
+    }, 5000);
+  }
+
   return (
     <div>
       <div>

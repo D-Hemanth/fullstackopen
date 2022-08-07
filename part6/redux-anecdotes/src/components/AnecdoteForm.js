@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
+import { removeNotification, setNotification } from '../reducers/notificatonReducer'
 
 const AnecdoteForm = () => {
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
@@ -13,6 +14,10 @@ const AnecdoteForm = () => {
     console.log('content log:', `${ content }`)
     event.target.anecdote.value = ''
     dispatch(createAnecdote(content))
+    dispatch(setNotification(`You added a new anecdote ${content}`))
+    setTimeout(() => {
+      dispatch(removeNotification(null))
+    }, 5000);
   }
 
   return (
