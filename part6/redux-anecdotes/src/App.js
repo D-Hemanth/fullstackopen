@@ -11,10 +11,9 @@ import { setAnecdotes } from './reducers/anecdoteReducer'
 const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    // initialize the notes state based on the data received from the server fetch request & 
-    // to dispatch an action using the setNotes action creator for getting the note object array 
-    anecdoteService
-      .getAll().then(anecdotes => dispatch(setAnecdotes(anecdotes)))
+    // https://github.com/reduxjs/redux-thunk
+    // With Redux Thunk it is possible to implement action creators which return a function instead of an object
+    dispatch(initializeAnecdotes())
   }, [dispatch])
 
   return (
