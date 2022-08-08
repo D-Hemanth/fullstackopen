@@ -14,10 +14,7 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     console.log('content log:', `${ content }`)
     event.target.anecdote.value = ''
-
-    // make a request to backend with anecdoteService to post/add the new anecdote to backend & then add dispatch createAnecdote action to update the state
-    const newAnecdote = await anecdoteService.createNew(content)
-    dispatch(createAnecdote(newAnecdote))
+    dispatch(createAnecdote(content))
     dispatch(setNotification(`You added a new anecdote "${content}"`))
     setTimeout(() => {
       dispatch(removeNotification(null))
