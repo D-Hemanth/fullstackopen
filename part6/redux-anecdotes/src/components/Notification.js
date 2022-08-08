@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 
 const Notification = () => {
+  // any React component can access the anecdotes stored in the store with the useSelector-hook,the function either searches for or selects data from the react-redux store
   const notification = useSelector(state => state.notification)
 
   const style = {
