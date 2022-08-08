@@ -29,13 +29,19 @@ const Anecdote = ({anecdote, handleVoteIncrease}) => {
 
 const AnecdoteList = () => {
   // any React component can access the anecdotes stored in the store with the useSelector-hook,the function either searches for or selects data from the react-redux store
-  const anecdotes = useSelector(state => state.anecdote)
-  // console.log('anecdotes from useSelector', anecdotes)
+  const filteredAnecdotes = useSelector(({filter, anecdotes}) => {
+    if (filter === null) {
+      return anecdotes
+    }
+    // use regular Expression to filter out the anecdotes with case-insensitive matching(i) of the filter string content
+    const regex = new RegExp( filter, 'i' )
+    return anecdotes.filter(anecdote => anecdote.content.match(regex))
+  })
 
 
   // use the spread syntax to copy the state before mutating it using sort method to sort the anecdote list 
   // by no. of votes in descending order and to avoid sort not a function error
-  const anecdotesToSort = [...anecdotes]
+  const anecdotesToSort = [...filteredAnecdotes]
   const sortedAnecdotes = anecdotesToSort.sort((a, b) => b.votes - a.votes)
   // console.log('sorted anecdotes: ', sortedAnecdotes)
 
