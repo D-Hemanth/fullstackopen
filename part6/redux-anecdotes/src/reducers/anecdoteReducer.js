@@ -1,7 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const getId = () => (100000 * Math.random()).toFixed(0)
-
 // With Redux Toolkit, we can easily create reducer and related action creators using the createSlice function
 const anecdoteSlice = createSlice({
   // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/createAnecdotes)
@@ -9,12 +7,8 @@ const anecdoteSlice = createSlice({
   initialState: [],
   reducers: {
     createAnecdote(state, action) {
-      const content = action.payload
-      state.push({
-        content,
-        id: getId(),
-        votes: 0
-      })
+      // since backend generates ids for the anecdotes we can directly change the state because of immer without additional formatting
+      state.push(action.payload)
     },
     // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/toggleIncreaseVote)
     toggleIncreaseVote(state, action) {
