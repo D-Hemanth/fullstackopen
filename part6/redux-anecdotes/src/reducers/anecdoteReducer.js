@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import anecdoteService from '../services/anecdotes'
 
 // With Redux Toolkit, we can easily create reducer and related action creators using the createSlice function
 const anecdoteSlice = createSlice({
@@ -33,4 +34,16 @@ const anecdoteSlice = createSlice({
 
 // The reducer can be accessed by the anecdoteSlice.reducer property, whereas the action creators by the anecdoteSlice.actions
 export const { createAnecdote, toggleIncreaseVote, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
+
+// With Redux Thunk it is possible to implement action creators which return a function instead of an object/action
+// define an action creator initializeAnecdotes which initializes the anecdotes based on the data received from the server
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    // initialize the notes state based on the data received from the server fetch request & 
+    // to dispatch an action using the setAnecdotes action creator for getting the anecdotes object array
+    const anecdotes = await anecdoteService.getAll()
+    dispatch(setAnecdotes(anecdotes))
+  }
+}
+
 export default anecdoteSlice.reducer
