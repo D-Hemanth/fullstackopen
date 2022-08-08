@@ -1,3 +1,4 @@
+// Normally (not as defaults) exported functions can be imported with the curly brace syntax
 import AnecdoteForm from './components/AnecdoteForm'
 import AnecdoteList from './components/AnecdoteList'
 import Filter from './components/Filter'
