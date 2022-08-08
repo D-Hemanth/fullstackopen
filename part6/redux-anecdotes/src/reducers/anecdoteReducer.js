@@ -7,10 +7,6 @@ const anecdoteSlice = createSlice({
   name: 'anecdote',
   initialState: [],
   reducers: {
-    createAnecdote(state, action) {
-      // since backend generates ids for the anecdotes we can directly change the state because of immer without additional formatting
-      state.push(action.payload)
-    },
     // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/toggleIncreaseVote)
     toggleIncreaseVote(state, action) {
       const id = action.payload
@@ -33,7 +29,7 @@ const anecdoteSlice = createSlice({
 })
 
 // The reducer can be accessed by the anecdoteSlice.reducer property, whereas the action creators by the anecdoteSlice.actions
-export const { createAnecdote, toggleIncreaseVote, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
+export const { toggleIncreaseVote, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
 
 // With Redux Thunk it is possible to implement action creators which return a function instead of an object/action
 // define an action creator initializeAnecdotes which initializes the anecdotes based on the data received from the server
@@ -43,6 +39,16 @@ export const initializeAnecdotes = () => {
     // to dispatch an action using the setAnecdotes action creator for getting the anecdotes object array
     const anecdotes = await anecdoteService.getAll()
     dispatch(setAnecdotes(anecdotes))
+  }
+}
+
+// replace the createAnecdote action creator created by the createSlice function with an asynchronous action creator using redux-thunk
+// https://github.com/reduxjs/redux-thunk
+export const createAnecdote = content => {
+  return async dispatch => {
+    // make a request to backend with anecdoteService to post/add the new anecdote to backend & then add dispatch appendAnecdote action to update the state
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch(appendAnecdote(newAnecdote))
   }
 }
 
