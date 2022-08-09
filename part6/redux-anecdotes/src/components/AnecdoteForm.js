@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
-import { removeNotification, setNotification } from '../reducers/notificatonReducer'
+import { setNotification } from '../reducers/notificatonReducer'
 
 const AnecdoteForm = () => {
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
