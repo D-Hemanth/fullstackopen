@@ -1,6 +1,7 @@
 import { connect } from "react-redux"
 import { filterAnecdote } from "../reducers/filterReducer"
 
+// pass the props containing the redux-store state to the Filter component as props
 const Filter = (props) => {
   const handleChange = (event) => {
     // input-field value is in variable event.target.value

@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import { createAnecdote } from '../reducers/anecdoteReducer'
 import { setNotification } from '../reducers/notificatonReducer'
 
+// pass the props containing the redux-store state to the AnecdoteForm component as props
 const AnecdoteForm = (props) => {
   const addAnecdote = async (event) => {
     event.preventDefault()
