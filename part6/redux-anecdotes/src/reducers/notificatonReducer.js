@@ -20,6 +20,8 @@ export const { displayNotification } = notificationSlice.actions
 export const setNotification = (notification, displayTime) => {
   return async dispatch => {
     dispatch(displayNotification(notification))
+    let previousTimeout = 0
+    clearTimeout(previousTimeout)
     setTimeout(() => {
       dispatch(displayNotification(null))
     }, displayTime * 1000);
