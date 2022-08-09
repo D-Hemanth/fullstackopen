@@ -7,18 +7,6 @@ const anecdoteSlice = createSlice({
   name: 'anecdote',
   initialState: [],
   reducers: {
-    // createSlice function's name parameter defines the prefix(anecdote/) which is used in the action's type values along with reducer name(type: anecdote/toggleIncreaseVote)
-    toggleIncreaseVote(state, action) {
-      const id = action.payload
-      // console.log('actoin payload: ', action.payload)
-      const anecdoteToChange = state.find(anecdote => anecdote.id === id)
-      // console.log(anecdoteToChange)
-      const changedAnecdote = {
-        ...anecdoteToChange,
-        votes: anecdoteToChange.votes + 1
-      }
-      return state.map(anecdote => anecdote.id !== id ? anecdote : changedAnecdote)
-    },
     appendAnecdote(state, action) {
       state.push(action.payload)
     },
@@ -49,6 +37,19 @@ export const createAnecdote = content => {
     // make a request to backend with anecdoteService to post/add the new anecdote to backend & then add dispatch appendAnecdote action to update the state
     const newAnecdote = await anecdoteService.createNew(content)
     dispatch(appendAnecdote(newAnecdote))
+  }
+}
+
+// replace the toggleIncreseVotes action creator created by the createSlice function with an asynchronous action creator using redux-thunk
+export const increaseAnecdoteVotes = anecdote => {
+  return async dispatch => {
+    const changedAnecdote = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+    // make a request to backend with anecdoteService to put/update the votes in backend & then dispatch initializeAnecdotes action to display the updated state
+    await anecdoteService.updateLikes(changedAnecdote) 
+    dispatch(initializeAnecdotes())
   }
 }
 
