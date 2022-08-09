@@ -8,10 +8,7 @@ const Anecdote = ({anecdote, handleVoteIncrease}) => {
 
   const voteIncrease = () => {
     dispatch(increaseAnecdoteVotes(anecdote))
-    dispatch(setNotification(`You voted for "${anecdote.content}"`))
-    setTimeout(() => {
-      dispatch(removeNotification(null))
-    }, 5000);
+    dispatch(setNotification(`You voted for "${anecdote.content}"`, 5))
   }
 
   return (
