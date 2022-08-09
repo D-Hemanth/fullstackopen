@@ -15,4 +15,10 @@ const createNew = async (content) => {
   return response.data
 }
 
-export default { getAll, createNew }
+// create a method which uses axios put method to update existing data in the backend
+const updateLikes = async (voteAnecdoteObject) => {
+  const response = await axios.put(`${baseUrl}/${voteAnecdoteObject.id}`, voteAnecdoteObject)
+  return response.data
+}
+
+export default { getAll, createNew, updateLikes }
