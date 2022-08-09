@@ -20,6 +20,9 @@ export const { displayNotification } = notificationSlice.actions
 export const setNotification = (notification, displayTime) => {
   return async dispatch => {
     dispatch(displayNotification(notification))
+
+    // after clicking vote button multiple times in a row, last vote is displayed for five seconds 
+    // by cancelling the removal of the previous notification(using clearTimeout) when a new notification is displayed 
     let previousTimeout = 0
     clearTimeout(previousTimeout)
     setTimeout(() => {
