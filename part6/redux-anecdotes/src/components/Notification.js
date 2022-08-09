@@ -1,9 +1,6 @@
-import { useSelector } from "react-redux"
+import { connect } from "react-redux"
 
-const Notification = () => {
-  // any React component can access the anecdotes stored in the store with the useSelector-hook,the function either searches for or selects data from the react-redux store
-  const notification = useSelector(state => state.notification)
-
+const Notification = (props) => {
   const style = {
     border: 'solid',
     padding: 10,
@@ -12,15 +9,24 @@ const Notification = () => {
 
   // if initially after loading the page there are no notifications to show i.e notification initialstate is null
   // then don't display the notification display style empty bar at the top
-  if(notification === null) {
+  if(props.notification === null) {
     return null
   }
 
   return (
     <div style={style}>
-      {notification}
+      {props.notification}
     </div>
   )
 }
 
-export default Notification
+// by using mapStateToProps the Notification component can access the state of the store directly through the props
+const mapStateToProps = (state) => {
+  return {
+    notification: state.notification
+  }
+}
+
+// connect function accepts a mapStateToProps function as its first parameter, which can be used for defining the props of the connected component that are based on the state of the Redux store
+// connect function accepts a mapDispatchToProps function as its second parameter, which is a group of action creator/dispatch functions passed to the connected component as props, here dispatch not needed so skip this argument
+export default connect(mapStateToProps)(Notification)
