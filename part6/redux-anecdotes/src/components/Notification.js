@@ -1,5 +1,6 @@
 import { connect } from "react-redux"
 
+// pass the props containing the redux-store state to the Notification component as props
 const Notification = (props) => {
   const style = {
     border: 'solid',
