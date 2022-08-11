@@ -142,8 +142,15 @@ const App = () => {
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
   
+  // use React Router's useMatch hook to figure out the id of the note to be displayed in the App component
+  // If the url matches /anecdotes/:id, the match variable will contain an object from which we can access the parameterized part of the path, the id of the note to be displayed
+  const match = useMatch('/anecdotes/:id')
+  const anecdote = match
+    ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id))
+    : null
+
+  
   return (
-    <Router>
       <div>
         <h1>Software anecdotes</h1>
         <Menu />
