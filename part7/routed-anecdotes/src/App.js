@@ -20,6 +20,15 @@ const Menu = () => {
   )
 }
 
+const Notification = ({ notification }) => {
+  if(notification === null) {
+    return null
+  }
+  return (
+    <div>{notification}</div>
+  )
+}
+
 const Anecdote = ({ anecdote }) => {
   return( 
     <div>
@@ -154,6 +163,7 @@ const App = () => {
     <div>
       <h1>Software anecdotes</h1>
       <Menu />
+      <Notification notification={notification} />
       {/* We wrap the components to be rendered based on the url with a Routes component */}
       <Routes>
         {/* Components rendered based on the URL of the browser are defined with the help of the component Route */}
