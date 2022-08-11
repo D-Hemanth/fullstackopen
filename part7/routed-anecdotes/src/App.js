@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { 
-  BrowserRouter as Router,
   Routes,
   Route,
   Link,
+  useMatch
 } from 'react-router-dom'
 
 const Menu = () => {
@@ -11,6 +11,7 @@ const Menu = () => {
     paddingRight: 5
   }
   return (
+    // we define links that modify the address bar with the help of the Link component
     <div>
       <Link style={padding} to='/'>anecdotes</Link>
       <Link style={padding} to='/create'>create new</Link>
@@ -100,7 +101,6 @@ const CreateNew = (props) => {
       </form>
     </div>
   )
-
 }
 
 const App = () => {
@@ -141,7 +141,7 @@ const App = () => {
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
-  
+
   // use React Router's useMatch hook to figure out the id of the note to be displayed in the App component
   // If the url matches /anecdotes/:id, the match variable will contain an object from which we can access the parameterized part of the path, the id of the note to be displayed
   const match = useMatch('/anecdotes/:id')
@@ -151,19 +151,19 @@ const App = () => {
 
   
   return (
-      <div>
-        <h1>Software anecdotes</h1>
-        <Menu />
+    <div>
+      <h1>Software anecdotes</h1>
+      <Menu />
       {/* We wrap the components to be rendered based on the url with a Routes component */}
-        <Routes>
+      <Routes>
         {/* Components rendered based on the URL of the browser are defined with the help of the component Route */}
         <Route path='/anecdotes/:id' element={<Anecdote anecdote={anecdote} />} />
         <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
-          <Route path='/create' element={<CreateNew addNew={addNew} />} /> 
-          <Route path='/about' element={<About />} /> 
-        </Routes>
-        <Footer />
-      </div>
+        <Route path='/create' element={<CreateNew addNew={addNew} />} /> 
+        <Route path='/about' element={<About />} /> 
+      </Routes>
+      <Footer />
+    </div>
   )
 }
 
