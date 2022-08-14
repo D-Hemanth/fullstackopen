@@ -8,7 +8,9 @@ const useField = (type) => {
     setValue(event.target.value)
   }
 
-  const reset = () => {
+  // In React, you should use onReset instead of just reset property on input tags or it will cause 
+  // warning: Invalid value for prop `reset` on <input> tag. Either remove it from the element, or pass a string or number value to keep it in the DOM.
+  const onReset = () => {
     setValue('')
   }
 
@@ -16,7 +18,7 @@ const useField = (type) => {
     type,
     value,
     onChange,
-    reset
+    onReset
   }
 }
 
