@@ -76,13 +76,19 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
-  const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  // define a variable with name of your choosing for your custom hook name & then use it
+  const contentHook = useField('content')
+  const authorHook = useField('author')
+  const infoHook = useField('info')
 
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
+    console.log('content', contentHook.value)
+    // we need the value field from the custom hook object to create the new anecdote
+    const content = contentHook.value
+    const author = authorHook.value
+    const info = infoHook.value
     e.preventDefault()
     props.addNew({
       content,
@@ -104,17 +110,18 @@ const CreateNew = (props) => {
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
+        {/* Since the contentHook object has exactly all of the attributes that the input element expects to receive(value, onchange, name) as props, we can pass the props to the element using the spread syntax  */}
         <div>
           content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          <input {...contentHook} />
         </div>
         <div>
           author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          <input {...authorHook} />
         </div>
         <div>
           url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          <input {...infoHook} />
         </div>
         <button>create</button>
       </form>
