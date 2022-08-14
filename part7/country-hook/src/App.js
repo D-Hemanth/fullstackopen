@@ -18,7 +18,26 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect(() => {})
+  useEffect(() => {
+    // after rendering the page the name input form is empty 
+    if(name === '') {
+      setCountry(null)
+    }
+    else {
+      const setCountryState = async () => {
+        try {
+          const response = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+          console.log('axios response', response.data[0])
+          setCountry(response.data[0])
+        }
+        catch (error) {
+          console.log('axios request failed check the country spelling', error)
+          setCountry(null)
+        }
+      }
+      setCountryState()
+    }
+  }, [name])
 
   return country
 }
