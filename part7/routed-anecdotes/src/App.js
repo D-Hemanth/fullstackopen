@@ -105,10 +105,12 @@ const CreateNew = (props) => {
   }
 
   const handleReset = () => {
-    // function callback to reset Input field of create anecdote form using the useField custom hook
-    content.reset()
-    author.reset()
-    info.reset()
+    // function callback to onReset Input field of create anecdote form using the useField custom hook
+    // In React, you should use onReset instead of just reset property on buttons/input tags or it will cause 
+    // warning:Invalid value for prop `reset` on <input> tag. Either remove it from the element, or pass a string or number value to keep it in the DOM.
+    content.onReset()
+    author.onReset()
+    info.onReset()
   }
 
   return (
