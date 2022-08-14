@@ -78,23 +78,20 @@ const Footer = () => (
 
 const CreateNew = (props) => {
   // define a variable with name of your choosing for your custom hook name & then use it
-  const contentHook = useField('content')
-  const authorHook = useField('author')
-  const infoHook = useField('info')
+  const content = useField('content')
+  const author = useField('author')
+  const info = useField('info')
 
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
-    console.log('content', contentHook.value)
-    // we need the value field from the custom hook object to create the new anecdote
-    const content = contentHook.value
-    const author = authorHook.value
-    const info = infoHook.value
+    // console.log('content', contentHook.value)
     e.preventDefault()
+    // we need the value field from the custom hook object to create the new anecdote
     props.addNew({
-      content,
-      author,
-      info,
+      content: content.value,
+      author: author.value,
+      info: info.value,
       votes: 0
     })
 
@@ -105,6 +102,13 @@ const CreateNew = (props) => {
     setTimeout(() => {
       props.setNotification('')
     }, 5000);
+  }
+
+  const handleReset = () => {
+    // function callback to reset Input field of create anecdote form using the useField custom hook
+    content.reset()
+    author.reset()
+    info.reset()
   }
 
   return (
