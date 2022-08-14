@@ -118,17 +118,18 @@ const CreateNew = (props) => {
         {/* Since the contentHook object has exactly all of the attributes that the input element expects to receive(value, onchange, name) as props, we can pass the props to the element using the spread syntax  */}
         <div>
           content
-          <input {...contentHook} />
+          <input {...content} />
         </div>
         <div>
           author
-          <input {...authorHook} />
+          <input {...author} />
         </div>
         <div>
           url for more info
-          <input {...infoHook} />
+          <input {...info} />
         </div>
-        <button>create</button>
+        <button>create</button> 
+        <button type='reset' onClick={handleReset}>reset</button>
       </form>
     </div>
   )
