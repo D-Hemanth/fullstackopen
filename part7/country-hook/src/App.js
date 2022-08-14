@@ -24,6 +24,8 @@ const useCountry = (name) => {
       setCountry(null)
     }
     else {
+      // used the async/await syntax to make the api request or you can use axios get with then to handle returned promise
+      // to use async & await define a function here setCountryState & call it setCountryState()
       const setCountryState = async () => {
         try {
           const response = await axios.get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
