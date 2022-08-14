@@ -6,6 +6,7 @@ import {
   useMatch,
   useNavigate
 } from 'react-router-dom'
+import useField from './hooks/index'
 
 const Menu = () => {
   const padding = {
@@ -152,6 +153,7 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
     setAnecdotes(anecdotes.concat(anecdote))
+    console.log('new anecdote', anecdote)
   }
 
   const anecdoteById = (id) =>
