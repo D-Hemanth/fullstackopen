@@ -28,8 +28,11 @@ const useResource = (baseUrl) => {
       })
   }, [setResources, baseUrl])
 
-  const create = (resource) => {
-    // ...
+  // axios post request to create new note/person entry into db.json & change setResources state to re-render page with updated data
+  const create = async (resource) => {
+    const response = await axios.post(baseUrl, resource)
+    console.log('axios post response', response.data)
+    setResources(resources.concat(response.data))
   }
 
   const service = {
