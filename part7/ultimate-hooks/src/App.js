@@ -27,7 +27,7 @@ const useResource = (baseUrl) => {
         setResources(response.data)
       })
   }, [setResources, baseUrl])
-
+  
   // axios post request to create new note/person entry into db.json & change setResources state to re-render page with updated data
   const create = async (resource) => {
     const response = await axios.post(baseUrl, resource)
@@ -56,7 +56,7 @@ const App = () => {
     event.preventDefault()
     noteService.create({ content: content.value })
   }
- 
+
   const handlePersonSubmit = (event) => {
     event.preventDefault()
     personService.create({ name: name.value, number: number.value})
