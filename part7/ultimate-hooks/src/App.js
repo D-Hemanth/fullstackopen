@@ -18,7 +18,15 @@ const useField = (type) => {
 const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
-  // ...
+  // use useEffect with axios get request to get all the resources from db.json file whenever baseUrl/setResources changes
+  useEffect(() => {
+    axios
+      .get(baseUrl)
+      .then(response => {
+        console.log('axios get response', response.data)
+        setResources(response.data)
+      })
+  }, [setResources, baseUrl])
 
   const create = (resource) => {
     // ...
