@@ -1,0 +1,13 @@
+### A new blog can now be created using Rest Client if the authorization header is given the correct value, 
+### the string bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyYzQ2MTNmMTllNzA2MDcxN2NkMzIzMSIsImlhdCI6MTY1NzU1MzYyM30.BwdRQBG4dX7lcGd9bov2Qm1j47zNG25c20WTG82LD-w, where the second value is the token returned by the login operation.
+### no need to mention the userId of user creating the blog as it determined from authorization & decoding token
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbWFudGgiLCJpZCI6IjYyY2QxODBjZDEzMDlhZmIxOWU3ODIxYiIsImlhdCI6MTY1ODEzNTk2MSwiZXhwIjoxNjU4MTM5NTYxfQ.wgFXhd6yXTlR_ATNsm0C4oLw5q5D4R6KbrNBuZnMc3g
+
+{
+  "title": "Things I Don't know as of 2022",
+  "author": "Dan Abramov",
+  "url": "https://overreacted.io/things-i-dont-know-as-of-2018/",
+  "likes": 0
+}

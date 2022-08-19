@@ -1,0 +1,26 @@
+
+### validation request check for adding new blog with a userId of user while creating the blog
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Things I Don't know as of 2018",
+  "author": "Dan Abramov",
+  "userId": "62cd1808d1309afb19e78219",
+  "url": "https://overreacted.io/things-i-dont-know-as-of-2018/",
+  "likes": 0
+}
+
+
+
+### validation request check for adding new blog with a userId of user while creating the blog
+POST http://localhost:3003/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "Microservices and the First Law of Distributed Objects",
+  "author": "Martin Fowler",
+  "userId": "62cd180cd1309afb19e7821b",
+  "url": "https://martinfowler.com/articles/distributed-objects-microservices.html",
+  "likes": 0
+}
