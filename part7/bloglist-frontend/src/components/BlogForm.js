@@ -29,7 +29,7 @@ const BlogForm = ({ createBlog }) => {
     createBlog({
       title: newTitle,
       author: newAuthor,
-      url: newUrl
+      url: newUrl,
     })
     // set the states of title, author, url to blank after sending their data back to App.js with createNewBlogs
     setNewTitle('')
@@ -39,20 +39,35 @@ const BlogForm = ({ createBlog }) => {
 
   return (
     // Allow loggedIn users to add new blog to mongodb through input forms, states, useRef for toggleVisibility, props.children
-    <div className='blogFormDiv'>
+    <div className="blogFormDiv">
       <h2>Create New Blog</h2>
       <form onSubmit={addBlog}>
         <div>
           title:
-          <input id="title" value={newTitle} name="Title" onChange={handleTitleChange} />
+          <input
+            id="title"
+            value={newTitle}
+            name="Title"
+            onChange={handleTitleChange}
+          />
         </div>
         <div>
           author:
-          <input id="author" value={newAuthor} name="Author" onChange={handleAuthorChange} />
+          <input
+            id="author"
+            value={newAuthor}
+            name="Author"
+            onChange={handleAuthorChange}
+          />
         </div>
         <div>
           url:
-          <input id="url" value={newUrl} name="Url" onChange={handleUrlChange} />
+          <input
+            id="url"
+            value={newUrl}
+            name="Url"
+            onChange={handleUrlChange}
+          />
         </div>
         <button type="submit">create</button>
       </form>

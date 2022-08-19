@@ -23,7 +23,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
   const increaseLikes = () => {
     // Using the spread operator to update blog object's likes value by 1
-    const likesIncreaseBlog = ({ ...blog, likes: blog.likes + 1 })
+    const likesIncreaseBlog = { ...blog, likes: blog.likes + 1 }
     // console.log(likesIncreaseBlog)
     // pass the update blog with new likes value to the update function props from the App file
     updateBlog(likesIncreaseBlog)
@@ -35,17 +35,31 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
   }
 
   // the button for deleting a blog post is visible only if the blog post was added by that user
-  const deleteButtonVisibility = { display: user.name === blog.user.name ? '' : 'none' }
+  const deleteButtonVisibility = {
+    display: user.name === blog.user.name ? '' : 'none',
+  }
 
   return (
-    <div style={blogStyle} className='blog'>
+    <div style={blogStyle} className="blog">
       {blog.title} - {blog.author}&nbsp;
       <button onClick={toggleVisibility}>{buttonLabel}</button>
-      <div style={showWhenVisible} className='showFullBlog'>
-        {blog.url}<br />
-        likes {blog.likes} <button id='likes-button' onClick={increaseLikes}>like</button><br />
-        {blog.user.name}<br />
-        <button style={deleteButtonVisibility} id='remove-button' onClick={handleRemoveBlogChange}>remove</button>
+      <div style={showWhenVisible} className="showFullBlog">
+        {blog.url}
+        <br />
+        likes {blog.likes}{' '}
+        <button id="likes-button" onClick={increaseLikes}>
+          like
+        </button>
+        <br />
+        {blog.user.name}
+        <br />
+        <button
+          style={deleteButtonVisibility}
+          id="remove-button"
+          onClick={handleRemoveBlogChange}
+        >
+          remove
+        </button>
       </div>
     </div>
   )

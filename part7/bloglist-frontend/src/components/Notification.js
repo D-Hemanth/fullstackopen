@@ -1,10 +1,10 @@
 const Notification = ({ notificationMessage, messageColor }) => {
-  if(notificationMessage === null) {
+  if (notificationMessage === null) {
     return null
   }
 
   return (
-    <div id='notificationMessage' className={messageColor}>
+    <div id="notificationMessage" className={messageColor}>
       {notificationMessage}
     </div>
   )

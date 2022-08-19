@@ -17,7 +17,7 @@ const Togglable = forwardRef((props, refs) => {
   // component uses the useImperativeHandle hook to make its toggleVisibility function available outside of the component
   useImperativeHandle(refs, () => {
     return {
-      toggleVisibility
+      toggleVisibility,
     }
   })
 
@@ -36,7 +36,7 @@ const Togglable = forwardRef((props, refs) => {
 
 // expected and required props of a component can be defined with the prop-types package
 Togglable.propTypes = {
-  buttonLabel: PropTypes.string.isRequired
+  buttonLabel: PropTypes.string.isRequired,
 }
 
 // to remove the component definition is missing display name error in eslint add the following lines

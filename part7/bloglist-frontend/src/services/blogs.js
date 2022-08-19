@@ -6,10 +6,10 @@ let token = null
 // declare the config for headers globally so we can use them in all http routes
 let config
 
-const setToken = newToken => {
+const setToken = (newToken) => {
   token = `bearer ${newToken}`
   config = {
-    headers: { Authorization: token }
+    headers: { Authorization: token },
   }
 }
 
@@ -20,19 +20,26 @@ const getAll = async () => {
   return response.data
 }
 
-const create = async blogObject => {
+const create = async (blogObject) => {
   // add config with token of the logged-in user to the Authorization header of the HTTP post request
   const response = await axios.post(baseUrl, blogObject, config)
   return response.data
 }
 
 const update = async (likesBlogObject) => {
-  const response = await axios.put(`${baseUrl}/${likesBlogObject.id}`, likesBlogObject, config)
+  const response = await axios.put(
+    `${baseUrl}/${likesBlogObject.id}`,
+    likesBlogObject,
+    config,
+  )
   return response.data
 }
 
 const remove = async (deleteBlogObject) => {
-  const response = await axios.delete(`${baseUrl}/${deleteBlogObject.id}`, config)
+  const response = await axios.delete(
+    `${baseUrl}/${deleteBlogObject.id}`,
+    config,
+  )
   return response.data
 }
 

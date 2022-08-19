@@ -5,7 +5,6 @@ import userEvent from '@testing-library/user-event'
 import BlogForm from './BlogForm'
 
 describe('<BlogForm /> tests', () => {
-
   test('that the form calls the event handler it received as props with the right details when a new blog is created', async () => {
     const createBlog = jest.fn()
     // sets up a session using setup() to mimic the UI of rendered component in browser to mock user interactions while testing
