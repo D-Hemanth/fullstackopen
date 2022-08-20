@@ -41,4 +41,32 @@ export const createBlog = (newBlogObject) => {
   }
 }
 
+export const increaseLikes = (increaseLikesObject) => {
+  return async (dispatch) => {
+    // Using the spread operator to update blog object's likes value by 1
+    const likesIncreaseBlog = {
+      ...increaseLikesObject,
+      likes: increaseLikesObject.likes + 1,
+    }
+    // console.log(likesIncreaseBlog)
+    // make a request to backend with blogService to put/update the likes in backend & then dispatch initializeBlogs action to display the updated state
+    await blogService.update(likesIncreaseBlog)
+    dispatch(initializeBlogs())
+  }
+}
+
+export const deleteBlog = (blogToDelete) => {
+  return async (dispatch) => {
+    if (
+      window.confirm(
+        `Remove blog ${blogToDelete.title} by ${blogToDelete.author}`,
+      )
+    ) {
+      // make a request to backend with blogService to delete a blog in backend & then dispatch initializeBlogs action to display the updated state
+      await blogService.remove(blogToDelete)
+      dispatch(initializeBlogs())
+    }
+  }
+}
+
 export default blogSlice.reducer
