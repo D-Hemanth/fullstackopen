@@ -21,8 +21,10 @@ const App = () => {
   // use Useeffect to add a side effect after rendering the component i.e. here we use it to get data from the server
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs))
-  }, [])
+    // https://github.com/reduxjs/redux-thunk
+    // With Redux Thunk it is possible to implement action creators which return a function instead of an object
+    dispatch(initializeBlogs())
+  }, [dispatch])
 
   // application checks if user details of a logged-in user can already be found on the local storage. If they can, the details are saved to the state of the application and to blogService
   useEffect(() => {
