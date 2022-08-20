@@ -30,3 +30,15 @@ export const initializeBlogs = () => {
     dispatch(setBlogs(blogs))
   }
 }
+
+// replace the createAnecdote action creator created by the createSlice function with an asynchronous action creator using redux-thunk
+// https://github.com/reduxjs/redux-thunk
+export const createBlog = (newBlogObject) => {
+  return async (dispatch) => {
+    // make a request to backend with blogService to post/add the new blogs to backend & then add dispatch appendBlogs action to update the state
+    const newBlog = await blogService.create(newBlogObject)
+    dispatch(appendBlogs(newBlog))
+  }
+}
+
+export default blogSlice.reducer

@@ -77,54 +77,35 @@ const App = () => {
     setUser(null)
   }
 
-  const addBlog = async (newBlogObject) => {
-    try {
-      // use the toggleVisibility function referenced from the Toggable component to hide create noteform after creating a note
-      blogFormRef.current.toggleVisibility()
-      // Use blogservice create method to post data to the server
-      const newBlog = await blogService.create(newBlogObject)
-      // console.log(newBlog)
-      setBlogs(blogs.concat(newBlog))
+  // const updateBlog = async (likesBlogObject) => {
+  //   try {
+  //     // Use blogservice update method to put data to the server, specifically increase likes by 1 when likes button is clicked
+  //     const likesIncreaseBlog = await blogService.update(likesBlogObject)
+  //     setBlogs(
+  //       blogs.map((blog) =>
+  //         blog.id !== likesBlogObject.id ? blog : likesIncreaseBlog,
+  //       ),
+  //     )
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
 
-      // set message color to green for errors in the bloglist app using dispatch hook to send actions to react store and similarly
-      // Add a improved notification message when you add a new blog into the list
-      const notificationMessage = `A new blog "${newBlog.title}" by ${newBlog.author} added`
-      const messageColor = 'green'
-      dispatch(setNotification({ messageColor, notificationMessage }, 5))
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
-
-  const updateBlog = async (likesBlogObject) => {
-    try {
-      // Use blogservice update method to put data to the server, specifically increase likes by 1 when likes button is clicked
-      const likesIncreaseBlog = await blogService.update(likesBlogObject)
-      setBlogs(
-        blogs.map((blog) =>
-          blog.id !== likesBlogObject.id ? blog : likesIncreaseBlog,
-        ),
-      )
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
-
-  const deleteBlog = async (blogToDelete) => {
-    try {
-      if (
-        window.confirm(
-          `Remove blog ${blogToDelete.title} by ${blogToDelete.author}`,
-        )
-      ) {
-        // Use blogservice remove method to delete data from the server, only if the blog was created by that user
-        blogService.remove(blogToDelete)
-        setBlogs(blogs.filter((blog) => blog.id !== blogToDelete.id))
-      }
-    } catch (exception) {
-      console.log(exception)
-    }
-  }
+  // const deleteBlog = async (blogToDelete) => {
+  //   try {
+  //     if (
+  //       window.confirm(
+  //         `Remove blog ${blogToDelete.title} by ${blogToDelete.author}`,
+  //       )
+  //     ) {
+  //       // Use blogservice remove method to delete data from the server, only if the blog was created by that user
+  //       blogService.remove(blogToDelete)
+  //       setBlogs(blogs.filter((blog) => blog.id !== blogToDelete.id))
+  //     }
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
 
   // show the login form only if the user is not logged-in so when user === null
   if (user === null) {
@@ -156,7 +137,7 @@ const App = () => {
       </p>
 
       <Togglable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm createBlog={addBlog} />
+        <BlogForm blogFormRef={blogFormRef} />
       </Togglable>
 
       {/* sort the list of blog posts by the number of likes using sort method with compare function inside [(a,b) => a.likes - b.likes] */}
