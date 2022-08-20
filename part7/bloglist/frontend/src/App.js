@@ -1,20 +1,14 @@
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
-import loginService from './services/login'
 import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
-import { useDispatch } from 'react-redux'
-import { setNotification } from './reducers/notificationReducer'
+import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUser, setUser } from './reducers/userReducer'
 
 const App = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
-
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
   const dispatch = useDispatch()
 
@@ -24,47 +18,12 @@ const App = () => {
     // https://github.com/reduxjs/redux-thunk
     // With Redux Thunk it is possible to implement action creators which return a function instead of an object
     dispatch(initializeBlogs())
+    dispatch(initializeUser())
   }, [dispatch])
 
-  // application checks if user details of a logged-in user can already be found on the local storage. If they can, the details are saved to the state of the application and to blogService
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
-  const handleLogin = async (event) => {
-    event.preventDefault()
-    // console.log('logging in with', username, password)
-
-    // If the login is successful, the form fields are emptied and the server response
-    // (including a token and the user details) is saved to the user field of the application's state.
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
-
-      // save the details of a logged-in user to the local storage of browser with window.localStorage
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-
-      // call the method noteService.setToken(user.token) with a successful login for setting token for all axios requests
-      blogService.setToken(user.token)
-      setUser(user)
-      setUsername('')
-      setPassword('')
-    } catch (exception) {
-      console.log('exception', exception)
-      // set message color to red for errors in the bloglist app using dispatch hook to send actions to react store and similarly
-      // Add a improved notification message when you've typed in a wrong username or password with
-      const notificationMessage = 'Wrong username or password'
-      const messageColor = 'red'
-      dispatch(setNotification({ messageColor, notificationMessage }, 5))
-    }
-  }
+  // use useSelector to access the redux store from any react component
+  const user = useSelector((state) => state.user)
+  // console.log('user state', user)
 
   // The useRef hook is used to create a blogFormRef ref, that is assigned to the Togglable component containing the creation blog form
   // blogFormRef variable acts as a reference to the component
@@ -74,25 +33,16 @@ const App = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     // window.localStorage.clear()
-    setUser(null)
+    dispatch(setUser(null))
   }
 
   // show the login form only if the user is not logged-in so when user === null
   if (user === null) {
     return (
-      // Add the components for username & password for login
-      // target.value sets the username, password value from the form to application's state variables username, password
       <div>
         <h2>Log in to application</h2>
         <Notification />
-
-        <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
-        />
+        <LoginForm />
       </div>
     )
   }
