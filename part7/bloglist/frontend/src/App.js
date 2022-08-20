@@ -131,11 +131,7 @@ const App = () => {
       // target.value sets the username, password value from the form to application's state variables username, password
       <div>
         <h2>Log in to application</h2>
-
-        <Notification
-          notificationMessage={notificationMessage}
-          messageColor={messageColor}
-        />
+        <Notification />
 
         <LoginForm
           username={username}
@@ -151,11 +147,7 @@ const App = () => {
   return (
     <div>
       <h2>Blogs</h2>
-
-      <Notification
-        notificationMessage={notificationMessage}
-        messageColor={messageColor}
-      />
+      <Notification />
 
       <p>
         {user.name} logged in <button onClick={handleLogout}>logout</button>
