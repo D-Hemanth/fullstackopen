@@ -67,7 +67,8 @@ const BlogList = ({ user, blog }) => {
   )
 }
 
-const Blog = ({ user }) => {
+const Blog = () => {
+  const user = useSelector((state) => state.user)
   const blogs = useSelector((state) => state.blogs)
   // console.log('Blogs state gotten from store', blogs)
 

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import blogService from '../services/blogs'
+import { setNotification } from './notificationReducer'
 
 // With Redux Toolkit, we can easily create reducer and related action creators using the createSlice function
 const blogSlice = createSlice({
@@ -52,6 +53,10 @@ export const increaseLikes = (increaseLikesObject) => {
     // make a request to backend with blogService to put/update the likes in backend & then dispatch initializeBlogs action to display the updated state
     await blogService.update(likesIncreaseBlog)
     dispatch(initializeBlogs())
+    // set message color to green & Add a improved notification message when you update likes of a blog
+    const notificationMessage = `You've liked the blog "${likesIncreaseBlog.title}" by ${likesIncreaseBlog.author}`
+    const messageColor = 'green'
+    dispatch(setNotification({ messageColor, notificationMessage }, 5))
   }
 }
 
@@ -65,6 +70,10 @@ export const deleteBlog = (blogToDelete) => {
       // make a request to backend with blogService to delete a blog in backend & then dispatch initializeBlogs action to display the updated state
       await blogService.remove(blogToDelete)
       dispatch(initializeBlogs())
+      // set message color to green & Add a improved notification message when you delete a blog
+      const notificationMessage = `You've deleted the blog "${blogToDelete.title}" by ${blogToDelete.author}`
+      const messageColor = 'green'
+      dispatch(setNotification({ messageColor, notificationMessage }, 5))
     }
   }
 }
