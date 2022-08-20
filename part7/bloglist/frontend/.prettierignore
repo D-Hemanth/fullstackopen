@@ -3,3 +3,5 @@ build
 coverage
 cypress
 node_modules
+.eslintrc.js
+.editorconfig
