@@ -66,8 +66,8 @@ const App = () => {
     }
   }
 
-  // The useRef hook is used to create a noteFormRef ref, that is assigned to the Togglable component containing the creation note form
-  // noteFormRef variable acts as a reference to the component
+  // The useRef hook is used to create a blogFormRef ref, that is assigned to the Togglable component containing the creation blog form
+  // blogFormRef variable acts as a reference to the component
   const blogFormRef = useRef()
 
   // Logout & Ensure the browser does not remember the details of the user after logging out
