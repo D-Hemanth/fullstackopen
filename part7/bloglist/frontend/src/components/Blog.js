@@ -1,7 +1,12 @@
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { increaseLikes, deleteBlog } from '../reducers/blogReducer'
 
-const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
+const BlogList = ({ user, blog }) => {
   const [visible, setVisible] = useState(false)
+
+  // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
+  const dispatch = useDispatch()
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -21,17 +26,14 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
     marginBottom: 5,
   }
 
-  const increaseLikes = () => {
-    // Using the spread operator to update blog object's likes value by 1
-    const likesIncreaseBlog = { ...blog, likes: blog.likes + 1 }
-    // console.log(likesIncreaseBlog)
-    // pass the update blog with new likes value to the update function props from the App file
-    updateBlog(likesIncreaseBlog)
+  // update the blog with new likes by dispatching increaseLikes action creator using axios put request
+  const increaseBlogLikes = () => {
+    dispatch(increaseLikes(blog))
   }
 
-  // delete blogs from bloglist using deleteBlog function props to send axios delete request
+  // delete blogs from bloglist by dispatching deleteBlog action creator to send axios delete request
   const handleRemoveBlogChange = () => {
-    deleteBlog(blog)
+    dispatch(deleteBlog(blog))
   }
 
   // the button for deleting a blog post is visible only if the blog post was added by that user
@@ -47,7 +49,7 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
         {blog.url}
         <br />
         likes {blog.likes}{' '}
-        <button id="likes-button" onClick={increaseLikes}>
+        <button id="likes-button" onClick={increaseBlogLikes}>
           like
         </button>
         <br />
@@ -61,6 +63,26 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
           remove
         </button>
       </div>
+    </div>
+  )
+}
+
+const Blog = ({ user }) => {
+  const blogs = useSelector((state) => state.blogs)
+  // console.log('Blogs state gotten from store', blogs)
+
+  // sort the list of blog posts by the number of likes using sort method with compare function inside [(a,b) => a.likes - b.likes]
+  // use the spread syntax to copy the state before mutating it using sort method to sort the blog list
+  // by no. of likes in descending order and to avoid sort not a function error
+  const blogsToSort = [...blogs]
+  const sortedBlogs = blogsToSort.sort((a, b) => b.likes - a.likes)
+  // console.log('sorted Blogs: ', sortedBlogs)
+
+  return (
+    <div>
+      {sortedBlogs.map((blog) => (
+        <BlogList key={blog.id} user={user} blog={blog} />
+      ))}
     </div>
   )
 }
