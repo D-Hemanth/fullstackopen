@@ -6,14 +6,17 @@ import Togglable from './components/Togglable'
 import Notification from './components/Notification'
 import BlogForm from './components/BlogForm'
 import LoginForm from './components/LoginForm'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notificationMessage, setNotificationMessage] = useState(null)
-  const [messageColor, setMessageColor] = useState(null)
+
+  // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
+  const dispatch = useDispatch()
 
   // use Useeffect to add a side effect after rendering the component i.e. here we use it to get data from the server
   // useEffect takes 2 parameters the effect function & the [] - array specifies how  often the effect function is run
@@ -52,14 +55,12 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      // console.log('exception', exception)
-      // set message color to red for errors in the bloglist app
-      setMessageColor('red')
-      // Add a improved notification message when you've typed in a wrong username or password
-      setNotificationMessage('Wrong username or password')
-      setTimeout(() => {
-        setNotificationMessage(null)
-      }, 5000)
+      console.log('exception', exception)
+      // set message color to red for errors in the bloglist app using dispatch hook to send actions to react store and similarly
+      // Add a improved notification message when you've typed in a wrong username or password with
+      const notificationMessage = 'Wrong username or password'
+      const messageColor = 'red'
+      dispatch(setNotification({ messageColor, notificationMessage }, 5))
     }
   }
 
@@ -83,13 +84,11 @@ const App = () => {
       // console.log(newBlog)
       setBlogs(blogs.concat(newBlog))
 
-      setMessageColor('green')
-      setNotificationMessage(
-        `A new blog ${newBlog.title} by ${newBlog.author} added`,
-      )
-      setTimeout(() => {
-        setNotificationMessage(null)
-      }, 5000)
+      // set message color to green for errors in the bloglist app using dispatch hook to send actions to react store and similarly
+      // Add a improved notification message when you add a new blog into the list
+      const notificationMessage = `A new blog "${newBlog.title}" by ${newBlog.author} added`
+      const messageColor = 'green'
+      dispatch(setNotification({ messageColor, notificationMessage }, 5))
     } catch (exception) {
       console.log(exception)
     }
