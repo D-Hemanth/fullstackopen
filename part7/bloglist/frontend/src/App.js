@@ -7,6 +7,9 @@ import LoginForm from './components/LoginForm'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUser, setUser } from './reducers/userReducer'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import UsersList from './components/UsersList'
+import { initializeAllUsers } from './reducers/usersReducer'
 
 const App = () => {
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
@@ -19,7 +22,8 @@ const App = () => {
     // With Redux Thunk it is possible to implement action creators which return a function instead of an object
     dispatch(initializeBlogs())
     dispatch(initializeUser())
-  }, [dispatch])
+    dispatch(initializeAllUsers())
+  }, [])
 
   // use useSelector to access the redux store from any react component
   const user = useSelector((state) => state.user)
@@ -48,17 +52,46 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h2>Blogs</h2>
-      <Notification />
-      <p>
-        {user.name} logged in <button onClick={handleLogout}>logout</button>
-      </p>
-      <Togglable buttonLabel="new blog" ref={blogFormRef}>
-        <BlogForm blogFormRef={blogFormRef} />
-      </Togglable>
-      <Blog />
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route
+            path="/users"
+            element={
+              <div>
+                <h2>Blogs</h2>
+                <Notification />
+                <p>{user.name} logged in </p>
+                <p>
+                  <button onClick={handleLogout}>logout</button>
+                </p>
+                <UsersList />
+              </div>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <div>
+                <Link style={padding} to="/users">
+                  users
+                </Link>
+                <span>{user.name} logged in </span>
+                <button style={padding} onClick={handleLogout}>
+                  logout
+                </button>
+                <h2>Blogs</h2>
+                <Notification />
+                <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                  <BlogForm blogFormRef={blogFormRef} />
+                </Togglable>
+                <Blog />
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   )
 }
 
