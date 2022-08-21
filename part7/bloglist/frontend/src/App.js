@@ -75,6 +75,37 @@ const App = () => {
             }
           />
           <Route
+            path="/blogs/:id"
+            element={
+              <div>
+                <h2>Blogs</h2>
+                <Notification />
+                <p>{user.name} logged in </p>
+                <p>
+                  <button onClick={handleLogout}>logout</button>
+                </p>
+                <EachBlogInfo />
+              </div>
+            }
+          />
+          <Route
+            path="/blogs"
+            element={
+              <div>
+                <h2>Blogs</h2>
+                <Notification />
+                <p>{user.name} logged in </p>
+                <p>
+                  <button onClick={handleLogout}>logout</button>
+                </p>
+                <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                  <BlogForm blogFormRef={blogFormRef} />
+                </Togglable>
+                <Blog />
+              </div>
+            }
+          />
+          <Route
             path="/users"
             element={
               <div>
@@ -92,8 +123,14 @@ const App = () => {
             path="/"
             element={
               <div>
+                <Link style={padding} to="/">
+                  Home
+                </Link>
+                <Link style={padding} to="/blogs">
+                  Blogs
+                </Link>
                 <Link style={padding} to="/users">
-                  users
+                  Users
                 </Link>
                 <span>{user.name} logged in </span>
                 <button style={padding} onClick={handleLogout}>
@@ -101,9 +138,6 @@ const App = () => {
                 </button>
                 <h2>Blogs</h2>
                 <Notification />
-                <Togglable buttonLabel="new blog" ref={blogFormRef}>
-                  <BlogForm blogFormRef={blogFormRef} />
-                </Togglable>
                 <Blog />
               </div>
             }
