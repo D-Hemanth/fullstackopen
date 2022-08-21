@@ -9,6 +9,7 @@ import { initializeBlogs } from './reducers/blogReducer'
 import { initializeUser, setUser } from './reducers/userReducer'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import UsersList from './components/UsersList'
+import UserBlogsList from './components/UserBlogsList'
 import { initializeAllUsers } from './reducers/usersReducer'
 
 const App = () => {
