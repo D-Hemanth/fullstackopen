@@ -60,17 +60,23 @@ const App = () => {
   return (
     <Router>
       <div>
+        <>
+          <Link style={padding} to="/">
+            Home
+          </Link>
+          <Link style={padding} to="/blogs">
+            Blogs
+          </Link>
+          <Link style={padding} to="/users">
+            Users
+          </Link>
+        </>
         <Routes>
           <Route
             path="/users/:id"
             element={
               <div>
-                <h2>Blogs</h2>
-                <Notification />
-                <p>{user.name} logged in </p>
-                <p>
-                  <button onClick={handleLogout}>logout</button>
-                </p>
+                <Menu />
                 <UserBlogsList />
               </div>
             }
@@ -79,12 +85,7 @@ const App = () => {
             path="/blogs/:id"
             element={
               <div>
-                <h2>Blogs</h2>
-                <Notification />
-                <p>{user.name} logged in </p>
-                <p>
-                  <button onClick={handleLogout}>logout</button>
-                </p>
+                <Menu />
                 <EachBlogInfo />
               </div>
             }
@@ -93,12 +94,7 @@ const App = () => {
             path="/blogs"
             element={
               <div>
-                <h2>Blogs</h2>
-                <Notification />
-                <p>{user.name} logged in </p>
-                <p>
-                  <button onClick={handleLogout}>logout</button>
-                </p>
+                <Menu />
                 <Togglable buttonLabel="new blog" ref={blogFormRef}>
                   <BlogForm blogFormRef={blogFormRef} />
                 </Togglable>
@@ -110,12 +106,7 @@ const App = () => {
             path="/users"
             element={
               <div>
-                <h2>Blogs</h2>
-                <Notification />
-                <p>{user.name} logged in </p>
-                <p>
-                  <button onClick={handleLogout}>logout</button>
-                </p>
+                <Menu />
                 <UsersList />
               </div>
             }
@@ -123,16 +114,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              <div>
-                <Link style={padding} to="/">
-                  Home
-                </Link>
-                <Link style={padding} to="/blogs">
-                  Blogs
-                </Link>
-                <Link style={padding} to="/users">
-                  Users
-                </Link>
+              <>
                 <span>{user.name} logged in </span>
                 <button style={padding} onClick={handleLogout}>
                   logout
