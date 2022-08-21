@@ -40,6 +40,10 @@ const App = () => {
     dispatch(setUser(null))
   }
 
+  const padding = {
+    paddingRight: 5,
+  }
+
   // show the login form only if the user is not logged-in so when user === null
   if (user === null) {
     return (
