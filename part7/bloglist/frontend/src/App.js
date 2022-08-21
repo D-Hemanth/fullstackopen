@@ -10,6 +10,7 @@ import { initializeUser, setUser } from './reducers/userReducer'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import UsersList from './components/UsersList'
 import UserBlogsList from './components/UserBlogsList'
+import Menu from './components/Menu'
 import { initializeAllUsers } from './reducers/usersReducer'
 import EachBlogInfo from './components/EachBlogInfo'
 
@@ -122,7 +123,7 @@ const App = () => {
                 <h2>Blogs</h2>
                 <Notification />
                 <Blog />
-              </div>
+              </>
             }
           />
         </Routes>
