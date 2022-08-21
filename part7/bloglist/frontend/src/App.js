@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import UsersList from './components/UsersList'
 import UserBlogsList from './components/UserBlogsList'
 import { initializeAllUsers } from './reducers/usersReducer'
+import EachBlogInfo from './components/EachBlogInfo'
 
 const App = () => {
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
