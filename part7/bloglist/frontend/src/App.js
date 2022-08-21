@@ -60,6 +60,20 @@ const App = () => {
       <div>
         <Routes>
           <Route
+            path="/users/:id"
+            element={
+              <div>
+                <h2>Blogs</h2>
+                <Notification />
+                <p>{user.name} logged in </p>
+                <p>
+                  <button onClick={handleLogout}>logout</button>
+                </p>
+                <UserBlogsList />
+              </div>
+            }
+          />
+          <Route
             path="/users"
             element={
               <div>
