@@ -1,22 +1,7 @@
-import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { increaseLikes, deleteBlog } from '../reducers/blogReducer'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-const BlogList = ({ user, blog }) => {
-  const [visible, setVisible] = useState(false)
-
-  // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
-  const dispatch = useDispatch()
-
-  const toggleVisibility = () => {
-    setVisible(!visible)
-  }
-
-  // visibility of the component is defined by an inline style rule, when the display property is set to none the component is not displayed
-  const showWhenVisible = { display: visible ? '' : 'none' }
-
-  const buttonLabel = visible ? 'hide' : 'view'
-
+const BlogList = ({ blog }) => {
   // add styles to the application using inline styles
   const blogStyle = {
     paddingTop: 10,
@@ -26,49 +11,16 @@ const BlogList = ({ user, blog }) => {
     marginBottom: 5,
   }
 
-  // update the blog with new likes by dispatching increaseLikes action creator using axios put request
-  const increaseBlogLikes = () => {
-    dispatch(increaseLikes(blog))
-  }
-
-  // delete blogs from bloglist by dispatching deleteBlog action creator to send axios delete request
-  const handleRemoveBlogChange = () => {
-    dispatch(deleteBlog(blog))
-  }
-
-  // the button for deleting a blog post is visible only if the blog post was added by that user
-  const deleteButtonVisibility = {
-    display: user.name === blog.user.name ? '' : 'none',
-  }
-
   return (
-    <div style={blogStyle} className="blog">
-      {blog.title} - {blog.author}&nbsp;
-      <button onClick={toggleVisibility}>{buttonLabel}</button>
-      <div style={showWhenVisible} className="showFullBlog">
-        {blog.url}
-        <br />
-        likes {blog.likes}{' '}
-        <button id="likes-button" onClick={increaseBlogLikes}>
-          like
-        </button>
-        <br />
-        {blog.user.name}
-        <br />
-        <button
-          style={deleteButtonVisibility}
-          id="remove-button"
-          onClick={handleRemoveBlogChange}
-        >
-          remove
-        </button>
-      </div>
+    <div style={blogStyle}>
+      <Link to={`/blogs/${blog.id}`}>
+        {blog.title} - {blog.author}
+      </Link>
     </div>
   )
 }
 
 const Blog = () => {
-  const user = useSelector((state) => state.user)
   const blogs = useSelector((state) => state.blogs)
   // console.log('Blogs state gotten from store', blogs)
 
@@ -82,7 +34,7 @@ const Blog = () => {
   return (
     <div>
       {sortedBlogs.map((blog) => (
-        <BlogList key={blog.id} user={user} blog={blog} />
+        <BlogList key={blog.id} blog={blog} />
       ))}
     </div>
   )
