@@ -12,6 +12,7 @@ const EachBlogInfo = () => {
   // console.log('blog id from useParams', id)
   const blog = blogs.find((blog) => blog.id === id)
   // console.log('blog info to display', blog)
+  // console.log('comments in blog', blog.comments)
 
   // use useNavigate to navigate to home page('/') after a blog is deleted
   const navigate = useNavigate()
