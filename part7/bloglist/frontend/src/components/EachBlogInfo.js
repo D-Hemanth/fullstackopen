@@ -33,6 +33,16 @@ const EachBlogInfo = () => {
     display: user.name === blog.user.name ? '' : 'none',
   }
 
+  // dispatch an action creator containing the blog & comment value to the reducer
+  const handleCommentSubmit = (event) => {
+    event.preventDefault()
+    const comment = event.target.comment.value
+    console.log('comment value', comment)
+    console.log('blog value in comment handler', blog)
+    event.target.comment.value = ''
+    dispatch(addComment(comment, blog))
+  }
+
   return (
     <div>
       <h2>
@@ -55,6 +65,10 @@ const EachBlogInfo = () => {
         remove
       </button>
       <h3>comments</h3>
+      <form onSubmit={handleCommentSubmit}>
+        <input id='comment' name='comment' type='text' />
+        <button id='comment-button' type='submit' >add comment</button>
+      </form>
       <ul>
         {blog.comments.map((comment) => (
           <li key={comment}>{comment}</li>
