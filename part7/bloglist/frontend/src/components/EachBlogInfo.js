@@ -2,6 +2,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import { increaseLikes, deleteBlog, addComment } from '../reducers/blogReducer'
 
+// material UI stylesheet
+import { TextField, Button } from '@mui/material'
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddCommentIcon from '@mui/icons-material/AddComment'
+// material UI stylesheet
+
 const EachBlogInfo = () => {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.user)
@@ -37,8 +44,8 @@ const EachBlogInfo = () => {
   const handleCommentSubmit = (event) => {
     event.preventDefault()
     const comment = event.target.comment.value
-    console.log('comment value', comment)
-    console.log('blog value in comment handler', blog)
+    // console.log('comment value', comment)
+    // console.log('blog value in comment handler', blog)
     event.target.comment.value = ''
     dispatch(addComment(comment, blog))
   }
@@ -49,25 +56,54 @@ const EachBlogInfo = () => {
         {blog.title} - {blog.author}
       </h2>
       <a href={blog.url}>{blog.url}</a>
+      <br></br>
       <br />
       likes {blog.likes}{' '}
-      <button id="likes-button" onClick={increaseBlogLikes}>
+      <Button
+        id="likes-button"
+        variant="contained"
+        color="primary"
+        size="small"
+        endIcon={<ThumbUpOffAltIcon />}
+        onClick={increaseBlogLikes}
+      >
         like
-      </button>
+      </Button>
+      <br></br>
       <br />
       added by {blog.user.name}
+      <br></br>
       <br />
-      <button
+      <Button
         style={deleteButtonVisibility}
         id="remove-button"
+        variant="contained"
+        color="primary"
+        size="small"
+        endIcon={<DeleteIcon />}
         onClick={handleRemoveBlogChange}
       >
         remove
-      </button>
+      </Button>
       <h3>comments</h3>
       <form onSubmit={handleCommentSubmit}>
-        <input id='comment' name='comment' type='text' />
-        <button id='comment-button' type='submit' >add comment</button>
+        <TextField
+          id="comment"
+          label="comment"
+          variant="standard"
+          name="comment"
+          type="text"
+        />
+        <Button
+          id="comment-button"
+          variant="contained"
+          color="primary"
+          size="small"
+          endIcon={<AddCommentIcon />}
+          type="submit"
+        >
+          add comment
+        </Button>
       </form>
       <ul>
         {blog.comments.map((comment) => (

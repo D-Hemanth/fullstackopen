@@ -3,6 +3,11 @@ import { useDispatch } from 'react-redux'
 import { createBlog } from '../reducers/blogReducer'
 import { setNotification } from '../reducers/notificationReducer'
 
+// material UI stylesheet
+import { Box, TextField, Button } from '@mui/material'
+import SendIcon from '@mui/icons-material/Send'
+// material UI stylesheet
+
 const BlogForm = ({ blogFormRef }) => {
   // Add states for inputing new blogs by loggedIn users
   const [newTitle, setNewTitle] = useState('')
@@ -63,36 +68,59 @@ const BlogForm = ({ blogFormRef }) => {
     // Allow loggedIn users to add new blog to mongodb through input forms, states, useRef for toggleVisibility, props.children
     <div className="blogFormDiv">
       <h2>Create New Blog</h2>
-      <form onSubmit={addBlog}>
+      <Box
+        component="form"
+        sx={{ '& .MuiTextField-root': { m: 1, width: '25ch' } }}
+        noValidate
+        autoComplete="off"
+        onSubmit={addBlog}
+      >
         <div>
-          title:
-          <input
+          <TextField
             id="title"
+            label="Title"
+            multiline
+            maxRows={4}
+            variant="filled"
             value={newTitle}
             name="Title"
             onChange={handleTitleChange}
           />
         </div>
         <div>
-          author:
-          <input
+          <TextField
             id="author"
+            label="Author"
+            multiline
+            maxRows={4}
+            variant="filled"
             value={newAuthor}
             name="Author"
             onChange={handleAuthorChange}
           />
         </div>
         <div>
-          url:
-          <input
+          <TextField
             id="url"
+            label="URL"
+            multiline
+            maxRows={4}
+            variant="filled"
             value={newUrl}
             name="Url"
             onChange={handleUrlChange}
           />
         </div>
-        <button type="submit">create</button>
-      </form>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<SendIcon />}
+          type="submit"
+        >
+          create
+        </Button>
+      </Box>
+      <br></br>
     </div>
   )
 }

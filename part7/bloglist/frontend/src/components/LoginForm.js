@@ -6,6 +6,11 @@ import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
 import { setUser } from '../reducers/userReducer'
 
+// material UI stylesheet
+import { TextField, Button } from '@mui/material'
+import LoginIcon from '@mui/icons-material/Login'
+// material UI stylesheet
+
 const LoginForm = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -51,28 +56,38 @@ const LoginForm = () => {
       {/* Add the components for username & password for login */}
       <form onSubmit={handleLogin}>
         <div>
-          username
-          <input
+          <TextField
             id="username"
+            label="Username"
+            variant="outlined"
             type="text"
             value={username}
             name="Username"
             onChange={handleUsernameChange}
           />
         </div>
+        <br></br>
         <div>
-          password
-          <input
+          <TextField
             id="password"
+            label="Password"
+            variant="outlined"
             type="password"
             value={password}
             name="Password"
             onChange={handlePasswordChange}
           />
         </div>
-        <button id="login-button" type="submit">
+        <br></br>
+        <Button
+          id="login-button"
+          variant="contained"
+          endIcon={<LoginIcon />}
+          color="primary"
+          type="submit"
+        >
           login
-        </button>
+        </Button>
       </form>
     </div>
   )

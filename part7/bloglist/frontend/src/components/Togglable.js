@@ -1,6 +1,12 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
 import PropTypes from 'prop-types'
 
+// material UI stylesheet
+import { Button } from '@mui/material'
+import CancelIcon from '@mui/icons-material/Cancel'
+import AddIcon from '@mui/icons-material/Add'
+// material UI stylesheet
+
 // React.forwardRef creates a React component that forwards the ref attribute it receives to another component below in the tree
 const Togglable = forwardRef((props, refs) => {
   const [visible, setVisible] = useState(false)
@@ -24,12 +30,28 @@ const Togglable = forwardRef((props, refs) => {
   return (
     <div>
       <div style={hideWhenVisible}>
-        <button onClick={toggleVisibility}>{props.buttonLabel}</button>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<AddIcon />}
+          size="small"
+          onClick={toggleVisibility}
+        >
+          {props.buttonLabel}
+        </Button>
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <Button
+          variant="contained"
+          color="primary"
+          endIcon={<CancelIcon />}
+          onClick={toggleVisibility}
+        >
+          cancel
+        </Button>
       </div>
+      <br></br>
     </div>
   )
 })

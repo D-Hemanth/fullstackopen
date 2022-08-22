@@ -2,6 +2,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import Notification from './Notification'
 import { setUser } from '../reducers/userReducer'
 
+// material UI stylesheet
+import { Button } from '@mui/material'
+import LogoutIcon from '@mui/icons-material/Logout'
+// material UI stylesheet
+
 const Menu = () => {
   const user = useSelector((state) => state.user)
   const dispatch = useDispatch()
@@ -19,7 +24,15 @@ const Menu = () => {
       <Notification />
       <p>{user.name} logged in </p>
       <p>
-        <button onClick={handleLogout}>logout</button>
+        <Button
+          variant="contained"
+          color="primary"
+          size="small"
+          endIcon={<LogoutIcon />}
+          onClick={handleLogout}
+        >
+          logout
+        </Button>
       </p>
     </div>
   )

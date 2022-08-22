@@ -1,21 +1,45 @@
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-const BlogList = ({ blog }) => {
-  // add styles to the application using inline styles
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-  }
+// material UI stylesheet
+import {
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  styled,
+  tableCellClasses,
+} from '@mui/material'
 
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+  },
+}))
+// material UI stylesheet
+
+const BlogList = ({ blog }) => {
   return (
-    <div style={blogStyle}>
-      <Link to={`/blogs/${blog.id}`}>
-        {blog.title} - {blog.author}
-      </Link>
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+          <TableBody>
+            <TableRow>
+              <StyledTableCell>
+                <Link to={`/blogs/${blog.id}`}>
+                  {blog.title} - {blog.author}
+                </Link>
+              </StyledTableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   )
 }
