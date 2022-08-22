@@ -14,6 +14,11 @@ import Menu from './components/Menu'
 import { initializeAllUsers } from './reducers/usersReducer'
 import EachBlogInfo from './components/EachBlogInfo'
 
+// material UI stylesheet imports
+import { Container, AppBar, Toolbar, IconButton, Button } from '@mui/material'
+import LogoutIcon from '@mui/icons-material/Logout'
+// material UI stylesheet imports
+
 const App = () => {
   // useDispatch-hook provides any React component access to dispatch-function from the useDispatch -hook to send actions to react-redux store
   const dispatch = useDispatch()
@@ -43,92 +48,109 @@ const App = () => {
     dispatch(setUser(null))
   }
 
-  const padding = {
-    paddingRight: 5,
-  }
-
   // show the login form only if the user is not logged-in so when user === null
   if (user === null) {
     return (
-      <div>
-        <h2>Log in to application</h2>
-        <Notification />
-        <LoginForm />
-      </div>
+      // add inline styling to display the login form in center of page
+      <Container style={{ display: 'flex', justifyContent: 'center' }}>
+        <div>
+          <h2>Log in to Bloglist App</h2>
+          <Notification />
+          <LoginForm />
+        </div>
+      </Container>
     )
   }
 
   return (
-    <Router>
-      <div>
-        <>
-          <Link style={padding} to="/">
-            Home
-          </Link>
-          <Link style={padding} to="/blogs">
-            Blogs
-          </Link>
-          <Link style={padding} to="/users">
-            Users
-          </Link>
-        </>
-        <Routes>
-          <Route
-            path="/users/:id"
-            element={
-              <div>
-                <Menu />
-                <UserBlogsList />
-              </div>
-            }
-          />
-          <Route
-            path="/blogs/:id"
-            element={
-              <div>
-                <Menu />
-                <EachBlogInfo />
-              </div>
-            }
-          />
-          <Route
-            path="/blogs"
-            element={
-              <div>
-                <Menu />
-                <Togglable buttonLabel="new blog" ref={blogFormRef}>
-                  <BlogForm blogFormRef={blogFormRef} />
-                </Togglable>
-                <Blog />
-              </div>
-            }
-          />
-          <Route
-            path="/users"
-            element={
-              <div>
-                <Menu />
-                <UsersList />
-              </div>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <>
-                <span>{user.name} logged in </span>
-                <button style={padding} onClick={handleLogout}>
-                  logout
-                </button>
-                <h2>Blogs</h2>
-                <Notification />
-                <Blog />
-              </>
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+    <Container>
+      <Router>
+        <div>
+          <>
+            <AppBar position="static">
+              <Toolbar>
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                ></IconButton>
+                <Button color="inherit" component={Link} to="/">
+                  Home
+                </Button>
+                <Button color="inherit" component={Link} to="/blogs">
+                  Blogs
+                </Button>
+                <Button color="inherit" component={Link} to="/users">
+                  Users
+                </Button>
+              </Toolbar>
+            </AppBar>
+          </>
+          <Routes>
+            <Route
+              path="/users/:id"
+              element={
+                <div>
+                  <Menu />
+                  <UserBlogsList />
+                </div>
+              }
+            />
+            <Route
+              path="/blogs/:id"
+              element={
+                <div>
+                  <Menu />
+                  <EachBlogInfo />
+                </div>
+              }
+            />
+            <Route
+              path="/blogs"
+              element={
+                <div>
+                  <Menu />
+                  <Togglable buttonLabel="new blog" ref={blogFormRef}>
+                    <BlogForm blogFormRef={blogFormRef} />
+                  </Togglable>
+                  <Blog />
+                </div>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <div>
+                  <Menu />
+                  <UsersList />
+                </div>
+              }
+            />
+            <Route
+              path="/"
+              element={
+                <>
+                  <br></br>
+                  <span>{user.name} logged in </span>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    endIcon={<LogoutIcon />}
+                    onClick={handleLogout}
+                  >
+                    logout
+                  </Button>
+                  <h2>Blogs</h2>
+                  <Notification />
+                  <Blog />
+                </>
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </Container>
   )
 }
 
