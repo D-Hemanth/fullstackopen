@@ -12,7 +12,9 @@ const blogSchema = new mongoose.Schema({
     ref: 'User',
   },
   likes: Number,
-  comments: [String],
+  comments: [{
+    type: String
+  }],
 })
 
 // to remove unique id field _id & mongo versioning field __v from the frontend output
