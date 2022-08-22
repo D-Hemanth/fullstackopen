@@ -78,4 +78,20 @@ export const deleteBlog = (blogToDelete) => {
   }
 }
 
+export const addComment = (comment, blog) => {
+  return async (dispatch) => {
+    // Using the spread operator to update/add comment to blog object's comment field
+    console.log('addcomment comment', comment)
+    console.log('addcomment id', blog.id)
+    // make a request to backend with blogService to post comment to a blog in backend & then dispatch initializeBlogs action to display the updated state
+    const updatedBlog = await blogService.makeComment(comment, blog.id)
+    console.log('updated blog in addComment', updatedBlog)
+    dispatch(initializeBlogs())
+    // set message color to green & Add a improved notification message when you add a comment to a blog
+    const notificationMessage = `You've commented on the blog "${blog.title}"`
+    const messageColor = 'green'
+    dispatch(setNotification({ messageColor, notificationMessage }, 5))
+  }
+}
+
 export default blogSlice.reducer

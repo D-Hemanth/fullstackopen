@@ -43,7 +43,9 @@ const remove = async (deleteBlogObject) => {
   return response.data
 }
 
-const makeComment = async (id, comment) => {
+// adding comments to a blog post would be an HTTP POST request to the api/blogs/:id/comments endpoint
+// & Comments should be anonymous, meaning that they are not associated to the user who left the comment so no need to send config
+const makeComment = async (comment, id) => {
   const response = await axios.post(`${baseUrl}/${id}/comments`, { comment })
   return response.data
 }
