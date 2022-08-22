@@ -33,7 +33,7 @@ describe('<Blog/> component tests', () => {
     )
   })
 
-  test("blog renders the blog's title and author, but does not render its url or number of likes by default", () => {
+  test('blog renders the blog\'s title and author, but does not render its url or number of likes by default', () => {
     const ComponentRendered = component.container.querySelector('.blog')
     screen.debug(ComponentRendered)
 
@@ -48,7 +48,7 @@ describe('<Blog/> component tests', () => {
     expect(fullComponentRendered).toHaveStyle('display: none')
   })
 
-  test("which checks that the blog's url and number of likes are shown when the view button is clicked", async () => {
+  test('which checks that the blog\'s url and number of likes are shown when the view button is clicked', async () => {
     // setsup a session using setup() to mimic the UI of rendered component in browser to mock user interactions while testing
     const user = userEvent.setup()
     const viewButton = screen.getByText('view')

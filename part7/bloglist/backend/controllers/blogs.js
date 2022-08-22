@@ -104,8 +104,26 @@ blogsRouter.put('/:id', userExtractor, async (request, response) => {
     console.log(exception)
   }
 
+})
 
-  
+// post method to update comments of a blog from a blogslist on mongodb using the id parameter & comment value
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const id = request.params.id
+  console.log('request params id & request body comment', request.params.id, request.body.comment)
+
+  // using mongoose findByIdAndUpdate method of Blog model to find the comments field and add to it ("$addToSet":...) & to return the updated blog from mongodb use ({new: true})
+  // https://stackoverflow.com/questions/44860181/mongoose-findbyidandupdate-not-adding-item-in-array
+	if(request.body.comment){
+		const blog = await Blog.
+			findByIdAndUpdate(id,{ "$addToSet": { comments: request.body.comment } },
+				{ new : true }
+			)
+		response.json(blog)
+	}
+	else{
+		response.status(400).send({ error: "Comment is missing" })
+	}
+
 })
 
 module.exports = blogsRouter
