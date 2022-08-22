@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
-import { increaseLikes, deleteBlog } from '../reducers/blogReducer'
+import { increaseLikes, deleteBlog, addComment } from '../reducers/blogReducer'
 
 const EachBlogInfo = () => {
   const dispatch = useDispatch()
