@@ -119,6 +119,7 @@ const resolvers = {
     authorCount: () => authors.length,
     // Implement query allBooks, which returns the details of all books.
     allBooks: () => books,
+    // Implement query allAuthors, which returns the details of all authors & include a field bookCount containing the number of books the author has written
     allAuthors: () => authors,
   },
   Author: {
