@@ -109,6 +109,7 @@ const typeDefs = gql`
   }
 `
 
+// Implement queries bookCount and authorCount which return the number of books and the number of authors
 const resolvers = {
   Query: {
     bookCount: () => books.length,
