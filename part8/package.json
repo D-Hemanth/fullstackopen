@@ -1,0 +1,11 @@
+{
+  "name": "library-graphql-backend",
+  "version": "0.0.1",
+  "description": "I will implement a GraphQL backend for a small library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hemanth D",
+  "license": "MIT"
+}
