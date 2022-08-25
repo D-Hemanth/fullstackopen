@@ -163,6 +163,13 @@ const resolvers = {
     },
   },
   Mutation: {
+    addBook: (root, args) => {
+      // If the author is not yet saved to the server, a new author is added to the system. The birth years of authors are not saved to the server yet
+      if (!authors.find((author) => author.name === args.author)) {
+        addNewAuthor = { name: args.author, born: null, id: uuid() }
+        authors = authors.concat(addNewAuthor)
+      }
+
       // id field is given a unique value using the uuid library
       const book = { ...args, id: uuid() }
       books = books.concat(book)
