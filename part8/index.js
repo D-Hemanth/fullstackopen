@@ -108,7 +108,7 @@ const typeDefs = gql`
   type Query {
     bookCount: Int!
     authorCount: Int!
-    allBooks(author: String): [Book!]!
+    allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
   }
 `
@@ -123,9 +123,16 @@ const resolvers = {
       if (!args.author) {
         return books
       }
-      const authorWrittenBooks = books.filter(
-        (book) => book.author === args.author
-      )
+      // use the books response from authorWrittenBooks to again filter by genre if genre parameter is given to return authorBooksGenreBased else return authorWrittenBooks
+      if (args.genre) {
+        const authorBooksGenreBased = authorWrittenBooks.filter(
+          (book) =>
+            // The findIndex() method returns -1 if no match is found & returns the index (position) of the first element that passes a test
+            book.genres.findIndex((genre) => genre === args.genre) !== -1
+        )
+        return authorBooksGenreBased
+      }
+
       return authorWrittenBooks
     },
     // Implement query allAuthors, which returns the details of all authors & include a field bookCount containing the number of books the author has written
