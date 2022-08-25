@@ -179,6 +179,7 @@ const resolvers = {
       books = books.concat(book)
       return book
     },
+    // Implement mutation editAuthor, which can be used to set a birth year for an author
     editAuthor: (root, args) => {
       const author = authors.find((author) => author.name === args.name)
       if (!author) {
