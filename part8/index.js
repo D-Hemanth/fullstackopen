@@ -120,6 +120,7 @@ const resolvers = {
     authorCount: () => authors.length,
     // Implement query allBooks, which returns the details of all books, if author argument is not given else return all books written by that author
     allBooks: (root, args) => {
+      // if both author, genre are not given in argument parameter then return all books
       if (!args.author && !args.genre) {
         return books
       }
