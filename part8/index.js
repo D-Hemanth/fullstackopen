@@ -120,9 +120,16 @@ const resolvers = {
     authorCount: () => authors.length,
     // Implement query allBooks, which returns the details of all books, if author argument is not given else return all books written by that author
     allBooks: (root, args) => {
-      if (!args.author) {
+      if (!args.author && !args.genre) {
         return books
       }
+
+      // initialize authorWrittenBooks to books object so if author argument is not given but genre is given then we can still use initialization here to filter
+      let authorWrittenBooks = books
+
+      if (args.author)
+        authorWrittenBooks = books.filter((book) => book.author === args.author)
+
       // use the books response from authorWrittenBooks to again filter by genre if genre parameter is given to return authorBooksGenreBased else return authorWrittenBooks
       if (args.genre) {
         const authorBooksGenreBased = authorWrittenBooks.filter(
