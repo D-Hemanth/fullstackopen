@@ -88,6 +88,7 @@ let books = [
   },
 ]
 
+// the schema for graphql queries & types of queries are defined inside the schema
 const typeDefs = gql`
   type Author {
     name: String!
@@ -117,6 +118,7 @@ const resolvers = {
     // Implement queries bookCount and authorCount which return the number of books and the number of authors
     bookCount: () => books.length,
     authorCount: () => authors.length,
+    // Implement query allBooks, which returns the details of all books, if author argument is not given else return all books written by that author
     allBooks: (root, args) => {
       if (!args.author) {
         return books
