@@ -1,9 +1,20 @@
+import { useQuery } from '@apollo/client'
+import { ALL_BOOKS } from '../queries'
 const Books = (props) => {
+  // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
+  const result = useQuery(ALL_BOOKS)
+  // console.log('allBooks query result', result)
+
   if (!props.show) {
     return null
   }
 
-  const books = []
+  // The field loading is true if the query has not received a response yet
+  if (result.loading) {
+    return <div>loading...</div>
+  }
+
+  const books = result.data.allBooks
 
   return (
     <div>
