@@ -47,3 +47,16 @@ export const ADD_BOOK = gql`
     }
   }
 `
+
+// to execute queries/mutations programmatically, we must be able to give them parameters dynamically using graphql variables instead of hardcoding them
+// 3 things to remember for gql variables: query should be named, Declare $variableName as one of the variables accepted by the query & pass it as a clientparameter to query
+export const EDIT_AUTHOR_BIRTHYEAR = gql`
+  mutation editAuthorBirthyear($name: String!, $setBornTo: Int!) {
+    editAuthor(name: $name, setBornTo: $setBornTo) {
+      name
+      born
+      id
+      bookCount
+    }
+  }
+`
