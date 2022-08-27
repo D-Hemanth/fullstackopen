@@ -10,6 +10,8 @@ const Authors = (props) => {
   if (!props.show) {
     return null
   }
+
+  // The field loading is true if the query has not received a response yet
   if (result.loading) {
     return <div>loading...</div>
   }
