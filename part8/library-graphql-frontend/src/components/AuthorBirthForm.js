@@ -6,6 +6,9 @@ const AuthorBirthForm = () => {
   const [name, setName] = useState('')
   const [setBornTo, setSetBornTo] = useState('')
 
+  // hook function useMutation provides the functionality for making mutations/changes to server data
+  // if person is not in gql server the response given in backend resolver is return null, in gql this is not onError,
+  // so We can use the result field returned by the useMutation hook as its second parameter to generate an error message
   const [editAuthorBirthyear] = useMutation(EDIT_AUTHOR_BIRTHYEAR)
 
   const submit = (event) => {
