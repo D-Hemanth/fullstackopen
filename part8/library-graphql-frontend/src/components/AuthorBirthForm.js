@@ -19,5 +19,28 @@ const AuthorBirthForm = () => {
     setSetBornTo('')
   }
 
+  return (
+    <div>
+      <h2>Set Birthyear</h2>
+      <form onSubmit={submit}>
+        <div>
+          name{' '}
+          <input
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+          />
+        </div>
+        <div>
+          name{' '}
+          <input
+            value={setBornTo}
+            onChange={({ target }) => setSetBornTo(Number(target.value))}
+          />
+        </div>
+        <button type="submit">update author</button>
+      </form>
+    </div>
+  )
+}
 
 export default AuthorBirthForm
