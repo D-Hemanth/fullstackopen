@@ -9,6 +9,9 @@ const NewBook = (props) => {
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
 
+  // hook function useMutation provides the functionality for making mutations/changes to server data
+  // You can provide the refetchQueries option to useMutation as a way to update your local data by fetching the latest data from the server
+  // We can register an error handler function to the mutation using the useMutation hook's onError option
   const [createBook] = useMutation(ADD_BOOK, {
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
   })
