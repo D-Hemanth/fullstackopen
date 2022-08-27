@@ -1,8 +1,20 @@
+import { useQuery } from '@apollo/client'
+import { ALL_AUTHORS } from '../queries'
+
+// Authors renders the detailed info of each Author
 const Authors = (props) => {
+  // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
+  const result = useQuery(ALL_AUTHORS)
+  // console.log('allAuthors useQuery result', result)
+
   if (!props.show) {
     return null
   }
-  const authors = []
+  if (result.loading) {
+    return <div>loading...</div>
+  }
+
+  const authors = result.data.allAuthors
 
   return (
     <div>
