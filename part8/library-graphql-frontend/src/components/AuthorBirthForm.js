@@ -30,6 +30,7 @@ const AuthorBirthForm = ({ authors }) => {
     <div>
       <h2>Set Birthyear</h2>
       <form onSubmit={submit}>
+        {/* use select options element to only display authors in gql server */}
         <select value={name} onChange={handleNameSelection}>
           {authors.map((author) => (
             <option key={author.name}>{author.name}</option>
