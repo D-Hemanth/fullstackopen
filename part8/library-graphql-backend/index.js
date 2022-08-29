@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, UserInputError } = require('apollo-server')
 const config = require('./utils/config')
 
 const mongoose = require('mongoose')
@@ -65,7 +65,7 @@ const resolvers = {
     allBooks: (root, args) => {
       // if both author, genre are not given in argument parameter then return all books
       if (!args.author && !args.genre) {
-        return Book.find({}).populate('author')
+        return await Book.find({}).populate('author')
       }
 
       // initialize authorWrittenBooks to books object so if author argument is not given but genre is given then we can still use initialization here to filter
