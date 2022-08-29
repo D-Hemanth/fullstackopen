@@ -97,11 +97,24 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args) => {
+      // author name being too short(<4) then mongoose database validation error handling 
+      if(args.author.length < 4) {
+        throw new UserInputError('Author name is less than 4 characters', {
+          invalidArgs: args.author,
+        })
+      }
+
       // If the author is not yet saved to the server, a new author is added to the system. The birth years of authors are not saved to the server yet
       const existingAuthor = await Author.findOne({ name: args.author })
       if(!existingAuthor) {
         const author = new Author({ name: args.author, born: null })
         await author.save()
+      // book title already exists then mongoose database validation error handling 
+      const existingBook = await Book.findOne({ title: args.title })
+      if(existingBook) {
+        throw new UserInputError('Book already exists', {
+          invalidArgs: args.title
+        })
       }
 
       // id field is given a unique value by the backend automatically so no need to add id field
