@@ -108,7 +108,16 @@ const resolvers = {
       const existingAuthor = await Author.findOne({ name: args.author })
       if(!existingAuthor) {
         const author = new Author({ name: args.author, born: null })
-        await author.save()
+        // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
+        try {
+          await author.save()
+        } catch (error) {
+          throw new UserInputError(error.message, {
+            invalidArgs: args,
+          })
+        }
+      }
+
       // book title already exists then mongoose database validation error handling 
       const existingBook = await Book.findOne({ title: args.title })
       if(existingBook) {
@@ -119,7 +128,15 @@ const resolvers = {
 
       // id field is given a unique value by the backend automatically so no need to add id field
       const book = new Book({ ...args })
-      return book.save()
+      // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
+      try {
+        await book.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        })
+      }
+      return book
     },
     // Implement mutation editAuthor, which can be used to set a birth year for an author
     editAuthor: (root, args) => {
@@ -130,7 +147,15 @@ const resolvers = {
 
       // add the updated author to authors object in mongodb by modifying the author birthyear & save the edited author object
       author.born = args.setBornTo
-      return author.save()
+      // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
+      try {
+        await author.save()
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args
+        })
+      }
+      return author
     },
   },
 }
