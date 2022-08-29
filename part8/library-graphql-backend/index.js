@@ -65,22 +65,19 @@ const resolvers = {
     allBooks: (root, args) => {
       // if both author, genre are not given in argument parameter then return all books
       if (!args.author && !args.genre) {
-        return books
+        return Book.find({}).populate('author')
       }
 
       // initialize authorWrittenBooks to books object so if author argument is not given but genre is given then we can still use initialization here to filter
-      let authorWrittenBooks = books
+      let authorWrittenBooks = await Book.find({}).populate('author')
 
       if (args.author)
-        authorWrittenBooks = books.filter((book) => book.author === args.author)
+        authorWrittenBooks = await authorWrittenBooks.filter((book) => book.author.name === args.author)
 
       // use the books response from authorWrittenBooks to again filter by genre if genre parameter is given to return authorBooksGenreBased else return authorWrittenBooks
       if (args.genre) {
-        const authorBooksGenreBased = authorWrittenBooks.filter(
-          (book) =>
-            // The findIndex() method returns -1 if no match is found & returns the index (position) of the first element that passes a test
-            book.genres.findIndex((genre) => genre === args.genre) !== -1
-        )
+        // The $in operator selects the documents where the value of a field(here genres) equals any value in the specified array
+        const authorBooksGenreBased = await authorWrittenBooks.find({ genres: { $in: [args.genre] } })
         return authorBooksGenreBased
       }
 
@@ -93,8 +90,9 @@ const resolvers = {
   },
   Author: {
     bookCount: (root) => {
-      const authorsBooks = books.filter((book) => book.author === root.name)
-      return authorsBooks.length
+      // find the books with author field having the id same as root.id i.e. current author id whose bookCount we're tallying
+      const books = await Book.find({ author: root.id})
+      return books.length
     },
   },
   Mutation: {
@@ -112,17 +110,14 @@ const resolvers = {
     },
     // Implement mutation editAuthor, which can be used to set a birth year for an author
     editAuthor: (root, args) => {
-      const author = authors.find((author) => author.name === args.name)
-      if (!author) {
+      const author = await Author.find({ name: args.name })
+      if(!author) {
         return null
       }
 
-      // add the updated author to authors object
-      const updatedAuthor = { ...author, born: args.setBornTo }
-      authors = authors.map((author) =>
-        author.name === args.name ? updatedAuthor : author
-      )
-      return updatedAuthor
+      // add the updated author to authors object in mongodb by modifying the author birthyear & save the edited author object
+      author.born = args.setBornTo
+      return author.save()
     },
   },
 }
