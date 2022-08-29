@@ -1,11 +1,13 @@
-const { ApolloServer, gql, UserInputError } = require('apollo-server')
+const { ApolloServer, gql, UserInputError, AuthenticationError } = require('apollo-server')
 const config = require('./utils/config')
+const jwt = require('jsonwebtoken')
 
 const mongoose = require('mongoose')
 const Book = require('./models/book')
 const Author = require('./models/author')
 const User = require('./models/user')
 
+const JWT_SECRET = config.SECRET
 const MONGODB_URI = config.MONGODB_URI
 console.log('connecting to', MONGODB_URI)
 
@@ -101,6 +103,9 @@ const resolvers = {
     allAuthors: async () => {
       await Author.find({})
     },
+    me: (root, args, context) => {
+      return context.currentUser
+    }
   },
   Author: {
     bookCount: (root) => {
@@ -110,7 +115,13 @@ const resolvers = {
     },
   },
   Mutation: {
-    addBook: async (root, args) => {
+    addBook: async (root, args, context) => {
+      // before editing persons verify that the user is logged-in using context parameter of resolver
+      const currentUser = context.currentUser
+      if(!currentUser) {
+        throw new AuthenticationError('Not Authenticated')
+      }
+
       // author name being too short(<4) then mongoose database validation error handling 
       if(args.author.length < 4) {
         throw new UserInputError('Author name is less than 4 characters', {
@@ -153,7 +164,13 @@ const resolvers = {
       return book
     },
     // Implement mutation editAuthor, which can be used to set a birth year for an author
-    editAuthor: (root, args) => {
+    editAuthor: (root, args, context) => {
+      // before editing persons verify that the user is logged-in using context parameter of resolver
+      const currentUser = context.currentUser
+      if (!currentUser) {
+        throw new AuthenticationError("not authenticated")
+      }
+
       const author = await Author.find({ name: args.name })
       if(!author) {
         return null
@@ -200,9 +217,19 @@ const resolvers = {
   },
 }
 
+// expand the definition of the server object by adding a third parameter context to the constructor call
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: async ({ req }) => {
+    // The object returned by context is given to all resolvers as their third parameter. Context is the right place to do things which are shared by multiple resolvers, like user identification
+    const auth = req ? req.headers.authorization : null
+    if(auth && auth.toLocaleLowerCase().startsWith('bearer ')) {
+      const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
+      const currentUser = await User.findById(decodedToken.id)
+      return { currentUser }
+    }
+  }
 })
 
 server.listen().then(({ url }) => {
