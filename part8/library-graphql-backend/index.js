@@ -85,7 +85,7 @@ const resolvers = {
     },
     // Implement query allAuthors, which returns the details of all authors & include a field bookCount containing the number of books the author has written
     allAuthors: async () => {
-      return Author.find({})
+      await Author.find({})
     },
   },
   Author: {
