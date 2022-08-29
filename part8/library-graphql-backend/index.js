@@ -54,6 +54,8 @@ const typeDefs = gql`
   }
 `
 
+// the resolver functions(personCount,...) now return a promise, when they previously returned normal objects. When a resolver returns a promise, Apollo server waits for the promise to resolve, and returns the result
+// A resolver can optionally accept four positional arguments: (parent/root, args, context, info)
 const resolvers = {
   Query: {
     // Implement queries bookCount and authorCount which return the number of books and the number of authors
