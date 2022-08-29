@@ -57,8 +57,8 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     // Implement queries bookCount and authorCount which return the number of books and the number of authors
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: async () => Book.collection.countDocuments(),
+    authorCount: async () => Author.collection.countDocuments(),
     // Implement query allBooks, which returns the details of all books, if author argument is not given else return all books written by that author
     allBooks: (root, args) => {
       // if both author, genre are not given in argument parameter then return all books
@@ -85,7 +85,9 @@ const resolvers = {
       return authorWrittenBooks
     },
     // Implement query allAuthors, which returns the details of all authors & include a field bookCount containing the number of books the author has written
-    allAuthors: () => authors,
+    allAuthors: async () => {
+      return Author.find({})
+    },
   },
   Author: {
     bookCount: (root) => {
@@ -94,17 +96,17 @@ const resolvers = {
     },
   },
   Mutation: {
-    addBook: (root, args) => {
+    addBook: async (root, args) => {
       // If the author is not yet saved to the server, a new author is added to the system. The birth years of authors are not saved to the server yet
-      if (!authors.find((author) => author.name === args.author)) {
-        addNewAuthor = { name: args.author, born: null, id: uuid() }
-        authors = authors.concat(addNewAuthor)
+      const existingAuthor = await Author.findOne({ name: args.author })
+      if(!existingAuthor) {
+        const author = new Author({ name: args.author, born: null })
+        await author.save()
       }
 
-      // id field is given a unique value using the uuid library
-      const book = { ...args, id: uuid() }
-      books = books.concat(book)
-      return book
+      // id field is given a unique value by the backend automatically so no need to add id field
+      const book = new Book({ ...args })
+      return book.save()
     },
     // Implement mutation editAuthor, which can be used to set a birth year for an author
     editAuthor: (root, args) => {
