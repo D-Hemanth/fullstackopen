@@ -7,6 +7,7 @@ const Book = require('./models/book')
 const Author = require('./models/author')
 const User = require('./models/user')
 
+// use the secret string for generating JWT & mongodb URI to save phonebookGqlApp data to mongodb from .env file using the config file
 const JWT_SECRET = config.SECRET
 const MONGODB_URI = config.MONGODB_URI
 console.log('connecting to', MONGODB_URI)
