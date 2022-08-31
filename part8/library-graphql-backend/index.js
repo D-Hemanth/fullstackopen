@@ -70,7 +70,7 @@ const typeDefs = gql`
       published: Int!
       author: String!
       genres: [String!]!
-    ): Book
+    ): Book!
     editAuthor(name: String!, setBornTo: Int!): Author
     createUser(username: String!, favouriteGenre: String!): User
     login(username: String!, password: String!): Token
@@ -140,7 +140,7 @@ const resolvers = {
       // If the author is not yet saved to the server, a new author is added to the system. The birth years of authors are not saved to the server yet
       const existingAuthor = await Author.findOne({ name: args.author })
       if (!existingAuthor) {
-        const author = new Author({ name: args.author, born: null })
+        const author = new Author({ name: args.author })
         // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
         try {
           await author.save()
@@ -160,7 +160,10 @@ const resolvers = {
       }
 
       // id field is given a unique value by the backend automatically so no need to add id field
-      const book = new Book({ ...args })
+      const newAuthor = await Author.findOne({ name: args.author })
+      // console.log('newAuthor while adding newBook', newAuthor)
+      const book = new Book({ ...args, author: newAuthor })
+
       // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
       try {
         await book.save()
@@ -179,13 +182,14 @@ const resolvers = {
         throw new AuthenticationError('not authenticated')
       }
 
-      const author = await Author.find({ name: args.name })
+      const author = await Author.findOne({ name: args.name })
       if (!author) {
         return null
       }
 
       // add the updated author to authors object in mongodb by modifying the author birthyear & save the edited author object
       author.born = args.setBornTo
+      // console.log('author birthyear edit result', author)
       // For handling possible validation errors in the schema, we must add an error-handling try/catch block to the save method
       try {
         await author.save()
