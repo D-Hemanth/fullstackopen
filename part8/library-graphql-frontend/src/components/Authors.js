@@ -17,6 +17,10 @@ const Authors = (props) => {
     return <div>loading...</div>
   }
 
+  if (!result.data || result.data.length === 0) {
+    return <div>No authors saved yet</div>
+  }
+
   const authors = result.data.allAuthors
 
   return (
