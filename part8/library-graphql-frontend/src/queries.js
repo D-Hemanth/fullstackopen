@@ -63,3 +63,13 @@ export const EDIT_AUTHOR_BIRTHYEAR = gql`
     }
   }
 `
+
+// 3 things to remember for gql variables: query should be named, Declare $variableName as one of the variables accepted by the query & pass it as a parameter to query
+// define a mutation for logging in
+export const LOGIN = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      value
+    }
+  }
+`
