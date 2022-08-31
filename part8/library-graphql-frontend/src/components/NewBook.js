@@ -13,6 +13,9 @@ const NewBook = (props) => {
   // You can provide the refetchQueries option to useMutation as a way to update your local data by fetching the latest data from the server
   // We can register an error handler function to the mutation using the useMutation hook's onError option
   const [createBook] = useMutation(ADD_BOOK, {
+    onError: (error) => {
+      props.setError(error.graphQLErrors[0].message)
+    },
     refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
   })
 
@@ -43,6 +46,7 @@ const NewBook = (props) => {
 
   return (
     <div>
+      <h2>Add a New Book</h2>
       <form onSubmit={submit}>
         <div>
           title

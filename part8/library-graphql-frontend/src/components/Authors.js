@@ -3,12 +3,12 @@ import { ALL_AUTHORS } from '../queries'
 import AuthorBirthForm from './AuthorBirthForm'
 
 // Authors renders the detailed info of each Author
-const Authors = (props) => {
+const Authors = ({ show, setError }) => {
   // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
   const result = useQuery(ALL_AUTHORS)
   // console.log('allAuthors useQuery result', result)
 
-  if (!props.show) {
+  if (!show) {
     return null
   }
 
@@ -42,7 +42,7 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <AuthorBirthForm authors={authors} />
+      <AuthorBirthForm authors={authors} setError={setError} />
     </div>
   )
 }
