@@ -22,6 +22,16 @@ const Books = (props) => {
 
   const books = result.data.allBooks
 
+  const handleGenreSubmit = (event) => {
+    event.preventDefault()
+    setGenre(event.target.value)
+  }
+
+  // use map, flatMap to combine all genre arrays from all books into single genre array
+  const allGenres = books.map(book => book.genres).flatMap(genre => genre)
+  // use Set to remove the duplicate genre elements in the genre array
+  const filteredAllGenres = [...new Set(allGenres)]
+
   return (
     <div>
       <h2>books</h2>
@@ -42,6 +52,11 @@ const Books = (props) => {
           ))}
         </tbody>
       </table>
+
+      {/*  select the genre to filter the library books by */}
+      {filteredAllGenres.map(genre => 
+        <button value={genre} key={genre} onClick={handleGenreSubmit}>{genre}</button>
+      )}
     </div>
   )
 }
