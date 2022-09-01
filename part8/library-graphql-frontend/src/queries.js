@@ -75,3 +75,14 @@ export const LOGIN = gql`
     }
   }
 `
+
+// define a query 'me' for getting logged-in user info object with fields username, favouriteGenre, id
+export const USER_INFO = gql`
+ query {
+  me {
+    username
+    favouriteGenre
+    id
+  }
+ }
+`
