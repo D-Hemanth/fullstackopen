@@ -1,5 +1,7 @@
 import { useQuery } from '@apollo/client'
 import { ALL_BOOKS, USER_INFO } from '../queries'
+
+// Books renders the detailed info of each book
 const Recommended = (props) => {
   // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
   const result = useQuery(ALL_BOOKS)
