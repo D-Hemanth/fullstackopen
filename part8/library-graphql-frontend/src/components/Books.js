@@ -1,4 +1,5 @@
 import { useQuery } from '@apollo/client'
+import { useState } from 'react'
 import { ALL_BOOKS } from '../queries'
 
 // Books renders the detailed info of each book
