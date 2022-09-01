@@ -3,6 +3,8 @@ import { ALL_BOOKS } from '../queries'
 
 // Books renders the detailed info of each book
 const Books = (props) => {
+  const [genre, setGenre] = useState('')
+
   // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
   const result = useQuery(ALL_BOOKS)
   // console.log('allBooks query result', result)
@@ -32,10 +34,17 @@ const Books = (props) => {
   // use Set to remove the duplicate genre elements in the genre array
   const filteredAllGenres = [...new Set(allGenres)]
 
+  // filter the books based on the genre choosen by the user
+  const filteredBooks = books.filter(book => 
+    { 
+      return book.genres.includes(genre) 
+    })
+
   return (
     <div>
       <h2>books</h2>
-
+      <p>in genre <strong>{genre}</strong></p>
+      
       <table>
         <tbody>
           <tr>
@@ -43,7 +52,7 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {books.map((a) => (
+          {filteredBooks.map((a) => (
             <tr key={a.title}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
