@@ -1,14 +1,29 @@
 import { useQuery } from '@apollo/client'
-import { useState } from 'react'
-import { ALL_BOOKS } from '../queries'
+import { useEffect, useState } from 'react'
+import { ALL_BOOKS, ALL_BOOKS_BY_GENRE } from '../queries'
 
 // Books renders the detailed info of each book
 const Books = (props) => {
   const [genre, setGenre] = useState('')
+  const [filteredBooks, setFilteredBooks] = useState([])
 
   // the hook function useQuery makes the query it receives as a parameter, It returns an object with multiple fields { loading, error, data: queryType }
   const result = useQuery(ALL_BOOKS)
   // console.log('allBooks query result', result)
+
+  // filter the books based on the genre choosen by the user using useQuery hook
+  const response = useQuery(ALL_BOOKS_BY_GENRE, {
+    variables: { genre },
+  })
+  // console.log('genre, response', genre, response)
+
+  // if user has selected a genre & useQuery of ALL_BOOKS_BY_GENRE has given a valid response then setFilteredBooks state value
+  useEffect(() => {
+    if (genre && response.data) {
+      setFilteredBooks(response.data.allBooks)
+      // console.log('books filtered using useQuery', response.data.allBooks)
+    }
+  }, [response.data, genre])
 
   if (!props.show) {
     return null
@@ -31,15 +46,9 @@ const Books = (props) => {
   }
 
   // use map, flatMap to combine all genre arrays from all books into single genre array
-  const allGenres = books.map(book => book.genres).flatMap(genre => genre)
+  const allGenres = books.map((book) => book.genres).flatMap((genre) => genre)
   // use Set to remove the duplicate genre elements in the genre array
   const filteredAllGenres = [...new Set(allGenres)]
-
-  // filter the books based on the genre choosen by the user
-  const filteredBooks = books.filter(book => 
-    { 
-      return book.genres.includes(genre) 
-    })
 
   return (
     <div>
