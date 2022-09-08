@@ -91,23 +91,23 @@ const resolvers = {
         return await Book.find({}).populate('author')
       }
 
-      // initialize authorWrittenBooks to books object so if author argument is not given but genre is given then we can still use initialization here to filter
-      let authorWrittenBooks = await Book.find({}).populate('author')
-
-      if (args.author)
-        authorWrittenBooks = await authorWrittenBooks.filter(
-          (book) => book.author.name === args.author
-        )
-      // use the books response from authorWrittenBooks to again filter by genre if genre parameter is given to return authorBooksGenreBased else return authorWrittenBooks
-      if (args.genre) {
-        // The $in operator selects the documents where the value of a field(here genres) equals any value in the specified array
-        const authorBooksGenreBased = await authorWrittenBooks.find({
-          genres: { $in: [args.genre] },
-        })
-        return authorBooksGenreBased
+      if (args.author) {
+        const foundAuthor = await Author.findOne({ name: args.author })
+        if (foundAuthor) {
+          if (args.genre) {
+            return await Book.find({
+              author: foundAuthor.id,
+              genres: { $in: [args.genre] },
+            }).populate('author')
+          }
+          return await Book.find({ author: foundAuthor.id }).populate('author')
+        }
+        return null
       }
 
-      return authorWrittenBooks
+      if (args.genre) {
+        return Book.find({ genres: { $in: [args.genre] } }).populate('author')
+      }
     },
     // Implement query allAuthors, which returns the details of all authors & include a field bookCount containing the number of books the author has written
     allAuthors: async () => await Author.find({}),
