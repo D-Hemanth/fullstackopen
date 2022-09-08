@@ -53,8 +53,10 @@ const Books = (props) => {
   return (
     <div>
       <h2>books</h2>
-      <p>in genre <strong>{genre}</strong></p>
-      
+      <p>
+        in genre <strong>{genre}</strong>
+      </p>
+
       <table>
         <tbody>
           <tr>
@@ -73,9 +75,11 @@ const Books = (props) => {
       </table>
 
       {/*  select the genre to filter the library books by */}
-      {filteredAllGenres.map(genre => 
-        <button value={genre} key={genre} onClick={handleGenreSubmit}>{genre}</button>
-      )}
+      {filteredAllGenres.map((genre) => (
+        <button value={genre} key={genre} onClick={handleGenreSubmit}>
+          {genre}
+        </button>
+      ))}
     </div>
   )
 }
