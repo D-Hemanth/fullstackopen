@@ -78,11 +78,26 @@ export const LOGIN = gql`
 
 // define a query 'me' for getting logged-in user info object with fields username, favouriteGenre, id
 export const USER_INFO = gql`
- query {
-  me {
-    username
-    favouriteGenre
-    id
+  query {
+    me {
+      username
+      favouriteGenre
+      id
+    }
   }
- }
+`
+
+// define a query books by genre to get the books of a particular genre
+export const ALL_BOOKS_BY_GENRE = gql`
+  query getAllBooksByGenre($genre: String!) {
+    allBooks(genre: $genre) {
+      title
+      author {
+        name
+      }
+      published
+      genres
+      id
+    }
+  }
 `
