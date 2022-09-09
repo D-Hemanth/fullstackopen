@@ -109,6 +109,8 @@ const resolvers = {
         })
       }
 
+      // Adding a new book publishes a notification about the operation to all subscribers with PubSub's method publish
+      // The first parameter(BOOK_ADDED) is the name of the event label you're publishing to, as a string, label name is not compulsory & The second parameter is the payload associated with the event
       pubsub.publish('BOOK_ADDED', { bookAdded: book })
 
       return book
