@@ -105,3 +105,13 @@ export const ALL_BOOKS_BY_GENRE = gql`
   }
   ${BOOK_DETAILS}
 `
+
+// Add a subscription for getting updated server data after adding a new book to graphql server
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      ...BookDetails
+    }
+  }
+  ${BOOK_DETAILS}
+`
