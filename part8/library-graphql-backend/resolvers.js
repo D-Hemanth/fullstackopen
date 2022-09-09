@@ -6,6 +6,9 @@ const Book = require('./models/book')
 const Author = require('./models/author')
 const User = require('./models/user')
 
+// With subscriptions, the communication happens using the publish-subscribe principle utilizing the object PubSub
+const { PubSub } = require('graphql-subscriptions')
+const pubsub = new PubSub()
 
 // use the secret string for generating JWT to save phonebookGqlApp data to mongodb from .env file using the config file
 const JWT_SECRET = config.SECRET
@@ -106,6 +109,7 @@ const resolvers = {
         })
       }
 
+      pubsub.publish('BOOK_ADDED', { bookAdded: book })
 
       return book
     },
@@ -162,6 +166,13 @@ const resolvers = {
 
       // JSON Web Tokens consist of three parts separated by dots (.), which are Header(type of encryption).Payload(user info).Signature(base64UrlEncode(header+payload+secret))
       return { value: jwt.sign(userForToken, JWT_SECRET) }
+    },
+  },
+  Subscription: {
+    bookAdded: {
+      // An AsyncIterator object listens for events that are associated with a particular label (or set of labels) and adds them to a queue for processing.
+      // You can create an AsyncIterator by calling the asyncIterator method of PubSub and passing in an array containing the names of the event labels that this AsyncIterator should listen for
+      subscribe: () => pubsub.asyncIterator(['BOOK_ADDED'])
     },
   },
 }
