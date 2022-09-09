@@ -16,7 +16,15 @@ const NewBook = (props) => {
     onError: (error) => {
       props.setError(error.graphQLErrors[0].message)
     },
-    refetchQueries: [{ query: ALL_BOOKS }, { query: ALL_AUTHORS }],
+    refetchQueries: [{ query: ALL_AUTHORS }],
+    // use update callback function instead of refetchQueries for handling every small changes for ALL_BOOKS but use refetchQueries Sfor ALL_AUTHORS to keep authors view upto date
+    update: (cache, response) => {
+      cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+        return {
+          allBooks: allBooks.concat(response.data.addBook),
+        }
+      })
+    },
   })
 
   if (!props.show) {
