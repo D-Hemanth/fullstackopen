@@ -1,18 +1,18 @@
-const {
-  ApolloServer,
-  gql,
-  UserInputError,
-  AuthenticationError,
-} = require('apollo-server')
+const { ApolloServer } = require('apollo-server-express')
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core')
+const { makeExecutableSchema } = require('@graphql-tools/schema')
+const express = require('express')
+const http = require('http')
 const config = require('./utils/config')
 const jwt = require('jsonwebtoken')
 
 const mongoose = require('mongoose')
-const Book = require('./models/book')
-const Author = require('./models/author')
 const User = require('./models/user')
 
-// use the secret string for generating JWT & mongodb URI to save phonebookGqlApp data to mongodb from .env file using the config file
+const typeDefs = require('./schema')
+const resolvers = require('./resolvers')
+
+// use the secret string for generating JWT & use the mongodb URI to save phonebookGqlApp data to mongodb from .env file using the config file
 const JWT_SECRET = config.SECRET
 const MONGODB_URI = config.MONGODB_URI
 console.log('connecting to', MONGODB_URI)
@@ -26,31 +26,14 @@ mongoose
     console.log('error connection to MongoDB:', error.message)
   })
 
-// the schema for graphql queries & types of queries are defined inside the schema
-// the exclamation indicates it is a non-nullable string meaning the query to this field has to return a value & it can't be empty
-// you can provide named arguments to query fields by including them inside round brackets() & it should be have any name here (author: String!)
-// Mutation also has a return value of type Book so the details of the added book are returned if the operation is successful and if not, null.
-const typeDefs = gql`
-  type Author {
-    name: String!
-    id: ID!
-    born: Int
-    bookCount: Int!
-  }
+// setup is now within a function  -- https://www.apollographql.com/docs/apollo-server/data/subscriptions/#enabling-subscriptions
+const start = async () => {
 
-  type Book {
-    title: String!
-    published: Int!
-    author: Author!
-    genres: [String!]!
-    id: ID!
-  }
+  // In order to set up both the HTTP and subscription servers, we need to first create an http.Server. Do this by passing your Express app to the createServer function
+  const app = express()
+  const httpServer = http.createServer(app)
 
-  type User {
-    username: String!
-    favouriteGenre: String!
-    id: ID!
-  }
+  const schema = makeExecutableSchema({ typeDefs, resolvers })
 
   type Token {
     value: String!
@@ -231,21 +214,34 @@ const resolvers = {
   },
 }
 
-// expand the definition of the server object by adding a third parameter context to the constructor call
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: async ({ req }) => {
+  const server = new ApolloServer({
+    schema,
+    context: async ({ req }) => {
     // The object returned by context is given to all resolvers as their third parameter. Context is the right place to do things which are shared by multiple resolvers, like user identification
-    const auth = req ? req.headers.authorization : null
-    if (auth && auth.toLocaleLowerCase().startsWith('bearer ')) {
-      const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
-      const currentUser = await User.findById(decodedToken.id)
-      return { currentUser }
-    }
-  },
+      const auth = req ? req.headers.authorization : null
+      if (auth && auth.toLocaleLowerCase().startsWith('bearer ')) {
+        const decodedToken = jwt.verify(auth.substring(7), JWT_SECRET)
+        const currentUser = await User.findById(decodedToken.id)
+        return { currentUser }
+      }
+    },
+    plugins: [       // Add plugins to your ApolloServer constructor to shutdown both the HTTP server and the WebSocketServer
+      // Proper shutdown of the HTTP server
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+
 })
 
-server.listen().then(({ url }) => {
-  console.log(`Server ready at ${url}`)
-})
+  await server.start()
+
+  server.applyMiddleware({
+    app,
+    path: '/',
+  })
+
+  const PORT = 4000
+
+  httpServer.listen(PORT, () => console.log(`Server is now running on http://localhost:${PORT}`))
+}
+
+// call the function that does the setup and starts the server
+start()
