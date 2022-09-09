@@ -22,6 +22,7 @@ const App = () => {
       // console.log('subscription data', subscriptionData)
     } 
   })
+
   const notify = (message) => {
     setErrorMessage(message)
     setTimeout(() => {
