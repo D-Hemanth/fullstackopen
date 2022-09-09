@@ -16,11 +16,15 @@ const App = () => {
   // some queries might have fetched data to cache, We can reset the cache after user logout using the resetStore method of an Apollo 'client' object. The client can be accessed with the useApolloClient hook
   const client = useApolloClient()
 
+  // using useSubscription When a new book is now added to the library, no matter where it's done, the details of the new Book are shown as window alert to the user
   useSubscription(BOOK_ADDED, {
-    onSubscriptionData: ({ subscriptionData }) => {
-      window.alert(`New Book - ${subscriptionData.data.bookAdded.title} by ${subscriptionData.data.bookAdded.author.name} added to library`)
+    onSubscriptionData: ({ subscriptionData, client }) => {
+      const addedBook = subscriptionData.data.bookAdded
+      window.alert(
+        `New Book - ${addedBook.title} by ${addedBook.author.name} added to library`
+      )
       // console.log('subscription data', subscriptionData)
-    } 
+    },
   })
 
   const notify = (message) => {
