@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { useApolloClient } from '@apollo/client'
+import { useApolloClient, useSubscription } from '@apollo/client'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
 import Recommended from './components/Recommended'
+import { BOOK_ADDED } from './queries'
 
 const App = () => {
   const [page, setPage] = useState('authors')
@@ -15,6 +16,12 @@ const App = () => {
   // some queries might have fetched data to cache, We can reset the cache after user logout using the resetStore method of an Apollo 'client' object. The client can be accessed with the useApolloClient hook
   const client = useApolloClient()
 
+  useSubscription(BOOK_ADDED, {
+    onSubscriptionData: ({ subscriptionData }) => {
+      window.alert(`New Book - ${subscriptionData.data.bookAdded.title} by ${subscriptionData.data.bookAdded.author.name} added to library`)
+      // console.log('subscription data', subscriptionData)
+    } 
+  })
   const notify = (message) => {
     setErrorMessage(message)
     setTimeout(() => {
