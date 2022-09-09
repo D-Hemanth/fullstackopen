@@ -1,30 +1,46 @@
 import { gql } from '@apollo/client'
 
+// With the fragments, we can do the queries in a compact form by calling them when required using the string template literal(${})
+// Declared like this, the fragment can be placed to any query or mutation using a dollar sign and curly braces
+const AUTHOR_DETAILS = gql`
+  fragment AuthorDetails on Author {
+    name
+    born
+    bookCount
+    id
+  }
+`
+
+const BOOK_DETAILS = gql`
+  fragment BookDetails on Book {
+    title
+    author {
+      name
+    }
+    published
+    genres
+    id
+  }
+`
+
 // add a query display all the authors in the graphql server
 export const ALL_AUTHORS = gql`
   query {
     allAuthors {
-      name
-      born
-      bookCount
-      id
+      ...AuthorDetails
     }
   }
+  ${AUTHOR_DETAILS}
 `
 
 // add a query display all books in the graphql server
 export const ALL_BOOKS = gql`
   query {
     allBooks {
-      title
-      author {
-        name
-      }
-      published
-      genres
-      id
+      ...BookDetails
     }
   }
+  ${BOOK_DETAILS}
 `
 
 // to execute queries/mutations programmatically, we must be able to give them parameters dynamically using graphql variables instead of hardcoding them
@@ -42,15 +58,10 @@ export const ADD_BOOK = gql`
       author: $author
       genres: $genres
     ) {
-      title
-      published
-      author {
-        name
-      }
-      genres
-      id
+      ...BookDetails
     }
   }
+  ${BOOK_DETAILS}
 `
 
 // to execute queries/mutations programmatically, we must be able to give them parameters dynamically using graphql variables instead of hardcoding them
@@ -58,12 +69,10 @@ export const ADD_BOOK = gql`
 export const EDIT_AUTHOR_BIRTHYEAR = gql`
   mutation editAuthorBirthyear($name: String!, $setBornTo: Int!) {
     editAuthor(name: $name, setBornTo: $setBornTo) {
-      name
-      born
-      id
-      bookCount
+      ...AuthorDetails
     }
   }
+  ${AUTHOR_DETAILS}
 `
 
 // 3 things to remember for gql variables: query should be named, Declare $variableName as one of the variables accepted by the query & pass it as a parameter to query
@@ -91,13 +100,8 @@ export const USER_INFO = gql`
 export const ALL_BOOKS_BY_GENRE = gql`
   query getAllBooksByGenre($genre: String!) {
     allBooks(genre: $genre) {
-      title
-      author {
-        name
-      }
-      published
-      genres
-      id
+      ...BookDetails
     }
   }
+  ${BOOK_DETAILS}
 `
