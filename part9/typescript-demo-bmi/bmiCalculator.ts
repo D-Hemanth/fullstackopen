@@ -22,3 +22,12 @@ const calculateBmi = (height: number, mass: number): string => {
   }
 }
 
+try {
+  console.log(calculateBmi(180, 74))
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong.'
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message
+  }
+  console.log(errorMessage)
+}
