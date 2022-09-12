@@ -4,7 +4,8 @@
   "description": "A simple BMI calcutor app made using typescript",
   "main": "index.js",
   "scripts": {
-    "ts-node": "ts-node"
+    "ts-node": "ts-node",
+    "calculateBmi": "ts-node bmiCalculator.ts"
   },
   "author": "Hemanth D",
   "license": "MIT",
