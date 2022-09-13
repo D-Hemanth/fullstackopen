@@ -54,3 +54,10 @@ const calculateExercises = (targetHoursValue: number, dailyExerciseHours: Array<
 
 try {
   calculateExercises(2, [3, 0, 2, 4.5, 0, 3, 1]);
+} catch (error: unknown) {
+  let errorMessage = 'Something went wrong';
+  if(error instanceof Error) {
+    errorMessage += ' Error: ' + error.message
+  }
+  console.log(errorMessage)
+}
