@@ -1,3 +1,35 @@
+// TypeScript's Interface object type keyword, which is one way to define the "shape" an object should have
+interface ExerciseParams {
+  target: number
+  dailyTrainingHours: Array<number>
+}
+
+// the args has only 4 arguments because when we execute the script to run this, > ts-node bmiCalculator.ts "180" "91" , will be run which has 4 params
+const parseExerciseArguments = (args: Array<string>): ExerciseParams => {
+  if (args.length < 4) throw new Error('Not enough arguments')
+
+  if (!isNaN(Number(args[2]))) {
+    let dailyExerciseHours: Array<number> = []
+    for (let i: number = 3; i < args.length; i++) {
+      if (isNaN(Number(args[i]))) {
+        throw new Error(
+          `Provided value for dailyExerciseHours ${args[i]} is not a number`
+        )
+      }
+      dailyExerciseHours.push(Number(args[i]))
+    }
+
+    return {
+      target: Number(args[2]),
+      dailyTrainingHours: dailyExerciseHours,
+    }
+  } else {
+    throw new Error(
+      'Provided values for target & dailyTrainingHours were not numbers'
+    )
+  }
+}
+
 interface ExercisesResult {
   periodLength: number,
   trainingDays: number, 
