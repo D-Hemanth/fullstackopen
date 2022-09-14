@@ -7,21 +7,21 @@ Content-Type: application/json
 }
 
 
-# # malformatted parameters post data test
-# POST http://localhost:3002/exercises HTTP/1.1
-# Content-Type: application/json
+### malformatted parameters post data test
+POST http://localhost:3002/exercises HTTP/1.1
+Content-Type: application/json
 
-# {
-#   "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
-#   "target": "a"
-# }
+{
+  "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
+  "target": "a"
+}
 
 
-# # missing parameters post data test
-# POST http://localhost:3002/exercises HTTP/1.1
-# Content-Type: application/json
+### missing parameters post data test
+POST http://localhost:3002/exercises HTTP/1.1
+Content-Type: application/json
 
-# {
-#   "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
-#   "target": ""
-# }
+{
+  "daily_exercises": [1, 0, 2, 0, 3, 0, 2.5],
+  "target": ""
+}
