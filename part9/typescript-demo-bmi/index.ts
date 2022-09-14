@@ -5,7 +5,7 @@ const app = express();
 //  to get rid of an unused variable error, you can prefix it with an underscore to inform the compiler you have thought about it, Let's rename the req variable to _req
 app.get('/hello', (_req, res) => {
   res.send('Hello Full Stack!');
-})
+});
 
 // add a bmi query route to get the bmi of person by going to the link - http://localhost:3002/bmi?height=180&weight=72
 app.get('/bmi', (req, res) => {
@@ -23,8 +23,6 @@ app.get('/bmi', (req, res) => {
       const bmi = calculateBmi(heightInCm, weightInKg);
       res.send({
         weight: weightInKg,
-        height: heightInCm,
-          height: heightInCm, 
         height: heightInCm,
         bmi: bmi,
       });
