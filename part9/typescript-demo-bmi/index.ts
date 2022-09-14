@@ -13,28 +13,30 @@ app.get('/bmi', (req, res) => {
   const height = Number(req.query.height);
   const weight = Number(req.query.weight);
 
-  if(!height || !weight) {
+  if (!height || !weight) {
     res.status(400);
-    res.send({ error: 'malformatted parameters'});
+    res.send({ error: 'malformatted parameters' });
   } else {
-      try {
-        const { heightInCm, weightInKg } = parseBmiArguments(height, weight)
+    try {
+      const { heightInCm, weightInKg } = parseBmiArguments(height, weight);
 
-        const bmi = calculateBmi(heightInCm, weightInKg)
-        res.send({
-          weight: weightInKg,
+      const bmi = calculateBmi(heightInCm, weightInKg);
+      res.send({
+        weight: weightInKg,
+        height: heightInCm,
           height: heightInCm, 
-          bmi: bmi
-        })
-      } catch (error) {
-        res.status(400);
-        res.send({ error: error.message });
-      }
+        height: heightInCm,
+        bmi: bmi,
+      });
+    } catch (error) {
+      res.status(400);
+      res.send({ error: error.message });
     }
-})
+  }
+});
 
 const PORT = 3002;
 
 app.listen(PORT, () => {
   console.log(`Server running on PORT ${PORT}`);
-})
+});
