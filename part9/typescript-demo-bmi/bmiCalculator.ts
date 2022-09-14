@@ -39,15 +39,3 @@ export const calculateBmi = (heightInCm: number, weightInKg: number): string => 
     return 'Obese (Class III)'
   }
 }
-
-try {
-  // We can get the calculateBmi to work with command-line parameters using process.argv
-  const { height, mass } = parseBmiArguments(process.argv)
-  console.log(calculateBmi(height, mass))
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong.'
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message
-  }
-  console.log(errorMessage)
-}
