@@ -1,76 +1,69 @@
 // TypeScript's Interface object type keyword, which is one way to define the "shape" an object should have
 interface ExerciseParams {
-  target: number
-  dailyTrainingHours: Array<number>
+  target: number;
+  dailyTrainingHours: Array<number>;
 }
 
 // the args has only 4 arguments because when we execute the script to run this, > ts-node bmiCalculator.ts "180" "91" , will be run which has 4 params
-const parseExerciseArguments = (args: Array<string>): ExerciseParams => {
-  if (args.length < 4) throw new Error('Not enough arguments')
-
-  if (!isNaN(Number(args[2]))) {
-    let dailyExerciseHours: Array<number> = []
-    for (let i: number = 3; i < args.length; i++) {
-      if (isNaN(Number(args[i]))) {
-        throw new Error(
-          `Provided value for dailyExerciseHours ${args[i]} is not a number`
-        )
-      }
-      dailyExerciseHours.push(Number(args[i]))
-    }
-
+export const parseExerciseArguments = (
+  target: number,
+  dailyExercises: Array<number>
+): ExerciseParams => {
+  // Array.prototype.some() - some() method allows us to establish if some (at least one) elements within an array meets a certain requirement.
+  // It stops evaluating the array (short circuits) the first time it finds an element that does satisfy the given requirement
+  if (!isNaN(target) && !dailyExercises.some(isNaN)) {
     return {
-      target: Number(args[2]),
-      dailyTrainingHours: dailyExerciseHours,
-    }
+      target: target,
+      dailyTrainingHours: dailyExercises,
+    };
   } else {
     throw new Error(
-      'Provided values for target & dailyTrainingHours were not numbers'
-    )
+      'Malformatted Parameters: Provided values for target & dailyTrainingHours were not number & Array of numbers'
+    );
   }
-}
+};
 
 // TypeScript's Interface object type keyword, which is one way to define the "shape" an object should have
 interface ExercisesResult {
-  periodLength: number
-  trainingDays: number
-  success: boolean
-  rating: number
-  ratingDescription: string
-  target: number
-  average: number
+  periodLength: number;
+  trainingDays: number;
+  success: boolean;
+  rating: number;
+  ratingDescription: string;
+  target: number;
+  average: number;
 }
 
-const calculateExercises = (
+export const calculateExercises = (
   targetHoursValue: number,
   dailyExerciseHours: Array<number>
 ): ExercisesResult => {
   if (targetHoursValue < 1)
-    throw new Error('original target exercise hours is below one!')
+    throw new Error('original target exercise hours is below one!');
 
-  const periodLength = dailyExerciseHours.length
-  const trainingDays = dailyExerciseHours.filter((hour) => hour > 0).length
-  const target = Number(targetHoursValue)
+  const periodLength = dailyExerciseHours.length;
+  const trainingDays = dailyExerciseHours.filter((hour) => hour > 0).length;
+  const target = Number(targetHoursValue);
   const totalHours = dailyExerciseHours.reduce(
     (sum, currentHour) => sum + currentHour,
     0
-  )
-  const average = totalHours / periodLength
-  const success = average >= target ? true : false
+  );
+  const average = totalHours / periodLength;
+  const success = average >= target ? true : false;
 
-  let rating
-  let ratingDescription
-  if (average < target / 3) {
-    rating = 1
+  let rating;
+  let ratingDescription;
+  if (average < target / 2) {
+    rating = 1;
     ratingDescription =
-      'You have failed to reach daily exercise hours, keep trying!'
+      'You have failed to reach daily exercise hours, keep trying!';
   } else if (average > target) {
-    rating = 3
+    rating = 3;
     ratingDescription =
-      "Great going you've reached your daily exercises hours goal!"
+      "Great going you've reached your daily exercises hours goal!";
   } else {
-    rating = 2
-    ratingDescription = 'Not too bad but could be better'
+    rating = 2;
+    ratingDescription = 'Not too bad but could be better';
   }
 
   return {
@@ -81,16 +74,5 @@ const calculateExercises = (
     ratingDescription: ratingDescription,
     target: target,
     average: average,
-  }
-}
-
-try {
-  const { target, dailyTrainingHours } = parseExerciseArguments(process.argv)
-  console.log(calculateExercises(target, dailyTrainingHours))
-} catch (error: unknown) {
-  let errorMessage = 'Something went wrong'
-  if (error instanceof Error) {
-    errorMessage += ' Error: ' + error.message
-  }
-  console.log(errorMessage)
-}
+  };
+};
