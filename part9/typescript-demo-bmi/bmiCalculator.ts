@@ -1,28 +1,25 @@
 // TypeScript's Interface object type keyword, which is one way to define the "shape" an object should have
 interface BodyMassParams {
-  height: number
-  mass: number
+  heightInCm: number
+  weightInKg: number
 }
 
 // the args has only 4 arguments because when we execute the script to run this, > ts-node bmiCalculator.ts "180" "91" , will be run which has 4 params
-const parseBmiArguments = (args: Array<string>): BodyMassParams => {
-  if (args.length < 4) throw new Error('Not enough arguments')
-  if (args.length > 4) throw new Error('Too many arguments')
-
-  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+export const parseBmiArguments = (height: number, weight: number): BodyMassParams => {
+  if (!isNaN(height) && !isNaN(weight)) {
     return {
-      height: Number(args[2]),
-      mass: Number(args[3]),
+      heightInCm: height,
+      weightInKg: weight,
     }
   } else {
-    throw new Error('Provided values for height & mass were not numbers')
+    throw new Error('Provided values for height & mass were not numbers!')
   }
 }
 
-const calculateBmi = (height: number, mass: number): string => {
-  if (height == 0) throw new Error("Can't divide by 0!")
+export const calculateBmi = (heightInCm: number, weightInKg: number): string => {
+  if (heightInCm == 0) throw new Error("Can't divide by 0!")
 
-  const bmi = (mass * 100 * 100) / (height * height)
+  const bmi = (weightInKg * 100 * 100) / (heightInCm * heightInCm)
 
   if (bmi < 16.0) {
     return 'Underweight (Severe thinness)'
