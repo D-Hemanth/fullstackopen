@@ -1,5 +1,6 @@
 import express from "express";
 import diagnosesRouter from "./routes/diagnoses";
+import patientsRouter from "./routes/patients";
 const app = express();
 import cors from "cors";
 
@@ -14,8 +15,9 @@ app.get("/api/ping", (_request, response) => {
   response.send("pong");
 });
 
-// We'll route all requests to prefix /api/diagnoses to that specific router, here diagnosesRouter
+// We'll route all diagnoses requests to prefix /api/diagnoses to that specific router, here diagnosesRouter
 app.use("/api/diagnoses", diagnosesRouter);
+app.use("/api/patients", patientsRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
