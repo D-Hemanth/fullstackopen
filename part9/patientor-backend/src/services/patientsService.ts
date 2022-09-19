@@ -2,6 +2,9 @@ import patients from "../../data/patients";
 import { NonSensitivePatientsEntry } from "../types";
 
 // We can improve the code's readability by using the alternative array syntax: Array<elemType> or elemType[] i.e here Array<NonSensitiveEntries> or NonSensitiveEntries[]
+// In getNonSensitiveEntries, we are returning the complete patient entries, and no error is given despite typing! because TypeScript only checks whether we have all of the required fields or not, but excess fields are not prohibited.
+// If we were now to return all of the patientEntries from the getNonSensitiveEntries function to the frontend, we would actually be leaking the unwanted fields to the requesting browser even though our types(using omit) seem to imply otherwise!
+// Because TypeScript doesn't modify the actual data but only its type, we need to exclude the fields ourselves
 const getNonSensitiveEntries = (): NonSensitivePatientsEntry[] => {
   return patients.map(({ id, name, dateOfBirth, gender, occupation }) => ({
     id,
