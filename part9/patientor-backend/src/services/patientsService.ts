@@ -1,5 +1,10 @@
-import patients from "../../data/patients";
-import { NonSensitivePatientsEntry } from "../types";
+import patients from '../../data/patients';
+import { v1 as uuid } from 'uuid';
+import {
+  NewPatientEntry,
+  NonSensitivePatientsEntry,
+  PatientsEntry,
+} from '../types';
 
 // We can improve the code's readability by using the alternative array syntax: Array<elemType> or elemType[] i.e here Array<NonSensitiveEntries> or NonSensitiveEntries[]
 // In getNonSensitiveEntries, we are returning the complete patient entries, and no error is given despite typing! because TypeScript only checks whether we have all of the required fields or not, but excess fields are not prohibited.
@@ -15,4 +20,19 @@ const getNonSensitiveEntries = (): NonSensitivePatientsEntry[] => {
   }));
 };
 
-export default { getNonSensitiveEntries };
+// create a new type for entry NewPatientEntry which doesn't include id like in PatientsEntry
+const addPatient = (entry: NewPatientEntry): PatientsEntry => {
+  // create unique ids of type string using the uuid library
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+  const id: string = uuid();
+
+  const newPatientEntry = {
+    id: id,
+    ...entry,
+  };
+
+  patients.push(newPatientEntry);
+  return newPatientEntry;
+};
+
+export default { getNonSensitiveEntries, addPatient };
