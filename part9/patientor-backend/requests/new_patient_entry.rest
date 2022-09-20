@@ -1,0 +1,21 @@
+POST http://localhost:3001/api/patients HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Hemanth",
+  "dateOfBirth": "2005-11-15",
+  "ssn": "21346dsd",
+  "gender": "Don't wanna tell",
+  "occupation": "Programmer"
+}
+
+
+POST http://localhost:3001/api/patients HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Hemanth",
+  "dateOfBirth": "2005-11-15",
+  "gender": "Don't wanna tell",
+  "occupation": "Programmer"
+}
