@@ -6,12 +6,20 @@ export interface DiagnosesEntry {
   latin?: string;
 }
 
+// let's type the Gender values using a enum type of the allowed strings, since we know what type of data should be accepted for the gender fields
+// we use enums so that it is helpful in type validation when taking data from external sources when adding new patientEntry
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+  Other = 'other',
+}
+
 export interface PatientsEntry {
   id: string;
   name: string;
   dateOfBirth: string;
   ssn: string;
-  gender: string;
+  gender: Gender;
   occupation: string;
 }
 
