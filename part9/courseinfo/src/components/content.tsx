@@ -1,18 +1,17 @@
-import { CourseParts } from '../types';
+import { CoursePart } from '../types';
+import Part from './Part';
 
-// We are explicitly defining the parameter types using an interface i.e. { courseParts: courseParts[] }
-// and we also explicitly state the return type as JSX.Element of the function (i.e., a react component) i.e. ({ courseParts }: { courseParts: courseParts[] }): JSX.Element
+// We are explicitly defining the parameter types using an inline interface i.e. { courseParts: CoursePart[] } where CoursePart[] is array of 4 different interface objects
+// and we also explicitly state the return type as JSX.Element of the function (i.e., a react component) i.e. ({ courseParts }: { courseParts: CoursePart[] }): JSX.Element
 const Content = ({
   courseParts,
 }: {
-  courseParts: CourseParts[];
+  courseParts: CoursePart[];
 }): JSX.Element => {
   return (
     <div>
       {courseParts.map((coursePart, index) => (
-        <p key={index}>
-          {coursePart.name} {coursePart.exerciseCount}
-        </p>
+        <Part key={index} coursePart={coursePart} />
       ))}
     </div>
   );
