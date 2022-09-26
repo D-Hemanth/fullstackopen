@@ -1,12 +1,8 @@
-import { CourseParts } from '../types';
+import { CoursePart } from '../types';
 
-// We are explicitly defining the parameter types using an interface i.e. { courseParts: courseParts[] }
-// and we also explicitly state the return type as JSX.Element of the function (i.e., a react component) i.e. ({ courseParts }: { courseParts: courseParts[] }): JSX.Element
-const Total = ({
-  courseParts,
-}: {
-  courseParts: CourseParts[];
-}): JSX.Element => {
+// We are explicitly defining the parameter types using an interface i.e. { courseParts: CoursePart[] }
+// and we also explicitly state the return type as JSX.Element of the function (i.e., a react component) i.e. ({ courseParts }: { courseParts: CoursePart[] }): JSX.Element
+const Total = ({ courseParts }: { courseParts: CoursePart[] }): JSX.Element => {
   return (
     <div>
       <p>
