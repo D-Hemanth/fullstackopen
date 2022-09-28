@@ -14,6 +14,9 @@ export enum Gender {
   Other = 'other',
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Entry {}
+
 export interface PatientsEntry {
   id: string;
   name: string;
@@ -21,10 +24,11 @@ export interface PatientsEntry {
   ssn: string;
   gender: Gender;
   occupation: string;
+  entries: Entry[];
 }
 
 // In this case, we want to exclude only one field(ssn), so it would be even better to use the Omit utility type, which we can use to declare which fields to exclude:
-export type NonSensitivePatientsEntry = Omit<PatientsEntry, 'ssn'>;
+export type NonSensitivePatientsEntry = Omit<PatientsEntry, 'ssn' | 'entries'>;
 
 // create a new type, newPatientEntry, for an entry that hasn't been saved yet
 export type NewPatientEntry = Omit<PatientsEntry, 'id'>;
