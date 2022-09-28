@@ -27,4 +27,15 @@ router.post('/', (request, response) => {
   }
 });
 
+router.get('/:id', (request, response) => {
+  // use findById method of express to find patient details using a specific id parameter
+  const patient = patientsService.findById(request.params.id);
+
+  if (patient) {
+    response.send(patient);
+  } else {
+    response.sendStatus(404);
+  }
+});
+
 export default router;
