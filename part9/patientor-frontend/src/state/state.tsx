@@ -8,12 +8,13 @@ export type State = {
 };
 
 const initialState: State = {
-  patients: {}
+  patients: {},
 };
 
+// createContext creates a Context object. When React renders a component that subscribes to this Context object it will read the current context value from the closest matching Provider above it in the tree.
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([
   initialState,
-  () => initialState
+  () => initialState,
 ]);
 
 type StateProviderProps = {
@@ -21,10 +22,8 @@ type StateProviderProps = {
   children: React.ReactElement;
 };
 
-export const StateProvider = ({
-  reducer,
-  children
-}: StateProviderProps) => {
+// the useReducer hook used to create the state and the dispatch function, and pass them on to the context provider
+export const StateProvider = ({ reducer, children }: StateProviderProps) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <StateContext.Provider value={[state, dispatch]}>
@@ -32,4 +31,6 @@ export const StateProvider = ({
     </StateContext.Provider>
   );
 };
+
+// the components that need to access the state or dispatcher use useStateValue function
 export const useStateValue = () => useContext(StateContext);

@@ -10,9 +10,11 @@ import { Patient } from "./types";
 import PatientListPage from "./PatientListPage";
 import { Typography } from "@material-ui/core";
 
+// When the component App mounts, it fetches patients from the backend using Axios
 const App = () => {
   const [, dispatch] = useStateValue();
   React.useEffect(() => {
+    // Note how we are giving the axios.get function a type parameter to describe the type of the response data
     void axios.get<void>(`${apiBaseUrl}/ping`);
 
     const fetchPatientList = async () => {

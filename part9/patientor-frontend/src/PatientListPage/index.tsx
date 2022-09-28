@@ -13,8 +13,11 @@ import { TableRow } from "@material-ui/core";
 import { TableBody } from "@material-ui/core";
 
 const PatientListPage = () => {
+  // the components that need to access the state or dispatcher use the useStateValue function
   const [{ patients }, dispatch] = useStateValue();
 
+  // We also use the app state created with the useState hook for managing modal visibility and form error handling
+  // We give the useState hook a type parameter, which is then applied to the actual state. So modalOpen is a boolean and error has the type string | undefined
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [error, setError] = React.useState<string>();
 
@@ -36,7 +39,9 @@ const PatientListPage = () => {
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         console.error(e?.response?.data || "Unrecognized axios error");
-        setError(String(e?.response?.data?.error) || "Unrecognized axios error");
+        setError(
+          String(e?.response?.data?.error) || "Unrecognized axios error"
+        );
       } else {
         console.error("Unknown error", e);
         setError("Unknown error");
