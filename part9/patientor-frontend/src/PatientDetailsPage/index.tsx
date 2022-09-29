@@ -1,12 +1,12 @@
-import React from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
-import { useStateValue } from "../state";
-import { Patient } from "../types";
-import { apiBaseUrl } from "../constants";
-import MaleIcon from "@mui/icons-material/Male";
-import FemaleIcon from "@mui/icons-material/Female";
-import TransgenderIcon from "@mui/icons-material/Transgender";
+import React from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useStateValue } from '../state';
+import { Patient } from '../types';
+import { apiBaseUrl } from '../constants';
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import TransgenderIcon from '@mui/icons-material/Transgender';
 
 const PatientDetailsPage = () => {
   const [{ confidentialPatientInfo }, dispatch] = useStateValue();
@@ -22,17 +22,17 @@ const PatientDetailsPage = () => {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           `${apiBaseUrl}/patients/${id}`
         );
-        dispatch({ type: "FETCHED_PATIENT", payload: patient });
+        dispatch({ type: 'FETCHED_PATIENT', payload: patient });
         setPatient(patient);
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) {
-          console.error(e?.response?.data || "Unrecognized axios error");
+          console.error(e?.response?.data || 'Unrecognized axios error');
           setError(
-            String(e?.response?.data?.error) || "Unrecognized axios error"
+            String(e?.response?.data?.error) || 'Unrecognized axios error'
           );
         } else {
-          console.error("Unknown error", e);
-          setError("Unknown error");
+          console.error('Unknown error', e);
+          setError('Unknown error');
         }
       }
     };
@@ -52,10 +52,10 @@ const PatientDetailsPage = () => {
 
   if (patient) {
     switch (patient.gender) {
-      case "male":
+      case 'male':
         iconName = <MaleIcon />;
         break;
-      case "female":
+      case 'female':
         iconName = <FemaleIcon />;
         break;
       default:
@@ -68,7 +68,7 @@ const PatientDetailsPage = () => {
   return (
     <div>
       {error && (
-        <div style={{ padding: "10px", border: "2px solid red" }}>{error}</div>
+        <div style={{ padding: '10px', border: '2px solid red' }}>{error}</div>
       )}
       <h2>
         {patient.name} {iconName}
