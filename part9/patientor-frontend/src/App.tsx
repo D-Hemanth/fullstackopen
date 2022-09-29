@@ -9,6 +9,7 @@ import { Patient } from "./types";
 
 import PatientListPage from "./PatientListPage";
 import { Typography } from "@material-ui/core";
+import PatientDetailsPage from "./PatientDetailsPage";
 
 // When the component App mounts, it fetches patients from the backend using Axios
 const App = () => {
