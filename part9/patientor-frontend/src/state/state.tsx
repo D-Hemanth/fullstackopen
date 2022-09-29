@@ -5,10 +5,12 @@ import { Action } from "./reducer";
 
 export type State = {
   patients: { [id: string]: Patient };
+  confidentialPatientInfo: { [id: string]: Patient };
 };
 
 const initialState: State = {
   patients: {},
+  confidentialPatientInfo: {},
 };
 
 // createContext creates a Context object. When React renders a component that subscribes to this Context object it will read the current context value from the closest matching Provider above it in the tree.
