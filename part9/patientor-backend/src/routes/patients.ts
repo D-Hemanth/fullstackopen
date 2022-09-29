@@ -27,6 +27,7 @@ router.post('/', (request, response) => {
   }
 });
 
+// get route to find patient info using id parameter
 router.get('/:id', (request, response) => {
   // use findById method of express to find patient details using a specific id parameter
   const patient = patientsService.findById(request.params.id);
