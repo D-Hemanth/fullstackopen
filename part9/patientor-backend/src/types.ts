@@ -9,9 +9,9 @@ export interface DiagnosesEntry {
 // let's type the Gender values using a enum type of the allowed strings, since we know what type of data should be accepted for the gender fields
 // we use enums so that it is helpful in type validation when taking data from external sources when adding new patientEntry
 export enum Gender {
-  Male = 'male',
-  Female = 'female',
-  Other = 'other',
+  Male = "male",
+  Female = "female",
+  Other = "other",
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -27,8 +27,10 @@ export interface PatientsEntry {
   entries: Entry[];
 }
 
+export type PublicPatient = Omit<PatientsEntry, "ssn" | "entries">;
+
 // In this case, we want to exclude only one field(ssn), so it would be even better to use the Omit utility type, which we can use to declare which fields to exclude:
-export type NonSensitivePatientsEntry = Omit<PatientsEntry, 'ssn' | 'entries'>;
+export type NonSensitivePatientsEntry = Omit<PatientsEntry, "ssn">;
 
 // create a new type, newPatientEntry, for an entry that hasn't been saved yet
-export type NewPatientEntry = Omit<PatientsEntry, 'id'>;
+export type NewPatientEntry = Omit<PatientsEntry, "id">;
