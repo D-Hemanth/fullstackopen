@@ -48,3 +48,10 @@ export const reducer = (state: State, action: Action): State => {
       return state;
   }
 };
+
+export const setPatientList = (patient: Patient): Action => {
+  return {
+    type: "FETCHED_PATIENT",
+    payload: patient,
+  };
+};
