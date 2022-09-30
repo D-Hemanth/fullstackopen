@@ -1,12 +1,4 @@
-import React from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { useStateValue } from '../state';
-import { Patient } from '../types';
-import { apiBaseUrl } from '../constants';
-import MaleIcon from '@mui/icons-material/Male';
-import FemaleIcon from '@mui/icons-material/Female';
-import TransgenderIcon from '@mui/icons-material/Transgender';
+import { setPatientList } from "../state";
 
 const PatientDetailsPage = () => {
   const [{ confidentialPatientInfo }, dispatch] = useStateValue();
@@ -22,7 +14,9 @@ const PatientDetailsPage = () => {
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           `${apiBaseUrl}/patients/${id}`
         );
-        dispatch({ type: 'FETCHED_PATIENT', payload: patient });
+        // console.log("patient data", patient);
+        // use action creator setPatientList defined in reducer to dispatch the action
+        dispatch(setPatientList(patient));
         setPatient(patient);
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) {
