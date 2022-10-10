@@ -80,6 +80,25 @@ const PatientDetailsPage = () => {
         ssh: {patient.ssn}
         <br></br>
         occupation: {patient.occupation}
+        <div>
+          <h3>Entries</h3>
+          {patient.entries.length === 0
+            ? null
+            : patient.entries.map((entry: Entry) => {
+                return (
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                  <div key={entry.id}>
+                    {entry.date} {entry.description}
+                    <ul>
+                      {entry.diagnosisCodes &&
+                        entry.diagnosisCodes?.map((code: string) => (
+                          <li key={code}>{code}</li>
+                        ))}
+                    </ul>
+                  </div>
+                );
+              })}
+        </div>
       </>
     </div>
   );
