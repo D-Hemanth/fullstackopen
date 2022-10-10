@@ -1,4 +1,4 @@
-import patients from "../../data/patients";
+import patientEntries from "../../data/patients";
 import { v1 as uuid } from "uuid";
 import {
   NewPatientEntry,
@@ -11,7 +11,7 @@ import {
 // If we were now to return all of the patientEntries from the getNonSensitiveEntries function to the frontend, we would actually be leaking the unwanted fields to the requesting browser even though our types(using omit) seem to imply otherwise!
 // Because TypeScript doesn't modify the actual data but only its type, we need to exclude the fields ourselves
 const getNonSensitiveEntries = (): NonSensitivePatientsEntry[] => {
-  return patients.map(
+  return patientEntries.map(
     ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
       id,
       name,
@@ -34,13 +34,14 @@ const addPatient = (entry: NewPatientEntry): PatientsEntry => {
     ...entry,
   };
 
-  patients.push(newPatientEntry);
+  patientEntries.push(newPatientEntry);
   return newPatientEntry;
 };
 
 // add findById function to patientService
 const findById = (id: string): PatientsEntry | undefined => {
-  const entry = patients.find((patient) => patient.id === id);
+  // console.log("patientEntries from DB", patientEntries);
+  const entry = patientEntries.find((patient) => patient.id === id);
   return entry;
 };
 

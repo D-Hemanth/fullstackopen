@@ -1,16 +1,16 @@
-import express from 'express';
-import patientsService from '../services/patientsService';
-import toNewPatientEntry from '../utils';
+import express from "express";
+import patientsService from "../services/patientsService";
+import toNewPatientEntry from "../utils";
 
 const router = express.Router();
 
 // get route to get all the patient entries without the sensitive info like ssn
-router.get('/', (_request, response) => {
+router.get("/", (_request, response) => {
   response.send(patientsService.getNonSensitiveEntries());
 });
 
 // post route to add new patient entries
-router.post('/', (request, response) => {
+router.post("/", (request, response) => {
   try {
     // Use function toNewPatientEntry that receives the request body as a parameter and returns a properly-typed NewPatientEntry object
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
@@ -19,18 +19,20 @@ router.post('/', (request, response) => {
     const addedPatientEntry = patientsService.addPatient(newPatientEntry);
     response.json(addedPatientEntry);
   } catch (error: unknown) {
-    let errorMessage = 'Something went wrong.';
+    let errorMessage = "Something went wrong.";
     if (error instanceof Error) {
-      errorMessage += ' Error: ' + error.message;
+      errorMessage += " Error: " + error.message;
     }
     response.status(400).send(errorMessage);
   }
 });
 
 // get route to find patient info using id parameter
-router.get('/:id', (request, response) => {
+router.get("/:id", (request, response) => {
+  // console.log("request params id:", request.params.id);
   // use findById method of express to find patient details using a specific id parameter
   const patient = patientsService.findById(request.params.id);
+  // console.log("Patient data from DB", patient);
 
   if (patient) {
     response.send(patient);
