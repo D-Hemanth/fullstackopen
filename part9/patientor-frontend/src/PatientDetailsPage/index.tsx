@@ -1,14 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import React from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { setDiagnosisList, useStateValue } from '../state';
-import { Patient, Entry, Diagnosis } from '../types';
-import { apiBaseUrl } from '../constants';
-import { setPatientList } from '../state';
-import MaleIcon from '@mui/icons-material/Male';
-import FemaleIcon from '@mui/icons-material/Female';
-import TransgenderIcon from '@mui/icons-material/Transgender';
+import { setPatientList } from "../state";
+import MaleIcon from "@mui/icons-material/Male";
+import FemaleIcon from "@mui/icons-material/Female";
+import TransgenderIcon from "@mui/icons-material/Transgender";
+import HealthCheck from "./HealthCheck";
+import Hospital from "./Hospital";
+import OccupationalHealthcare from "./OccupationalHealthcare";
+
+const assertNever = (value: never): never => {
+  throw new Error(
+    `Unhandled discriminated union member: ${JSON.stringify(value)}`
+  );
+};
+
+const EntryDetails = ({
+  entry,
+  diagnoses,
+}: {
+  entry: Entry;
+  diagnoses: Diagnosis[] | undefined;
+}) => {
+  switch (entry.type) {
+    case "Hospital":
+      return <Hospital entry={entry} diagnoses={diagnoses} />;
+    case "OccupationalHealthcare":
+      return <OccupationalHealthcare entry={entry} diagnoses={diagnoses} />;
+    case "HealthCheck":
+      return <HealthCheck entry={entry} diagnoses={diagnoses} />;
+    default:
+      return assertNever(entry);
+  }
+};
 
 const PatientDetailsPage = () => {
   const [{ confidentialPatientInfo }, dispatch] = useStateValue();
@@ -32,13 +53,13 @@ const PatientDetailsPage = () => {
         setPatient(patient);
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) {
-          console.error(e?.response?.data || 'Unrecognized axios error');
+          console.error(e?.response?.data || "Unrecognized axios error");
           setError(
-            String(e?.response?.data?.error) || 'Unrecognized axios error'
+            String(e?.response?.data?.error) || "Unrecognized axios error"
           );
         } else {
-          console.error('Unknown error', e);
-          setError('Unknown error');
+          console.error("Unknown error", e);
+          setError("Unknown error");
         }
       }
     };
@@ -46,7 +67,6 @@ const PatientDetailsPage = () => {
     const getDiagnoses = async () => {
       try {
         const { data: diagnoses } = await axios.get<Diagnosis[]>(
-          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
           `${apiBaseUrl}/diagnoses`
         );
         // console.log('diagnoses data', diagnoses);
@@ -56,13 +76,13 @@ const PatientDetailsPage = () => {
         setDiagnoses(diagnoses);
       } catch (e: unknown) {
         if (axios.isAxiosError(e)) {
-          console.error(e?.response?.data || 'Unrecognized axios error');
+          console.error(e?.response?.data || "Unrecognized axios error");
           setError(
-            String(e?.response?.data?.error) || 'Unrecognized axios error'
+            String(e?.response?.data?.error) || "Unrecognized axios error"
           );
         } else {
-          console.error('Unknown error', e);
-          setError('Unknown error');
+          console.error("Unknown error", e);
+          setError("Unknown error");
         }
       }
     };
@@ -83,10 +103,10 @@ const PatientDetailsPage = () => {
 
   if (patient) {
     switch (patient.gender) {
-      case 'male':
+      case "male":
         iconName = <MaleIcon />;
         break;
-      case 'female':
+      case "female":
         iconName = <FemaleIcon />;
         break;
       default:
@@ -101,7 +121,7 @@ const PatientDetailsPage = () => {
   return (
     <div>
       {error && (
-        <div style={{ padding: '10px', border: '2px solid red' }}>{error}</div>
+        <div style={{ padding: "10px", border: "2px solid red" }}>{error}</div>
       )}
       <h2>
         {patient.name} {iconName}
@@ -112,27 +132,13 @@ const PatientDetailsPage = () => {
         occupation: {patient.occupation}
         <div>
           <h3>Entries</h3>
-          {patient.entries.length === 0
-            ? null
-            : patient.entries.map((entry: Entry) => {
-                return (
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                  <div key={entry.id}>
-                    {entry.date} {entry.description}
-                    <ul>
-                      {entry.diagnosisCodes &&
-                        entry.diagnosisCodes?.map((code: string) => (
-                          <li key={code}>
-                            {code}{' '}
-                            {diagnoses?.map((diagnose) =>
-                              diagnose.code === code ? diagnose.name : null
-                            )}
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                );
-              })}
+          {patient.entries.map((entry, i) => (
+            <div key={i}>
+              {patient.entries.length === 0 ? null : (
+                <EntryDetails entry={entry} diagnoses={diagnoses} />
+              )}
+            </div>
+          ))}
         </div>
       </>
     </div>
