@@ -1,3 +1,9 @@
+import React from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { setDiagnosisList, useStateValue } from "../state";
+import { Patient, Entry, Diagnosis } from "../types";
+import { apiBaseUrl } from "../constants";
 import { setPatientList } from "../state";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
